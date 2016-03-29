@@ -6,7 +6,6 @@
 #include "exception.h"
 #include "config.h"
 #include "schema.h"
-#include "schema_mode.h"
 
 namespace inicpp
 {

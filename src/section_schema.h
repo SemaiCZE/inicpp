@@ -7,8 +7,11 @@
 #include "exception.h"
 #include "option_schema.h"
 
+
 namespace inicpp
 {
+	class option_schema;
+
 	class section_schema
 	{
 	private:
@@ -24,7 +27,7 @@ namespace inicpp
 		section_schema& operator=(section_schema &&source);
 
 		void add_option(std::string option_name);
-		void add_option(const &option_schema opt);
+		void add_option(const option_schema &opt);
 
 		std::ostream& operator<<(std::ostream& os);
 	};

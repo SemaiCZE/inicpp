@@ -12,7 +12,7 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	option_schema::option_schema &operator=(const option_schema &source)
+	option_schema &option_schema::operator=(const option_schema &source)
 	{
 		throw not_implemented_exception();
 	}

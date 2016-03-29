@@ -22,7 +22,7 @@ namespace inicpp
 	not_implemented_exception::not_implemented_exception()
 	{}
 
-	char *not_implemented_exception::what()
+	const char *not_implemented_exception::what() const noexcept
 	{
 		return "Not implemented";
 	}

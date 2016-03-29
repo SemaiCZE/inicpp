@@ -32,7 +32,7 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 	
-	void section_schema::add_option(const &option_schema opt)
+	void section_schema::add_option(const option_schema &opt)
 	{
 		throw not_implemented_exception();
 	}

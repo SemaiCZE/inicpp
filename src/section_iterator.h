@@ -6,44 +6,50 @@
 #include <iterator>
 
 #include "exception.h"
+#include "section.h"
 #include "option.h"
 
 namespace inicpp
 {
-	class section {};
+	class section;
 
 	class section_iterator : public std::iterator<std::random_access_iterator_tag, option>
 	{
 	private:
+		using std::iterator<std::random_access_iterator_tag, option>::reference;
+		
 		section &container_;
 		size_t pos_;
 	public:
-		section_iterator(const section &source) : container_(source) {}
-		section_iterator(const section_iterator &source) : container_(source.container_), pos_(source.pos_) {}
+		section_iterator(section &source);
+		section_iterator(const section_iterator &source);
 
-		section_iterator &operator++() { ++pos_; return *this; }
-		section_iterator operator++(int) { section_iterator old(*this); operator++(); return old; }
+		section_iterator &operator++();
+		section_iterator operator++(int);
 
-		bool operator==(const section_iterator &second) { return pos_ == second.pos_; }
-		bool operator!=(const section_iterator &second) { return pos_ != second.pos_; }
-		reference operator*() { return container_.options_.at(pos_); }
+		bool operator==(const section_iterator &second);
+		bool operator!=(const section_iterator &second);
+		reference operator*();
 	};
 
-	class const_section_iterator : public std::iterator<std::random_access_iterator_tag, option>
+
+	class const_section_iterator : public std::iterator<std::random_access_iterator_tag, const option>
 	{
 	private:
+		using std::iterator<std::random_access_iterator_tag, const option>::reference;
+		
 		const section &container_;
 		size_t pos_;
 	public:
-		const_section_iterator(const section &source) : container_(source) {}
-		const_section_iterator(const const_section_iterator &source) : container_(source.container_), pos_(source.pos_) {}
+		const_section_iterator(const section &source);
+		const_section_iterator(const const_section_iterator &source);
 
-		const_section_iterator &operator++() { ++pos_; return *this; }
-		const_section_iterator operator++(int) { const_section_iterator old(*this); operator++(); return old; }
+		const_section_iterator &operator++();
+		const_section_iterator operator++(int);
 
-		bool operator==(const const_section_iterator &second) { return pos_ == second.pos_; }
-		bool operator!=(const const_section_iterator &second) { return pos_ != second.pos_; }
-		const reference operator*() { return container_.options_.at(pos_); }
+		bool operator==(const const_section_iterator &second);
+		bool operator!=(const const_section_iterator &second);
+		reference operator*() const;
 	};
 }
 
