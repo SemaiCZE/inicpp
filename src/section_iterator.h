@@ -6,6 +6,7 @@
 #include <iterator>
 
 #include "exception.h"
+#include "section.h"
 #include "option.h"
 
 namespace inicpp
@@ -16,6 +17,8 @@ namespace inicpp
 	class section_iterator : public std::iterator<std::random_access_iterator_tag, Element>
 	{
 	private:
+		using std::iterator<std::random_access_iterator_tag, option>::reference;
+		
 		section &container_;
 		size_t position_;
 	public:

@@ -11,6 +11,9 @@
 
 namespace inicpp
 {
+	class section_iterator;
+	class const_section_iterator;
+	
 	class section
 	{
 	private:
@@ -18,6 +21,7 @@ namespace inicpp
 		bool name_;
 
 		friend class section_iterator;
+		friend class const_section_iterator;
 
 	public:
 		typedef section_iterator<option> iterator;

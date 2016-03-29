@@ -5,11 +5,12 @@
 #include <iostream>
 
 #include "exception.h"
-#include "option_schema.h"
 #include "option.h"
 
 namespace inicpp
 {
+	class option; //TODO: why?
+	
 	enum option_type { boolean_t, signed_t, unsigned_t, float_t, enum_t, string_t };
 
 	class option_schema

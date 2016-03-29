@@ -7,8 +7,11 @@
 #include "exception.h"
 #include "option_schema.h"
 
+
 namespace inicpp
 {
+	class option_schema;
+
 	class section_schema
 	{
 	private:

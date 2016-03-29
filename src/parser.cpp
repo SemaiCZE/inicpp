@@ -7,7 +7,7 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	static config parser::load(std::istream str)
+	config parser::load(std::istream str)
 	{
 		throw not_implemented_exception();
 	}

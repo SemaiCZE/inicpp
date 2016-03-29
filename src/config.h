@@ -9,14 +9,19 @@
 #include "option.h"
 #include "config_iterator.h"
 
+
 namespace inicpp
 {
+	class config_iterator;
+	class const_config_iterator;
+
 	class config
 	{
 	private:
 		std::vector<section> sections_;
 
 		friend class config_iterator;
+		friend class const_config_iterator;
 
 	public:
 		typedef config_iterator<section> iterator;

@@ -8,6 +8,7 @@
 #include "section_schema.h"
 #include "option_schema.h"
 
+
 namespace inicpp
 {
 	enum schema_mode { strict, relaxed };
