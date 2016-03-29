@@ -27,7 +27,7 @@ namespace inicpp
 		template<typename ValueType> std::vector<ValueType> get_list();
 
 		std::ostream &operator<<(std::ostream &os);
-		
+
 		bool is_list();
 	};
 }

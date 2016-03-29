@@ -6,7 +6,6 @@ set(SRC_DIR src)
 set(SOURCE_FILES
 	${SRC_DIR}/config.h
 	${SRC_DIR}/config.cpp
-	${SRC_DIR}/config_iterator.h
 	${SRC_DIR}/exception.h
 	${SRC_DIR}/exception.cpp
 	${SRC_DIR}/option.h
@@ -19,12 +18,15 @@ set(SOURCE_FILES
 	${SRC_DIR}/schema.cpp
 	${SRC_DIR}/section.h
 	${SRC_DIR}/section.cpp
-	${SRC_DIR}/section_iterator.h
 	${SRC_DIR}/section_schema.h
 	${SRC_DIR}/section_schema.cpp
 )
 
+# Compile dynamic library
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
+
+# Compile static library
+add_library(${PROJECT_NAME}_static STATIC ${SOURCE_FILES})
 
 # Use C++14 features
 if(UNIX)

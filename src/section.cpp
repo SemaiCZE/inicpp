@@ -36,7 +36,7 @@ namespace inicpp
 	{
 		throw not_implemented_exception();
 	}
-	
+
 	option &section::operator[](size_t index)
 	{
 		throw not_implemented_exception();
