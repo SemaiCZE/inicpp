@@ -28,9 +28,6 @@ namespace inicpp
 	{
 	public:
 		not_implemented_exception();
-		not_implemented_exception(const std::string &what);
-
-		virtual ~not_implemented_exception();
 
 		virtual const char *what() const noexcept;
 	};

@@ -25,16 +25,16 @@ namespace inicpp
 	public:
 		option_schema();
 		option_schema(const option_schema &source);
-		option_schema& operator=(const option_schema &source);
+		option_schema &operator=(const option_schema &source);
 		option_schema(option_schema &&source);
-		option_schema& operator=(option_schema &&source);
+		option_schema &operator=(option_schema &&source);
 
 		std::ostream& operator<<(std::ostream& os);
 		
 		bool is_list();
 		
-		bool is_valid(std::string str); // validate is probably better?
-		bool is_valid(option opt);
+		bool validate(std::string str);
+		bool validate(option opt);
 	};
 }
 

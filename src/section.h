@@ -29,7 +29,10 @@ namespace inicpp
 		section(section &&source);
 		section& operator=(section &&source);
 		
-		template<ValueType> void add_option(std::string name, ValueType value);
+		template<ValueType> void add_option(std::string name, ValueType value)
+		{
+			throw not_implemented_exception();
+		}
 		void add_option(const option &opt);
 
 		const std::vector<option> &get_options();

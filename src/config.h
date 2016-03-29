@@ -38,7 +38,6 @@ namespace inicpp
 		section &operator[](size_t index);
 
 		std::ostream& operator<<(std::ostream& os);
-		std::ostream& operator>>(std::ostream& os);
 
 		// TODO: begin() and end()
 	};
