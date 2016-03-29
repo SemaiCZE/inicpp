@@ -11,17 +11,14 @@
 
 namespace inicpp
 {
-	class section_iterator;
-	class const_section_iterator;
-	
 	class section
 	{
 	private:
 		std::vector<option> options_;
 		bool name_;
 
-		friend class section_iterator;
-		friend class const_section_iterator;
+		friend class section_iterator<option>;
+		friend class section_iterator<const option>;
 
 	public:
 		typedef section_iterator<option> iterator;
@@ -33,7 +30,7 @@ namespace inicpp
 		section(section &&source);
 		section& operator=(section &&source);
 		
-		template<ValueType> void add_option(const std::string &name, const ValueType &value)
+		template<typename ValueType> void add_option(const std::string &name, const ValueType &value)
 		{
 			throw not_implemented_exception();
 		}

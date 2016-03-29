@@ -67,22 +67,22 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	iterator config::begin()
+	config::iterator config::begin()
 	{
 		throw not_implemented_exception();
 	}
 
-	iterator config::end()
+	config::iterator config::end()
 	{
 		throw not_implemented_exception();
 	}
 
-	const_iterator config::cbegin()
+	config::const_iterator config::cbegin()
 	{
 		throw not_implemented_exception();
 	}
 
-	const_iterator config::cend()
+	config::const_iterator config::cend()
 	{
 		throw not_implemented_exception();
 	}

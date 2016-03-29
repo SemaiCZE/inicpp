@@ -12,16 +12,13 @@
 
 namespace inicpp
 {
-	class config_iterator;
-	class const_config_iterator;
-
 	class config
 	{
 	private:
 		std::vector<section> sections_;
 
-		friend class config_iterator;
-		friend class const_config_iterator;
+		friend class config_iterator<section>;
+		friend class config_iterator<const section>;
 
 	public:
 		typedef config_iterator<section> iterator;

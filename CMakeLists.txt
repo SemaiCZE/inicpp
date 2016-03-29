@@ -7,7 +7,6 @@ set(SOURCE_FILES
 	${SRC_DIR}/config.h
 	${SRC_DIR}/config.cpp
 	${SRC_DIR}/config_iterator.h
-	${SRC_DIR}/config_iterator.cpp
 	${SRC_DIR}/exception.h
 	${SRC_DIR}/exception.cpp
 	${SRC_DIR}/option.h
@@ -21,7 +20,6 @@ set(SOURCE_FILES
 	${SRC_DIR}/section.h
 	${SRC_DIR}/section.cpp
 	${SRC_DIR}/section_iterator.h
-	${SRC_DIR}/section_iterator.cpp
 	${SRC_DIR}/section_schema.h
 	${SRC_DIR}/section_schema.cpp
 )

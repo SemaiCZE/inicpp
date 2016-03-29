@@ -14,11 +14,11 @@ namespace inicpp
 {
 	class config;
 
-	template<Element>
+	template<typename Element>
 	class config_iterator : public std::iterator<std::random_access_iterator_tag, Element>
 	{
 	private:
-		using std::iterator<std::random_access_iterator_tag, section>::reference;
+		using std::iterator<std::random_access_iterator_tag, Element>::reference;
 
 		config &container_;
 		size_t position_;

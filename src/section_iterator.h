@@ -13,11 +13,11 @@ namespace inicpp
 {
 	class section;
 
-	template<Element>
+	template<typename Element>
 	class section_iterator : public std::iterator<std::random_access_iterator_tag, Element>
 	{
 	private:
-		using std::iterator<std::random_access_iterator_tag, option>::reference;
+		using std::iterator<std::random_access_iterator_tag, Element>::reference;
 		
 		section &container_;
 		size_t position_;

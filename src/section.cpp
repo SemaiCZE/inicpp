@@ -52,22 +52,22 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	iterator section::begin()
+	section::iterator section::begin()
 	{
 		throw not_implemented_exception();
 	}
 	
-	iterator section::end()
+	section::iterator section::end()
 	{
 		throw not_implemented_exception();
 	}
 	
-	const_iterator section::cbegin()
+	section::const_iterator section::cbegin()
 	{
 		throw not_implemented_exception();
 	}
 	
-	const_iterator section::cend()
+	section::const_iterator section::cend()
 	{
 		throw not_implemented_exception();
 	}
