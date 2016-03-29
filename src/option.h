@@ -35,7 +35,7 @@ namespace inicpp
 			throw not_implemented_exception();
 		}
 
-		std::ostream& operator<<(std::ostream& os);
+		std::ostream &operator<<(std::ostream &os);
 		
 		bool is_list();
 	};

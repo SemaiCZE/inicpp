@@ -29,12 +29,12 @@ namespace inicpp
 		option_schema(option_schema &&source);
 		option_schema &operator=(option_schema &&source);
 
-		std::ostream& operator<<(std::ostream& os);
+		std::ostream &operator<<(std::ostream &os);
 		
 		bool is_list();
 		
-		bool validate(std::string str);
-		bool validate(option opt);
+		bool validate(const std::string &str);
+		bool validate(const option &opt);
 	};
 }
 

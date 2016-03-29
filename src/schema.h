@@ -20,17 +20,17 @@ namespace inicpp
 	public:
 		schema();
 		schema(const schema &source);
-		schema& operator=(const schema &source);
+		schema &operator=(const schema &source);
 		schema(schema &&source);
-		schema& operator=(schema &&source);
+		schema &operator=(schema &&source);
 
-		void add_section(section_schema sect_schema);
-		void add_section(std::string section_name);
+		void add_section(const section_schema &sect_schema);
+		void add_section(const std::string &section_name);
 
-		void add_option(std::string section_name, const option_schema &opt_schema);
-		void add_option(std::string section_name, std::string option_name);
+		void add_option(const std::string &section_name, const option_schema &opt_schema);
+		void add_option(const std::string &section_name, const std::string &option_name);
 
-		std::ostream& operator<<(std::ostream& os);
+		std::ostream &operator<<(std::ostream &os);
 	};
 }
 

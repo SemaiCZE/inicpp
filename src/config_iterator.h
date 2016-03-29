@@ -10,40 +10,32 @@
 
 namespace inicpp
 {
-	class config {};
+	class config;
 
-	class config_iterator : public std::iterator<std::random_access_iterator_tag, option>
+	template<Element>
+	class config_iterator : public std::iterator<std::random_access_iterator_tag, Element>
 	{
 	private:
 		config &container_;
-		size_t pos_;
+		size_t position_;
 	public:
-		config_iterator(config &source) : container_(source) {}
-		config_iterator(const config_iterator &source) : container_(source.container_), pos_(source.pos_) {}
+		config_iterator() = delete;
+		config_iterator(config &source, size_t position) : container_(), position_(position) {}
+		config_iterator(config &source) : config_iterator(source, 0) {}
+		config_iterator(const config_iterator &source) : config_iterator(source.container_, source.position_) {}
 
-		config_iterator &operator++() { ++pos_; return *this; }
+		config_iterator &operator++() { ++position_; return *this; }
 		config_iterator operator++(int) { config_iterator old(*this); operator++(); return old; }
 
-		bool operator==(const config_iterator &second) { return pos_ == second.pos_; }
-		bool operator!=(const config_iterator &second) { return pos_ != second.pos_; }
-		reference operator*() { return container_.sections_.at(pos_); }
-	};
-
-	class const_config_iterator : public std::iterator<std::random_access_iterator_tag, option>
-	{
-	private:
-		const config &container_;
-		size_t pos_;
-	public:
-		const_config_iterator(const config &source) : container_(source) {}
-		const_config_iterator(const const_config_iterator &source) : container_(source.container_), pos_(source.pos_) {}
-
-		const_config_iterator &operator++() { ++pos_; return *this; }
-		const_config_iterator operator++(int) { const_config_iterator old(*this); operator++(); return old; }
-
-		bool operator==(const const_config_iterator &second) { return pos_ == second.pos_; }
-		bool operator!=(const const_config_iterator &second) { return pos_ != second.pos_; }
-		const reference operator*() { return container_.sections_.at(pos_); }
+		bool operator==(const config_iterator &second)
+		{
+			return this == &second && position_ == second.position_;
+		}
+		bool operator!=(const config_iterator &second)
+		{
+			return !(*this == second);
+		}
+		reference operator*() { return container_.sections_.at(position_); }
 	};
 }
 

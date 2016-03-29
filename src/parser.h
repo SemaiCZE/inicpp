@@ -19,17 +19,17 @@ namespace inicpp
 		parser(parser &&source) = delete;
 		parser& operator=(parser &&source) = delete;
 
-		static config load(std::string str);
+		static config load(const std::string &str);
 		static config load(std::istream str);
-		static config load(std::istream str, schema schm, schema_mode md);
+		static config load(std::istream str, const schema &schm, const schema_mode &md);
 
-		static config load_file(std::string file);
-		static config load_file(std::string file, schema schm, schema_mode md);
+		static config load_file(const std::string &file);
+		static config load_file(const std::string &file, const schema &schm, const schema_mode &md);
 
-		static void save(config cfg, std::string file);
-		static void save(config cfg, std::ostream str);
-		static void save(schema schm, std::string file);
-		static void save(schema schm, std::ostream file);
+		static void save(const config &cfg, const std::string &file);
+		static void save(const config &cfg, std::ostream str);
+		static void save(const schema &schm, const std::string &file);
+		static void save(const schema &schm, std::ostream file);
 	};
 }
 

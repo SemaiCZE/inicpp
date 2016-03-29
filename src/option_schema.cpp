@@ -37,12 +37,12 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	bool option_schema::validate(std::string str)
+	bool option_schema::validate(const std::string &str)
 	{
 		throw not_implemented_exception();
 	}
 	
-	bool option_schema::validate(option opt)
+	bool option_schema::validate(const option &opt)
 	{
 		throw not_implemented_exception();
 	}

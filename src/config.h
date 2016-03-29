@@ -19,8 +19,8 @@ namespace inicpp
 		friend class config_iterator;
 
 	public:
-		typedef config_iterator iterator;
-		typedef const_config_iterator const_iterator;
+		typedef config_iterator<section> iterator;
+		typedef config_iterator<const section> const_iterator;
 
 		config();
 		config(const config &src);
@@ -29,17 +29,21 @@ namespace inicpp
 		config& operator=(config &&source);
 
 		void add_section(section sect);
-		void add_section(std::string section_name);
+		void add_section(const std::string &section_name);
 
-		void add_option(std::string section_name, option opt_schema);
-		void add_option(std::string section_name, std::string option_name);
+		void add_option(const std::string &section_name, option opt_schema);
+		void add_option(const std::string &section_name, const std::string &option_name);
 
 		const std::vector<section> &get_sections();
 		section &operator[](size_t index);
+		section &operator[](const std::string &section_name);
 
-		std::ostream& operator<<(std::ostream& os);
+		std::ostream &operator<<(std::ostream &os);
 
-		// TODO: begin() and end()
+		iterator begin();
+		iterator end();
+		const_iterator cbegin();
+		const_iterator cend();
 	};
 }
 

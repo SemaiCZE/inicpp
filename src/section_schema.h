@@ -23,10 +23,10 @@ namespace inicpp
 		section_schema(section_schema &&source);
 		section_schema& operator=(section_schema &&source);
 
-		void add_option(std::string option_name);
-		void add_option(const &option_schema opt);
+		void add_option(const std::string &option_name);
+		void add_option(const option_schema &opt);
 
-		std::ostream& operator<<(std::ostream& os);
+		std::ostream &operator<<(std::ostream &os);
 	};
 }
 

@@ -32,17 +32,17 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	void config::add_section(std::string section_name)
+	void config::add_section(const std::string &section_name)
 	{
 		throw not_implemented_exception();
 	}
 
-	void config::add_option(std::string section_name, option opt_schema)
+	void config::add_option(const std::string &section_name, option opt_schema)
 	{
 		throw not_implemented_exception();
 	}
 
-	void config::add_option(std::string section_name, std::string option_name)
+	void config::add_option(const std::string &section_name, const std::string &option_name)
 	{
 		throw not_implemented_exception();
 	}
@@ -57,7 +57,32 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
+	section &config::operator[](const std::string &section_name)
+	{
+		throw not_implemented_exception();
+	}
+
 	std::ostream &config::operator<<(std::ostream& os)
+	{
+		throw not_implemented_exception();
+	}
+
+	iterator config::begin()
+	{
+		throw not_implemented_exception();
+	}
+
+	iterator config::end()
+	{
+		throw not_implemented_exception();
+	}
+
+	const_iterator config::cbegin()
+	{
+		throw not_implemented_exception();
+	}
+
+	const_iterator config::cend()
 	{
 		throw not_implemented_exception();
 	}

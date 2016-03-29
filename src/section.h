@@ -20,8 +20,8 @@ namespace inicpp
 		friend class section_iterator;
 
 	public:
-		typedef section_iterator iterator;
-		typedef const_section_iterator const_iterator;
+		typedef section_iterator<option> iterator;
+		typedef section_iterator<const option> const_iterator;
 
 		section();
 		section(const section &source);
@@ -29,7 +29,7 @@ namespace inicpp
 		section(section &&source);
 		section& operator=(section &&source);
 		
-		template<ValueType> void add_option(std::string name, ValueType value)
+		template<ValueType> void add_option(const std::string &name, const ValueType &value)
 		{
 			throw not_implemented_exception();
 		}
@@ -37,8 +37,14 @@ namespace inicpp
 
 		const std::vector<option> &get_options();
 		option &operator[](size_t index);
+		option &operator[](const std::string &option_name);
 
-		std::ostream& operator<<(std::ostream& os);
+		std::ostream &operator<<(std::ostream &os);
+
+		iterator begin();
+		iterator end();
+		const_iterator cbegin();
+		const_iterator cend();
 	};
 }
 

@@ -42,7 +42,32 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	std::ostream& section::operator<<(std::ostream& os)
+	option &section::operator[](const std::string &option_name)
+	{
+		throw not_implemented_exception();
+	}
+
+	std::ostream &section::operator<<(std::ostream &os)
+	{
+		throw not_implemented_exception();
+	}
+
+	iterator section::begin()
+	{
+		throw not_implemented_exception();
+	}
+	
+	iterator section::end()
+	{
+		throw not_implemented_exception();
+	}
+	
+	const_iterator section::cbegin()
+	{
+		throw not_implemented_exception();
+	}
+	
+	const_iterator section::cend()
 	{
 		throw not_implemented_exception();
 	}
