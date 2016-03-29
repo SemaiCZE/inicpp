@@ -23,9 +23,9 @@ namespace inicpp
 
 	public:
 		option_schema();
-		option_schema(const option_schema &src);
+		option_schema(const option_schema &source);
 		option_schema& operator=(const option_schema &source);
-		option_schema(option_schema &&src);
+		option_schema(option_schema &&source);
 		option_schema& operator=(option_schema &&source);
 
 		std::ostream& operator<<(std::ostream& os);

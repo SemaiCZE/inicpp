@@ -17,9 +17,9 @@ namespace inicpp
 
 	public:
 		option();
-		option(const option &src);
+		option(const option &source);
 		option& operator=(const option &source);
-		option(option &&src);
+		option(option &&source);
 		option& operator=(option &&source);
 
 		template<ValueType> void set(ValueType value);

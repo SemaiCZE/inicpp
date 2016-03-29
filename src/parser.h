@@ -22,6 +22,7 @@ namespace inicpp
 		config load(std::string str);
 		config load(std::istream str);
 		config load(std::istream str, schema schm, schema_mode md);
+
 		config load_file(std::string file);
 		config load_file(std::string file, schema schm, schema_mode md);
 

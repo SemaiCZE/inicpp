@@ -14,16 +14,17 @@ namespace inicpp
 	private:
 		std::vector<option_schema> options_;
 		bool mandatory_;
+		std::string comment_;
 
 	public:
 		section_schema();
-		section_schema(const section_schema &src);
+		section_schema(const section_schema &source);
 		section_schema& operator=(const section_schema &source);
-		section_schema(section_schema &&src);
+		section_schema(section_schema &&source);
 		section_schema& operator=(section_schema &&source);
 
 		void add_option(std::string option_name);
-		void add_option(const &option_schema option);
+		void add_option(const &option_schema opt);
 
 		std::ostream& operator<<(std::ostream& os);
 	};
