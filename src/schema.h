@@ -10,6 +10,8 @@
 
 namespace inicpp
 {
+	enum schema_mode { strict, relaxed };
+
 	class schema
 	{
 	private:

@@ -7,10 +7,11 @@
 #include "exception.h"
 #include "option_schema.h"
 #include "option.h"
-#include "option_type.h"
 
 namespace inicpp
 {
+	enum option_type { boolean_t, signed_t, unsigned_t, float_t, enum_t, string_t };
+
 	class option_schema
 	{
 	private:
