@@ -32,7 +32,7 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	const std::vector<option> &section::get_options()
+	const std::vector<option> &section::get_options() const
 	{
 		throw not_implemented_exception();
 	}
@@ -62,12 +62,12 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 	
-	section::const_iterator section::cbegin()
+	section::const_iterator section::cbegin() const
 	{
 		throw not_implemented_exception();
 	}
 	
-	section::const_iterator section::cend()
+	section::const_iterator section::cend() const
 	{
 		throw not_implemented_exception();
 	}

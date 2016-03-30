@@ -32,8 +32,8 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	bool option::is_list()
+	bool option::is_list() const
 	{
-		throw not_implemented_exception();
+		return is_list_;
 	}
 }

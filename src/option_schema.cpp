@@ -32,17 +32,17 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	bool option_schema::is_list()
+	bool option_schema::is_list() const
 	{
-		throw not_implemented_exception();
+		return is_list_;
 	}
 
-	bool option_schema::validate(const std::string &str)
+	bool option_schema::validate(const std::string &str) const
 	{
 		throw not_implemented_exception();
 	}
 	
-	bool option_schema::validate(const option &opt)
+	bool option_schema::validate(const option &opt) const
 	{
 		throw not_implemented_exception();
 	}

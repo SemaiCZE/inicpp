@@ -24,6 +24,7 @@ namespace inicpp
 	{
 	private:
 		std::string name_;
+		bool is_list_;
 		option_type type_;
 		std::string default_value_;
 		bool mandatory_;
@@ -39,10 +40,10 @@ namespace inicpp
 
 		std::ostream &operator<<(std::ostream &os);
 		
-		bool is_list();
+		bool is_list() const;
 		
-		bool validate(const std::string &str);
-		bool validate(const option &opt);
+		bool validate(const std::string &str) const;
+		bool validate(const option &opt) const;
 	};
 }
 

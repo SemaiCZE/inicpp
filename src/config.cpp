@@ -27,6 +27,26 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
+	config::config(const std::string &str)
+	{
+		throw not_implemented_exception();
+	}
+
+	config::config(const std::string &str, const schema &schm, const schema_mode &md)
+	{
+		throw not_implemented_exception();
+	}
+
+	config::config(std::istream &str)
+	{
+		throw not_implemented_exception();
+	}
+
+	config::config(std::istream &str, const schema &schm, const schema_mode &md)
+	{
+		throw not_implemented_exception();
+	}
+
 	void config::add_section(section sect)
 	{
 		throw not_implemented_exception();
@@ -47,7 +67,7 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	const std::vector<section> &config::get_sections()
+	const std::vector<section> &config::get_sections() const
 	{
 		throw not_implemented_exception();
 	}
@@ -77,12 +97,12 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	config::const_iterator config::cbegin()
+	config::const_iterator config::cbegin() const
 	{
 		throw not_implemented_exception();
 	}
 
-	config::const_iterator config::cend()
+	config::const_iterator config::cend() const
 	{
 		throw not_implemented_exception();
 	}

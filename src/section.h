@@ -12,7 +12,7 @@ namespace inicpp
 {
 	template<typename T> class section_iterator;
 	
-	
+
 	class section
 	{
 	private:
@@ -38,7 +38,7 @@ namespace inicpp
 		}
 		void add_option(const option &opt);
 
-		const std::vector<option> &get_options();
+		const std::vector<option> &get_options() const;
 		option &operator[](size_t index);
 		option &operator[](const std::string &option_name);
 
@@ -46,8 +46,8 @@ namespace inicpp
 
 		iterator begin();
 		iterator end();
-		const_iterator cbegin();
-		const_iterator cend();
+		const_iterator cbegin() const;
+		const_iterator cend() const;
 	};
 	
 

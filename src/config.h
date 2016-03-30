@@ -7,6 +7,7 @@
 #include "exception.h"
 #include "section.h"
 #include "option.h"
+#include "schema.h"
 
 
 namespace inicpp
@@ -32,13 +33,18 @@ namespace inicpp
 		config(config &&src);
 		config& operator=(config &&source);
 
+		config(const std::string &str);
+		config(const std::string &str, const schema &schm, const schema_mode &md);
+		config(std::istream &str);
+		config(std::istream &str, const schema &schm, const schema_mode &md);
+
 		void add_section(section sect);
 		void add_section(const std::string &section_name);
 
 		void add_option(const std::string &section_name, option opt);
 		void add_option(const std::string &section_name, const std::string &option_name);
 
-		const std::vector<section> &get_sections();
+		const std::vector<section> &get_sections() const;
 		section &operator[](size_t index);
 		section &operator[](const std::string &section_name);
 
@@ -46,8 +52,8 @@ namespace inicpp
 
 		iterator begin();
 		iterator end();
-		const_iterator cbegin();
-		const_iterator cend();
+		const_iterator cbegin() const;
+		const_iterator cend() const;
 	};
 
 
