@@ -2,6 +2,7 @@
 
 [![License](https://img.shields.io/badge/license-mit-blue.svg)](http://badges.mit-license.org)
 [![Wiki](https://img.shields.io/badge/docs-wiki-orange.svg)](https://github.com/SemaiCZE/inicpp/wiki)
+[![Docs](https://img.shields.io/badge/docs-latest-brightgreen.svg)](http://semaicze.github.io/inicpp)
 
 C++ parser of INI files with schema validation.
 

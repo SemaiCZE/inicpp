@@ -2,10 +2,11 @@ project(inicpp_tests)
 
 set(TESTS_NAME run_tests)
 set(SRC_DIR ../src)
+set(LIBS_DIR ../vendor)
 
 # Google Test and Google Mock headers
-include_directories(${LIBS_DIR}/googletest/include)
-include_directories(${LIBS_DIR}/googlemock/include)
+include_directories(${LIBS_DIR}/googletest/googletest/include)
+include_directories(${LIBS_DIR}/googletest/googlemock/include)
 
 add_executable(${TESTS_NAME}
 	${SRC_DIR}/config.cpp
