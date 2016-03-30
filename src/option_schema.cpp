@@ -27,22 +27,28 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
+	option_schema::option_schema(const std::string &name, bool mandatory,
+		option_type type, bool is_list, const std::string &default_value)
+	{
+		throw not_implemented_exception();
+	}
+
 	std::ostream &option_schema::operator<<(std::ostream &os)
 	{
 		throw not_implemented_exception();
 	}
 
-	bool option_schema::is_list()
+	bool option_schema::is_list() const
 	{
-		throw not_implemented_exception();
+		return is_list_;
 	}
 
-	bool option_schema::validate(const std::string &str)
+	bool option_schema::validate(const std::string &str) const
 	{
 		throw not_implemented_exception();
 	}
 	
-	bool option_schema::validate(const option &opt)
+	bool option_schema::validate(const option &opt) const
 	{
 		throw not_implemented_exception();
 	}

@@ -10,25 +10,54 @@
 
 namespace inicpp
 {
-	class option_schema;
-
+	/**
+	 * @brief The section_schema class
+	 */
 	class section_schema
 	{
 	private:
+		/** */
+		std::string name_;
+		/** */
 		std::vector<option_schema> options_;
+		/** */
 		bool mandatory_;
+		/** */
 		std::string comment_;
 
 	public:
+		/**
+		 * @brief section_schema
+		 */
 		section_schema();
 		section_schema(const section_schema &source);
 		section_schema& operator=(const section_schema &source);
 		section_schema(section_schema &&source);
 		section_schema& operator=(section_schema &&source);
 
+		/**
+		 * @brief section_schema
+		 * @param name
+		 * @param is_mandatory
+		 */
+		section_schema(const std::string &name, bool mandatory = true);
+
+		/**
+		 * @brief add_option
+		 * @param option_name
+		 */
 		void add_option(const std::string &option_name);
+		/**
+		 * @brief add_option
+		 * @param opt
+		 */
 		void add_option(const option_schema &opt);
 
+		/**
+		 * @brief operator <<
+		 * @param os
+		 * @return
+		 */
 		std::ostream &operator<<(std::ostream &os);
 	};
 }

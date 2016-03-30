@@ -7,6 +7,11 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
+	config parser::load(const std::string &str, const schema &schm, const schema_mode &md)
+	{
+		throw not_implemented_exception();
+	}
+
 	config parser::load(std::istream str)
 	{
 		throw not_implemented_exception();
