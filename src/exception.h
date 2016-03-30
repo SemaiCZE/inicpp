@@ -5,10 +5,6 @@
 #include <iostream>
 #include <exception>
 
-#include "exception.h"
-#include "section_schema.h"
-#include "option_schema.h"
-
 namespace inicpp
 {
 	class exception : public std::exception

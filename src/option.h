@@ -22,10 +22,18 @@ namespace inicpp
 		option(option &&source);
 		option &operator=(option &&source);
 
-		template<typename ValueType> void set(ValueType value);
-		template<typename ValueType> ValueType get();
-		template<typename ValueType> std::vector<ValueType> get_list();
-
+		template<typename ValueType> void set(ValueType value)
+		{
+			throw not_implemented_exception();
+		}
+		template<typename ValueType> ValueType get()
+		{
+			throw not_implemented_exception();
+		}
+		template<typename ValueType> std::vector<ValueType> get_list()
+		{
+			throw not_implemented_exception();
+		}
 		std::ostream &operator<<(std::ostream &os);
 
 		bool is_list();
