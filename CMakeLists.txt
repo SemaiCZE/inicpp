@@ -33,3 +33,10 @@ if(UNIX)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -Wall")
 endif()
 
+# Set up google testing framework
+set(gtest_force_shared_crt ON CACHE BOOL "Use shared (DLL) run-time lib even when Google Test is built as static lib.")
+add_subdirectory(vendor/googletest EXCLUDE_FROM_ALL)
+
+# Add our very own unit tests
+add_subdirectory(tests EXCLUDE_FROM_ALL)
+
