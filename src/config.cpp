@@ -37,7 +37,7 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	void config::add_option(const std::string &section_name, option opt_schema)
+	void config::add_option(const std::string &section_name, option opt)
 	{
 		throw not_implemented_exception();
 	}

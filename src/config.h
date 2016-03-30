@@ -35,7 +35,7 @@ namespace inicpp
 		void add_section(section sect);
 		void add_section(const std::string &section_name);
 
-		void add_option(const std::string &section_name, option opt_schema);
+		void add_option(const std::string &section_name, option opt);
 		void add_option(const std::string &section_name, const std::string &option_name);
 
 		const std::vector<section> &get_sections();
