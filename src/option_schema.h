@@ -24,10 +24,11 @@ namespace inicpp
 	{
 	private:
 		std::string name_;
-		bool is_list_;
 		option_type type_;
+		bool is_list_;
 		std::string default_value_;
 		bool mandatory_;
+		std::string comment_;
 		// TODO: restriction function reference
 		// TODO: access methods for private members
 
@@ -37,6 +38,10 @@ namespace inicpp
 		option_schema &operator=(const option_schema &source);
 		option_schema(option_schema &&source);
 		option_schema &operator=(option_schema &&source);
+
+		option_schema(const std::string &name, bool is_mandatory = true,
+			option_type type = option_type::string_t, bool is_list = false,
+			const std::string &default_value = "");
 
 		std::ostream &operator<<(std::ostream &os);
 		

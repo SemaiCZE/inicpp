@@ -23,6 +23,8 @@ namespace inicpp
 		option(option &&source);
 		option &operator=(option &&source);
 
+		option(const std::string &name, bool is_list = false, const std::string &value = "");
+
 		template<typename ValueType> void set(ValueType value)
 		{
 			throw not_implemented_exception();

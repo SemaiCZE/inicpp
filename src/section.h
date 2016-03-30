@@ -31,6 +31,8 @@ namespace inicpp
 		section& operator=(const section &source);
 		section(section &&source);
 		section& operator=(section &&source);
+
+		section(const std::string &name);
 		
 		template<typename ValueType> void add_option(const std::string &name, const ValueType &value)
 		{

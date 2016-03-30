@@ -27,6 +27,11 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
+	section::section(const std::string &name)
+	{
+		throw not_implemented_exception();
+	}
+
 	void section::add_option(const option &opt)
 	{
 		throw not_implemented_exception();

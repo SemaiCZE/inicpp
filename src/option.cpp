@@ -27,6 +27,11 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
+	option::option(const std::string &name, bool is_list, const std::string &value)
+	{
+		throw not_implemented_exception();
+	}
+
 	std::ostream &option::operator<<(std::ostream &os)
 	{
 		throw not_implemented_exception();
