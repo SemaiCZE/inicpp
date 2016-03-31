@@ -7,10 +7,14 @@
 #include "exception.h"
 #include "section_schema.h"
 #include "option_schema.h"
+#include "config.h"
 
 
 namespace inicpp
 {
+	/** Forward declaration, stated because of ring dependencies */
+	class config;
+
 	/**
 	 * @brief The schema class
 	 */
@@ -53,6 +57,13 @@ namespace inicpp
 		 * @param option_name
 		 */
 		void add_option(const std::string &section_name, const std::string &option_name);
+
+		/**
+		 * @brief
+		 * @param cfg
+		 * @return
+		 */
+		bool validate(const config &cfg);
 
 		/**
 		 * @brief operator <<

@@ -6,10 +6,14 @@
 
 #include "exception.h"
 #include "option_schema.h"
+#include "section.h"
 
 
 namespace inicpp
 {
+	/** Forward declaration, stated because of ring dependencies */
+	class section;
+
 	/**
 	 * @brief The section_schema class
 	 */
@@ -52,6 +56,13 @@ namespace inicpp
 		 * @param opt
 		 */
 		void add_option(const option_schema &opt);
+
+		/**
+		 * @brief
+		 * @param schm
+		 * @return
+		 */
+		bool validate(const section &sect);
 
 		/**
 		 * @brief operator <<

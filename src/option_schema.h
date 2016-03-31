@@ -10,6 +10,10 @@
 
 namespace inicpp
 {
+	/** Forward declaration, stated because of ring dependencies */
+	class option;
+
+
 	/**
 	 * @brief The option_schema class
 	 */
@@ -65,13 +69,7 @@ namespace inicpp
 		 * @return
 		 */
 		bool is_list() const;
-		
-		/**
-		 * @brief validate
-		 * @param str
-		 * @return
-		 */
-		bool validate(const std::string &str) const;
+
 		/**
 		 * @brief validate
 		 * @param opt

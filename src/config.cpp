@@ -66,11 +66,6 @@ namespace inicpp
 	{
 		throw not_implemented_exception();
 	}
-
-	const std::vector<section> &config::get_sections() const
-	{
-		throw not_implemented_exception();
-	}
 	
 	section &config::operator[](size_t index)
 	{
@@ -78,6 +73,11 @@ namespace inicpp
 	}
 
 	section &config::operator[](const std::string &section_name)
+	{
+		throw not_implemented_exception();
+	}
+
+	bool config::validate(const schema &schm)
 	{
 		throw not_implemented_exception();
 	}

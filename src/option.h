@@ -7,9 +7,14 @@
 
 #include "exception.h"
 #include "types.h"
+#include "option_schema.h"
 
 namespace inicpp
 {
+	/** Forward declaration, stated because of ring dependencies */
+	class option_schema;
+
+
 	class option_holder
 	{
 	public:
@@ -143,6 +148,13 @@ namespace inicpp
 		 * @param position
 		 */
 		void remove_from_list(size_t position);
+
+		/**
+		 * @brief validate
+		 * @param opt_schema
+		 * @return
+		 */
+		bool validate(const option_schema &opt_schema);
 
 		/**
 		 * @brief operator <<

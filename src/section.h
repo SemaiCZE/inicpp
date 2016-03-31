@@ -7,9 +7,13 @@
 
 #include "exception.h"
 #include "option.h"
+#include "section_schema.h"
 
 namespace inicpp
 {
+	/** Forward declaration, stated because of ring dependencies */
+	class section_schema;
+	/** Forward declaration of iterator used in section class */
 	template<typename T> class section_iterator;
 	
 
@@ -62,11 +66,6 @@ namespace inicpp
 		void add_option(const option &opt);
 
 		/**
-		 * @brief get_options
-		 * @return
-		 */
-		const std::vector<option> &get_options() const;
-		/**
 		 * @brief operator []
 		 * @param index
 		 * @return
@@ -85,6 +84,13 @@ namespace inicpp
 		 * @return
 		 */
 		std::ostream &operator<<(std::ostream &os);
+
+		/**
+		 * @brief validate
+		 * @param sect_schema
+		 * @return
+		 */
+		bool validate(const section_schema &sect_schema);
 
 		/**
 		 * @brief begin

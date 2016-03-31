@@ -37,11 +37,6 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	const std::vector<option> &section::get_options() const
-	{
-		throw not_implemented_exception();
-	}
-
 	option &section::operator[](size_t index)
 	{
 		throw not_implemented_exception();
@@ -53,6 +48,11 @@ namespace inicpp
 	}
 
 	std::ostream &section::operator<<(std::ostream &os)
+	{
+		throw not_implemented_exception();
+	}
+
+	bool section::validate(const section_schema &sect_schema)
 	{
 		throw not_implemented_exception();
 	}

@@ -42,11 +42,6 @@ namespace inicpp
 	{
 		return is_list_;
 	}
-
-	bool option_schema::validate(const std::string &str) const
-	{
-		throw not_implemented_exception();
-	}
 	
 	bool option_schema::validate(const option &opt) const
 	{

@@ -47,6 +47,11 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
+	bool schema::validate(const config &cfg)
+	{
+		throw not_implemented_exception();
+	}
+
 	std::ostream &schema::operator<<(std::ostream &os)
 	{
 		throw not_implemented_exception();

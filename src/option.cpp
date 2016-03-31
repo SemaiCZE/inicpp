@@ -37,6 +37,16 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
+	void option::remove_from_list(size_t position)
+	{
+		throw not_implemented_exception();
+	}
+
+	bool option::validate(const option_schema &opt_schema)
+	{
+		throw not_implemented_exception();
+	}
+
 	std::ostream &option::operator<<(std::ostream &os)
 	{
 		throw not_implemented_exception();

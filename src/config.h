@@ -12,6 +12,9 @@
 
 namespace inicpp
 {
+	/** Forward declaration, stated because of ring dependencies */
+	class schema;
+	/** Forward declaration of iterator used in config class */
 	template<typename T> class config_iterator;
 
 
@@ -90,11 +93,6 @@ namespace inicpp
 		void add_option(const std::string &section_name, const std::string &option_name);
 
 		/**
-		 * @brief get_sections
-		 * @return
-		 */
-		const std::vector<section> &get_sections() const;
-		/**
 		 * @brief operator []
 		 * @param index
 		 * @return
@@ -106,6 +104,13 @@ namespace inicpp
 		 * @return
 		 */
 		section &operator[](const std::string &section_name);
+
+		/**
+		 * @brief
+		 * @param schm
+		 * @return
+		 */
+		bool validate(const schema &schm);
 
 		/**
 		 * @brief operator <<
@@ -212,7 +217,10 @@ namespace inicpp
 		 * @brief operator *
 		 * @return
 		 */
-		reference operator*() { return container_.sections_.at(position_); }
+		reference operator*()
+		{
+			return container_.sections_.at(position_);
+		}
 	};
 }
 

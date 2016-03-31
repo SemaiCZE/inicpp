@@ -42,6 +42,11 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
+	bool section_schema::validate(const section &sect)
+	{
+		throw not_implemented_exception();
+	}
+
 	std::ostream &section_schema::operator<<(std::ostream &os)
 	{
 		throw not_implemented_exception();
