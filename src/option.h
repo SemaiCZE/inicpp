@@ -51,7 +51,6 @@ namespace inicpp
 		std::string name_;
 		/** */
 		std::vector<std::unique_ptr<option_holder>> values_;
-		// TODO: access methods for private members
 
 	public:
 		/**
@@ -69,6 +68,12 @@ namespace inicpp
 		 * @param value
 		 */
 		option(const std::string &name, const std::string &value = "", option_type type = option_type::string_t);
+
+		/**
+		 * @brief
+		 * @return
+		 */
+		const std::string &get_name() const;
 
 		/**
 		 * @brief set

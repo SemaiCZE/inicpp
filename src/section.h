@@ -26,7 +26,7 @@ namespace inicpp
 		/** */
 		std::vector<option> options_;
 		/** */
-		bool name_;
+		std::string name_;
 
 		friend class section_iterator<option>;
 		friend class section_iterator<const option>;
@@ -50,6 +50,12 @@ namespace inicpp
 		 */
 		section(const std::string &name);
 		
+		/**
+		 * @brief
+		 * @return
+		 */
+		const std::string &get_name() const;
+
 		/**
 		 * @brief add_option
 		 * @param name

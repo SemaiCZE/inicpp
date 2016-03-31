@@ -47,6 +47,22 @@ namespace inicpp
 		section_schema(const std::string &name, bool mandatory = true);
 
 		/**
+		 * @brief
+		 * @return
+		 */
+		const std::string &get_name() const;
+		/**
+		 * @brief
+		 * @return
+		 */
+		const std::string &get_comment() const;
+		/**
+		 * @brief
+		 * @return
+		 */
+		bool is_mandatory() const;
+
+		/**
 		 * @brief add_option
 		 * @param option_name
 		 */

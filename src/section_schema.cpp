@@ -32,6 +32,21 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
+	const std::string &section_schema::get_name() const
+	{
+		return name_;
+	}
+
+	const std::string &section_schema::get_comment() const
+	{
+		return comment_;
+	}
+
+	bool section_schema::is_mandatory() const
+	{
+		return mandatory_;
+	}
+
 	void section_schema::add_option(const std::string &option_name)
 	{
 		throw not_implemented_exception();

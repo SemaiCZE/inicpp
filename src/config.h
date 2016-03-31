@@ -39,9 +39,9 @@ namespace inicpp
 		 */
 		config();
 		config(const config &src);
-		config& operator=(const config &source);
+		config &operator=(const config &source);
 		config(config &&src);
-		config& operator=(config &&source);
+		config &operator=(config &&source);
 
 		/**
 		 * @brief config

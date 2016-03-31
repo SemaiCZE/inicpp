@@ -31,6 +31,11 @@ namespace inicpp
 	{
 		throw not_implemented_exception();
 	}
+
+	const std::string &option::get_name() const
+	{
+		return name_;
+	}
 		
 	void remove_from_list(size_t position)
 	{

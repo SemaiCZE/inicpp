@@ -58,17 +58,35 @@ namespace inicpp
 			const std::string &default_value = "");
 
 		/**
-		 * @brief operator <<
-		 * @param os
+		 * @brief
 		 * @return
 		 */
-		std::ostream &operator<<(std::ostream &os);
-		
+		const std::string &get_name() const;
+		/**
+		 * @brief
+		 * @return
+		 */
+		option_type get_type() const;
 		/**
 		 * @brief is_list
 		 * @return
 		 */
 		bool is_list() const;
+		/**
+		 * @brief
+		 * @return
+		 */
+		const std::string &get_default_value() const;
+		/**
+		 * @brief
+		 * @return
+		 */
+		bool is_mandatory() const;
+		/**
+		 * @brief
+		 * @return
+		 */
+		const std::string &get_comment() const;
 
 		/**
 		 * @brief validate
@@ -76,6 +94,13 @@ namespace inicpp
 		 * @return
 		 */
 		bool validate(const option &opt) const;
+
+		/**
+		 * @brief operator <<
+		 * @param os
+		 * @return
+		 */
+		std::ostream &operator<<(std::ostream &os);
 	};
 }
 

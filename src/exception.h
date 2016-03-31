@@ -39,6 +39,30 @@ namespace inicpp
 	};
 
 
+	class bad_cast_exception : public exception
+	{
+	public:
+		/**
+		 * @brief exception
+		 * @param what
+		 */
+		bad_cast_exception(const std::string &what);
+		/**
+		 * @brief exception
+		 * @param from
+		 * @param to
+		*/
+		bad_cast_exception(const std::string &from, const std::string &to);
+	};
+
+
+	class not_found_exception : public exception
+	{
+	public:
+		not_found_exception(const std::string &element_name);
+	};
+
+
 	/**
 	 * @brief The not_implemented_exception class
 	 */
