@@ -11,19 +11,6 @@
 namespace inicpp
 {
 	/**
-	 * @brief The option_type enum
-	 */
-	enum class option_type { boolean_t, signed_t, unsigned_t, float_t, enum_t, string_t };
-	
-	typedef bool boolean_t;
-	typedef int64_t signed_t;
-	typedef uint64_t unsigned_t;
-	typedef double float_t;
-	typedef std::vector<std::string> enum_t;
-	typedef std::string string_t;
-
-
-	/**
 	 * @brief The option_schema class
 	 */
 	class option_schema

@@ -6,6 +6,7 @@
 #include <iostream>
 
 #include "exception.h"
+#include "types.h"
 
 namespace inicpp
 {
@@ -62,7 +63,7 @@ namespace inicpp
 		 * @param name
 		 * @param value
 		 */
-		option(const std::string &name, const std::string &value = "");
+		option(const std::string &name, const std::string &value = "", option_type type = option_type::string_t);
 
 		/**
 		 * @brief set

@@ -20,6 +20,7 @@ set(SOURCE_FILES
 	${SRC_DIR}/section.cpp
 	${SRC_DIR}/section_schema.h
 	${SRC_DIR}/section_schema.cpp
+	${SRC_DIR}/types.h
 )
 
 # Compile dynamic library

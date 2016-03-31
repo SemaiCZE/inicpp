@@ -27,7 +27,7 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	option::option(const std::string &name, const std::string &value)
+	option::option(const std::string &name, const std::string &value, option_type type)
 	{
 		throw not_implemented_exception();
 	}

@@ -12,11 +12,6 @@
 namespace inicpp
 {
 	/**
-	 * @brief The schema_mode enum
-	 */
-	enum class schema_mode { strict, relaxed };
-
-	/**
 	 * @brief The schema class
 	 */
 	class schema
