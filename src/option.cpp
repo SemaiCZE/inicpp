@@ -27,7 +27,12 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	option::option(const std::string &name, bool is_list, const std::string &value)
+	option::option(const std::string &name, const std::string &value)
+	{
+		throw not_implemented_exception();
+	}
+		
+	void remove_from_list(size_t position)
 	{
 		throw not_implemented_exception();
 	}
@@ -39,6 +44,6 @@ namespace inicpp
 
 	bool option::is_list() const
 	{
-		return is_list_;
+		return values_.size() > 1;
 	}
 }

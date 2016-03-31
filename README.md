@@ -19,7 +19,7 @@ Originally written by:
 
 ## Build instructions
 
-**Inicpp** is build as shared and static library using `cmake`. Also C++ compiler with at least C++11 support is required.
+**Inicpp** is build as shared and static library using `cmake`. Also C++ compiler with at least C++14 support is required.
 
 ### Linux
 

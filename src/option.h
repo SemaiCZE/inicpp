@@ -2,12 +2,39 @@
 #define INICPP_OPTION_H
 
 #include <vector>
+#include <memory>
 #include <iostream>
 
 #include "exception.h"
 
 namespace inicpp
 {
+	class option_holder
+	{
+	public:
+		virtual ~option_holder() {}
+	};
+
+
+	template<typename T>
+	class option_value : public option_holder
+	{
+	public:
+		option_value(T value) : value_(value) {}
+		virtual ~option_value() {}
+		T get()
+		{
+			return value_;
+		}
+		void set(T value)
+		{
+			value_ = value;
+		}
+	private:
+		T value_;
+	};
+
+	
 	/**
 	 * @brief The option class
 	 */
@@ -17,9 +44,7 @@ namespace inicpp
 		/** */
 		std::string name_;
 		/** */
-		bool is_list_;
-		/** */
-		std::string value_;
+		std::vector<std::unique_ptr<option_holder>> values_;
 		// TODO: access methods for private members
 
 	public:
@@ -35,10 +60,9 @@ namespace inicpp
 		/**
 		 * @brief option
 		 * @param name
-		 * @param is_list
 		 * @param value
 		 */
-		option(const std::string &name, bool is_list = false, const std::string &value = "");
+		option(const std::string &name, const std::string &value = "");
 
 		/**
 		 * @brief set
@@ -48,6 +72,7 @@ namespace inicpp
 		{
 			throw not_implemented_exception();
 		}
+
 		/**
 		 * @brief get
 		 * @return
@@ -65,6 +90,16 @@ namespace inicpp
 		{
 			throw not_implemented_exception();
 		}
+		
+		/**
+		 * @brief set_list
+		 * @param value
+		 */
+		template<typename ValueType> void set_list(std::vector<ValueType> &&value)
+		{
+			throw not_implemented_exception();
+		}
+		
 		/**
 		 * @brief get_list
 		 * @return
@@ -82,6 +117,31 @@ namespace inicpp
 		{
 			throw not_implemented_exception();
 		}
+
+		/**
+		 * @brief add_to_list
+		 * @param value
+		 * @param position
+		 */
+		template<typename ValueType> void add_to_list(ValueType value, size_t position)
+		{
+			throw not_implemented_exception();
+		}
+
+		/**
+		 * @brief remove_from_list
+		 * @param value
+		 */
+		template<typename ValueType> void remove_from_list(ValueType value)
+		{
+			throw not_implemented_exception();
+		}
+
+		/**
+		 * @brief remove_from_list
+		 * @param position
+		 */
+		void remove_from_list(size_t position);
 
 		/**
 		 * @brief operator <<
