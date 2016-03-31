@@ -33,7 +33,6 @@ namespace inicpp
 		/** */
 		std::string comment_;
 		// TODO: restriction function reference
-		// TODO: access methods for private members
 
 	public:
 		/**

@@ -64,14 +64,16 @@ namespace inicpp
 
 		/**
 		 * @brief add_option
-		 * @param option_name
-		 */
-		void add_option(const std::string &option_name);
-		/**
-		 * @brief add_option
 		 * @param opt
 		 */
 		void add_option(const option_schema &opt);
+		/**
+		 * @brief add_option
+		 * @param option_name
+		 */
+		void add_option(const std::string &option_name, bool mandatory = true,
+			option_type type = option_type::string_t, bool is_list = false,
+			const std::string &default_value = "");
 
 		/**
 		 * @brief

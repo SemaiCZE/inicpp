@@ -42,8 +42,9 @@ namespace inicpp
 		/**
 		 * @brief add_section
 		 * @param section_name
+		 * @param mandatory
 		 */
-		void add_section(const std::string &section_name);
+		void add_section(const std::string &section_name, bool mandatory = true);
 
 		/**
 		 * @brief add_option
@@ -56,7 +57,9 @@ namespace inicpp
 		 * @param section_name
 		 * @param option_name
 		 */
-		void add_option(const std::string &section_name, const std::string &option_name);
+		void add_option(const std::string &section_name, const std::string &option_name,
+			bool mandatory = true, option_type type = option_type::string_t,
+			bool is_list = false, const std::string &default_value = "");
 
 		/**
 		 * @brief

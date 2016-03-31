@@ -46,13 +46,15 @@ namespace inicpp
 	{
 		return mandatory_;
 	}
-
-	void section_schema::add_option(const std::string &option_name)
+	
+	void section_schema::add_option(const option_schema &opt)
 	{
 		throw not_implemented_exception();
 	}
-	
-	void section_schema::add_option(const option_schema &opt)
+
+	void section_schema::add_option(const std::string &option_name,
+		bool mandatory, option_type type, bool is_list,
+		const std::string &default_value)
 	{
 		throw not_implemented_exception();
 	}
