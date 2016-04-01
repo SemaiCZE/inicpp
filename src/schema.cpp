@@ -49,7 +49,7 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	bool schema::validate(const config &cfg)
+	bool schema::validate(const config &cfg, schema_mode mode)
 	{
 		throw not_implemented_exception();
 	}

@@ -53,7 +53,7 @@ namespace inicpp
 		 * @param default_value
 		 */
 		option_schema(const std::string &name, bool mandatory = true,
-			option_type type = option_type::string_t, bool is_list = false,
+			option_type type = option_type::string_e, bool is_list = false,
 			const std::string &default_value = "");
 
 		/**
@@ -92,7 +92,7 @@ namespace inicpp
 		 * @param opt
 		 * @return
 		 */
-		bool validate(const option &opt) const;
+		bool validate(const option &opt, schema_mode mode);
 
 		/**
 		 * @brief operator <<

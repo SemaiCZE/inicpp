@@ -6,7 +6,7 @@ namespace inicpp
 	/**
 	 * @brief The option_type enum
 	 */
-	enum class option_type { boolean_t, signed_t, unsigned_t, float_t, enum_t, string_t };
+	enum class option_type : char { boolean_e, signed_e, unsigned_e, float_e, enum_e, string_e };
 	
 	typedef bool boolean_t;
 	typedef int64_t signed_t;
@@ -18,7 +18,7 @@ namespace inicpp
 	/**
 	 * @brief The schema_mode enum
 	 */
-	enum class schema_mode { strict, relaxed };
+	enum class schema_mode : bool { strict, relaxed };
 }
 
 #endif // INICPP_TYPES_H

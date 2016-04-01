@@ -54,7 +54,7 @@ namespace inicpp
 		 * @param schm
 		 * @param md
 		 */
-		config(const std::string &str, const schema &schm, const schema_mode &md);
+		config(const std::string &str, const schema &schm, schema_mode mode);
 		/**
 		 * @brief config
 		 * @param str
@@ -66,7 +66,7 @@ namespace inicpp
 		 * @param schm
 		 * @param md
 		 */
-		config(std::istream &str, const schema &schm, const schema_mode &md);
+		config(std::istream &str, const schema &schm, schema_mode mode);
 
 		/**
 		 * @brief add_section
@@ -110,7 +110,7 @@ namespace inicpp
 		 * @param schm
 		 * @return
 		 */
-		bool validate(const schema &schm);
+		bool validate(const schema &schm, schema_mode mode);
 
 		/**
 		 * @brief operator <<

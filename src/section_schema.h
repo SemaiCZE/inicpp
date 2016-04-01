@@ -72,7 +72,7 @@ namespace inicpp
 		 * @param option_name
 		 */
 		void add_option(const std::string &option_name, bool mandatory = true,
-			option_type type = option_type::string_t, bool is_list = false,
+			option_type type = option_type::string_e, bool is_list = false,
 			const std::string &default_value = "");
 
 		/**
@@ -80,7 +80,7 @@ namespace inicpp
 		 * @param schm
 		 * @return
 		 */
-		bool validate(const section &sect);
+		bool validate(const section &sect, schema_mode mode);
 
 		/**
 		 * @brief operator <<

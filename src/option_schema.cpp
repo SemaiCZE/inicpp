@@ -68,7 +68,7 @@ namespace inicpp
 		return comment_;
 	}
 	
-	bool option_schema::validate(const option &opt) const
+	bool option_schema::validate(const option &opt, schema_mode mode)
 	{
 		throw not_implemented_exception();
 	}

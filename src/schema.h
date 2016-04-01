@@ -58,7 +58,7 @@ namespace inicpp
 		 * @param option_name
 		 */
 		void add_option(const std::string &section_name, const std::string &option_name,
-			bool mandatory = true, option_type type = option_type::string_t,
+			bool mandatory = true, option_type type = option_type::string_e,
 			bool is_list = false, const std::string &default_value = "");
 
 		/**
@@ -66,7 +66,7 @@ namespace inicpp
 		 * @param cfg
 		 * @return
 		 */
-		bool validate(const config &cfg);
+		bool validate(const config &cfg, schema_mode mode);
 
 		/**
 		 * @brief operator <<

@@ -37,7 +37,7 @@ namespace inicpp
 		 * @param md
 		 * @return
 		 */
-		static config load(const std::string &str, const schema &schm, const schema_mode &md);
+		static config load(const std::string &str, const schema &schm, schema_mode mode);
 		/**
 		 * @brief load
 		 * @param str
@@ -51,7 +51,7 @@ namespace inicpp
 		 * @param md
 		 * @return
 		 */
-		static config load(std::istream str, const schema &schm, const schema_mode &md);
+		static config load(std::istream str, const schema &schm, schema_mode mode);
 
 		/**
 		 * @brief load_file
@@ -66,7 +66,7 @@ namespace inicpp
 		 * @param md
 		 * @return
 		 */
-		static config load_file(const std::string &file, const schema &schm, const schema_mode &md);
+		static config load_file(const std::string &file, const schema &schm, schema_mode mode);
 
 		/**
 		 * @brief save

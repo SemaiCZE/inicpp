@@ -63,6 +63,13 @@ namespace inicpp
 	};
 
 
+	class invalid_config_exception : public exception
+	{
+	public:
+		invalid_config_exception(const std::string &message);
+	};
+
+
 	/**
 	 * @brief The not_implemented_exception class
 	 */

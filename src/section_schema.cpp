@@ -59,7 +59,7 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	bool section_schema::validate(const section &sect)
+	bool section_schema::validate(const section &sect, schema_mode mode)
 	{
 		throw not_implemented_exception();
 	}

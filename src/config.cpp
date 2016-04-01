@@ -32,7 +32,7 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	config::config(const std::string &str, const schema &schm, const schema_mode &md)
+	config::config(const std::string &str, const schema &schm, schema_mode mode)
 	{
 		throw not_implemented_exception();
 	}
@@ -42,7 +42,7 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	config::config(std::istream &str, const schema &schm, const schema_mode &md)
+	config::config(std::istream &str, const schema &schm, schema_mode mode)
 	{
 		throw not_implemented_exception();
 	}
@@ -77,7 +77,7 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	bool config::validate(const schema &schm)
+	bool config::validate(const schema &schm, schema_mode mode)
 	{
 		throw not_implemented_exception();
 	}

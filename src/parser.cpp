@@ -7,7 +7,7 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	config parser::load(const std::string &str, const schema &schm, const schema_mode &md)
+	config parser::load(const std::string &str, const schema &schm, schema_mode mode)
 	{
 		throw not_implemented_exception();
 	}
@@ -17,7 +17,7 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	config parser::load(std::istream str, const schema &schm, const schema_mode &md)
+	config parser::load(std::istream str, const schema &schm, schema_mode mode)
 	{
 		throw not_implemented_exception();
 	}
@@ -27,7 +27,7 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	config parser::load_file(const std::string &file, const schema &schm, const schema_mode &md)
+	config parser::load_file(const std::string &file, const schema &schm, schema_mode mode)
 	{
 		throw not_implemented_exception();
 	}
