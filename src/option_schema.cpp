@@ -27,8 +27,7 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	option_schema::option_schema(const std::string &name, bool mandatory,
-		option_type type, bool is_list, const std::string &default_value)
+	option_schema::option_schema(const option_schema_params &arguments)
 	{
 		throw not_implemented_exception();
 	}

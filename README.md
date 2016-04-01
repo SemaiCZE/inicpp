@@ -77,12 +77,22 @@ try {
 } catch (bad_cast_exception) {
 	// item cannot be casted to signed_t type
 }
-// Get a string always wotk
-string_t port_str = config["github"]["port"].get<string_t>();
+// Make reference to the section
+section &github_sect = config["github"];
+// Get a string always work
+string_t port_str = github_sect["port"].get<string_t>();
 
 // Change some values
-config["github"]["port"].set<signed_t>(42222);
-config["github"]["address"].set<string_t>("www.github.com");
+github_sect["port"].set<signed_t>(42222);
+github_sect["address"].set<string_t>("www.github.com");
+
+// Change sigle value to list by inserting an item
+option &addr_opt = github_sect["address"];
+addr_opt.add_to_list<string_t>("https://github.io");
+assert(addr_opt.is_list()); // now it's a list
+// Remove item from the list (specifying position)
+addr_opt.remove_from_list(0); // remove first item
+assert(!addr_opt.is_list());
 
 // Save changes
 std::ofstream ofs("conf_new.ini");
@@ -106,9 +116,10 @@ conf_schm.add_section("github"); // default is mandatory
 // Add option named "port" into "github" section. The option is mandatory\
 // and it's type is unsigned. Default value makes no sense for mandatory
 // options.
-conf_schm.add_option("github", "port", true, option_type::unsigned_e);
+conf_schm.add_option("github", {"port", true, option_type::unsigned_e});
 // Mandatory string option "address" with default value "www.github.com" (one value, not list)
-conf_schm.add_option("github", "address", false, option_type::string_e, false, "www.github.com");
+option_schema_params args = {"address", false, option_type::string_e, false, "www.github.com"};
+conf_schm.add_option("github", args);
 
 // Alternatively, create the classes first and add them to schema
 option_schema autoconnect_option("autoconnect", false, option_type::boolean_e, false, "off");
@@ -129,4 +140,7 @@ if(example_conf.validate(conf_schm, schema_mode::relaxed)) {
 	// now the config is valid and all values are internaly
 	// stored as their correct type
 }
+
+// Default configuration (schema) can be written to a file using output stream or parser save method
+parser::save(conf_schm, "default_conf.ini");
 ```

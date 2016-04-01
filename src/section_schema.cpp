@@ -52,9 +52,7 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	void section_schema::add_option(const std::string &option_name,
-		bool mandatory, option_type type, bool is_list,
-		const std::string &default_value)
+	void section_schema::add_option(const option_schema_params &arguments)
 	{
 		throw not_implemented_exception();
 	}

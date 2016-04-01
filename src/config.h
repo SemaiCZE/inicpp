@@ -90,7 +90,8 @@ namespace inicpp
 		 * @param section_name
 		 * @param option_name
 		 */
-		void add_option(const std::string &section_name, const std::string &option_name);
+		template<typename ValueType>
+		void add_option(const std::string &section_name, const std::string &option_name, const ValueType &value);
 
 		/**
 		 * @brief operator []

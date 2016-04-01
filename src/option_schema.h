@@ -10,6 +10,22 @@
 
 namespace inicpp
 {
+	/** */
+	struct option_schema_params
+	{
+		/** */
+		std::string name;
+		/** */
+		bool mandatory = true;
+		/** */
+		option_type type = option_type::string_e;
+		/** */
+		bool is_list = false;
+		/** */
+		std::string default_value = "";
+	};
+
+	
 	/** Forward declaration, stated because of ring dependencies */
 	class option;
 
@@ -52,9 +68,7 @@ namespace inicpp
 		 * @param is_list
 		 * @param default_value
 		 */
-		option_schema(const std::string &name, bool mandatory = true,
-			option_type type = option_type::string_e, bool is_list = false,
-			const std::string &default_value = "");
+		option_schema(const option_schema_params &arguments);
 
 		/**
 		 * @brief

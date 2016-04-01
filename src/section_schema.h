@@ -71,9 +71,7 @@ namespace inicpp
 		 * @brief add_option
 		 * @param option_name
 		 */
-		void add_option(const std::string &option_name, bool mandatory = true,
-			option_type type = option_type::string_e, bool is_list = false,
-			const std::string &default_value = "");
+		void add_option(const option_schema_params &arguments);
 
 		/**
 		 * @brief

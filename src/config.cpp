@@ -62,7 +62,8 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	void config::add_option(const std::string &section_name, const std::string &option_name)
+	template<typename ValueType>
+	void config::add_option(const std::string &section_name, const std::string &option_name, const ValueType &value)
 	{
 		throw not_implemented_exception();
 	}
