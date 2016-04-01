@@ -47,7 +47,7 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	void config::add_section(section sect)
+	void config::add_section(const section &sect)
 	{
 		throw not_implemented_exception();
 	}
@@ -57,7 +57,12 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	void config::add_option(const std::string &section_name, option opt)
+	void config::remove_section(const std::string &section_name)
+	{
+		throw not_implemented_exception();
+	}
+
+	void config::add_option(const std::string &section_name, const option &opt)
 	{
 		throw not_implemented_exception();
 	}
@@ -68,6 +73,16 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 	
+	void config::remove_option(const std::string &section_name, const std::string &option_name)
+	{
+		throw not_implemented_exception();
+	}
+
+	size_t config::size()
+	{
+		throw not_implemented_exception();
+	}
+
 	section &config::operator[](size_t index)
 	{
 		throw not_implemented_exception();

@@ -32,7 +32,7 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	void schema::add_section(const std::string &section_name, bool mandatory)
+	void schema::add_section(const section_schema_params &arguments)
 	{
 		throw not_implemented_exception();
 	}
@@ -42,7 +42,7 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	void schema::add_option(const option_schema_params &arguments)
+	void schema::add_option(const std::string &section_name, option_schema_params &arguments)
 	{
 		throw not_implemented_exception();
 	}

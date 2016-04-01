@@ -19,12 +19,14 @@ namespace inicpp
 
 
 	/**
-	 * @brief The config class
+	 * Represents the base object of ini configuration.
+	 * Contains list of sections in logical map structure.
+	 * Can be constructed directly from string or stream.
 	 */
 	class config
 	{
 	private:
-		/** */
+		/** List of sections in this config instance */
 		std::vector<section> sections_;
 
 		friend class config_iterator<section>;
@@ -35,116 +37,155 @@ namespace inicpp
 		typedef config_iterator<const section> const_iterator;
 
 		/**
-		 * @brief config
+		 * Default constructor.
 		 */
 		config();
+		/**
+		 * Copy constructor.
+		 */
 		config(const config &src);
+		/**
+		 * Copy assignment.
+		 */
 		config &operator=(const config &source);
+		/**
+		 * Move constructor.
+		 */
 		config(config &&src);
+		/**
+		 * Move assignment.
+		 */
 		config &operator=(config &&source);
 
 		/**
-		 * @brief config
-		 * @param str
+		 * Construct ini config from given string.
+		 * @param str input string
 		 */
 		config(const std::string &str);
 		/**
-		 * @brief config
-		 * @param str
-		 * @param schm
-		 * @param md
+		 * Construct config from given string and validate it against schema.
+		 * @param str input string
+		 * @param schm validation schema
+		 * @param md validation mode
 		 */
 		config(const std::string &str, const schema &schm, schema_mode mode);
 		/**
-		 * @brief config
-		 * @param str
+		 * Construct ini config from given stream.
+		 * @param str input stream
 		 */
 		config(std::istream &str);
 		/**
-		 * @brief config
-		 * @param str
-		 * @param schm
-		 * @param md
+		 * Construct config from stream and validate it against schema.
+		 * @param str input stream
+		 * @param schm validation schema
+		 * @param md validation mode
 		 */
 		config(std::istream &str, const schema &schm, schema_mode mode);
 
 		/**
-		 * @brief add_section
-		 * @param sect
+		 * Add section to this ini configuration.
+		 * @param sect section which will be added
 		 */
-		void add_section(section sect);
+		void add_section(const section &sect);
 		/**
-		 * @brief add_section
-		 * @param section_name
+		 * Create and add section with specified name.
+		 * @param section_name section with same name cannot exist in config
 		 */
 		void add_section(const std::string &section_name);
+		/**
+		 * Remove section from internal sections list.
+		 * @param section_name name should exist in section list
+		 * @throws not_found_exception if section with given name does not exist
+		 */
+		void remove_section(const std::string &section_name);
 
 		/**
-		 * @brief add_option
-		 * @param section_name
-		 * @param opt
+		 * Add given option to specified section.
+		 * @param section_name should exist
+		 * @param opt option which will be added to appropriate section
+		 * @throws not_found_exception if section with given name does not exist
 		 */
-		void add_option(const std::string &section_name, option opt);
+		void add_option(const std::string &section_name, const option &opt);
 		/**
-		 * @brief add_option
-		 * @param section_name
-		 * @param option_name
+		 * Creates and add option to specified section.
+		 * @param section_name should exist in this config
+		 * @param option_name name of newly created option
+		 * @param value value which will be stored in new option
+		 * @throws not_found_exception if section with given name does not exist
 		 */
 		template<typename ValueType>
-		void add_option(const std::string &section_name, const std::string &option_name, const ValueType &value);
+		void add_option(const std::string &section_name,
+			const std::string &option_name, const ValueType &value);
+		/**
+		 * Removes option with given name from given section.
+		 * @param section_name index to section list
+		 * @param option_name option with this name will be removed
+		 * @throws not_found_exception if section or option
+		 * with given name does not exist
+		 */
+		void remove_option(const std::string &section_name,
+			const std::string &option_name);
 
 		/**
-		 * @brief operator []
+		 * Returns size of sections list
+		 * @return unsigned integer
+		 */
+		size_t size();
+		/**
+		 * Access section on specified index.
 		 * @param index
-		 * @return
+		 * @return modifiable reference to stored section
 		 */
 		section &operator[](size_t index);
 		/**
-		 * @brief operator []
-		 * @param section_name
-		 * @return
+		 * Access section with specified name.
+		 * @param index
+		 * @return modifiable reference to stored section
 		 */
 		section &operator[](const std::string &section_name);
 
 		/**
-		 * @brief
-		 * @param schm
-		 * @return
+		 * Validates this config agains given schema.
+		 * @param schm specifies how this config should look like
+		 * @param mode validation mode
+		 * @return true if this config comply given schema
 		 */
 		bool validate(const schema &schm, schema_mode mode);
 
 		/**
-		 * @brief operator <<
-		 * @param os
-		 * @return
+		 * Classic stream operator for printing this instance to output stream.
+		 * @param os output stream
+		 * @return reference to output stream which allows chaining
 		 */
 		std::ostream &operator<<(std::ostream &os);
 
 		/**
-		 * @brief begin
-		 * @return
+		 * Iterator pointing at the beginning of sections list.
+		 * @return config_iterator
 		 */
 		iterator begin();
 		/**
-		 * @brief end
-		 * @return
+		 * Iterator pointing at the end of sections list.
+		 * @return config_iterator
 		 */
 		iterator end();
 		/**
-		 * @brief cbegin
-		 * @return
+		 * Constant iterator pointing at the beginning of sections list.
+		 * @return config_iterator
 		 */
 		const_iterator cbegin() const;
 		/**
-		 * @brief cend
-		 * @return
+		 * Constant iterator pointing at the end of sections list.
+		 * @return config_iterator
 		 */
 		const_iterator cend() const;
 	};
 
 
 	/**
-	 *
+	 * Templated config iterator.
+	 * Templates provide const and non-const iterator in one implementation.
+	 * For easier implementation inheritance from std::iterator is used.
 	 */
 	template<typename Element>
 	class config_iterator : public std::iterator<std::random_access_iterator_tag, Element>
@@ -152,32 +193,49 @@ namespace inicpp
 	private:
 		using typename std::iterator<std::random_access_iterator_tag, Element>::reference;
 
-		/** */
+		/** Reference to container which can be iterated */
 		config &container_;
-		/** */
+		/** Position in iterable container */
 		size_t position_;
 	public:
+		/**
+		 * Deleted default constructor.
+		 */
 		config_iterator() = delete;
+		/**
+		 * Copy constructor.
+		 */
 		config_iterator(const config_iterator &src) = default;
+		/**
+		 * Copy assignment.
+		 */
 		config_iterator& operator=(const config_iterator &source) = default;
+		/**
+		 * Move constructor.
+		 */
 		config_iterator(config_iterator &&src) = default;
+		/**
+		 * Move assignment.
+		 */
 		config_iterator& operator=(config_iterator &&source) = default;
 
 		/**
-		 * @brief config_iterator
-		 * @param source
-		 * @param position
+		 * Construct iterator on given container
+		 * and pointing at specified postion.
+		 * @param source container which can be iterated
+		 * @param position initial position to given container
 		 */
-		config_iterator(config &source, size_t position) : container_(), position_(position) {}
+		config_iterator(config &source, size_t position)
+			: container_(), position_(position) {}
 		/**
-		 * @brief config_iterator
-		 * @param source
+		 * Construct iterator on given container pointing at the start.
+		 * @param source container which can be iterated
 		 */
 		config_iterator(config &source) : config_iterator(source, 0) {}
 
 		/**
-		 * @brief operator ++
-		 * @return
+		 * Moves iterator to next position.
+		 * @return iterator itself
 		 */
 		config_iterator &operator++()
 		{
@@ -185,8 +243,8 @@ namespace inicpp
 			return *this;
 		}
 		/**
-		 * @brief operator ++
-		 * @return
+		 * Moves iterator to next position.
+		 * @return new iterator with old position
 		 */
 		config_iterator operator++(int)
 		{
@@ -196,18 +254,18 @@ namespace inicpp
 		}
 
 		/**
-		 * @brief operator ==
+		 * Equality compare method for iterators.
 		 * @param second
-		 * @return
+		 * @return true if iterators are the same
 		 */
 		bool operator==(const config_iterator &second)
 		{
 			return this == &second && position_ == second.position_;
 		}
 		/**
-		 * @brief operator !=
+		 * Non-equality compare method for iterators.
 		 * @param second
-		 * @return
+		 * @return true if iterators are different
 		 */
 		bool operator!=(const config_iterator &second)
 		{
@@ -215,8 +273,8 @@ namespace inicpp
 		}
 
 		/**
-		 * @brief operator *
-		 * @return
+		 * Iterator dereference operator.
+		 * @return reference to section on current position
 		 */
 		reference operator*()
 		{

@@ -10,88 +10,106 @@
 namespace inicpp
 {
 	/**
-	 * @brief The parser class
+	 * Parser is not constructable class which contains methods
+	 * which can be used to load or store ini configuration.
 	 */
 	class parser
 	{
 	public:
 		/**
-		 * @brief parser
+		 * Deleted default constructor.
 		 */
 		parser() = delete;
+		/**
+		 * Deleted copy constructor.
+		 */
 		parser(const parser &source) = delete;
-		parser& operator=(const parser &source) = delete;
+		/**
+		 * Deleted copy assignment.
+		 */
+		parser &operator=(const parser &source) = delete;
+		/**
+		 * Deleted move constructor.
+		 */
 		parser(parser &&source) = delete;
-		parser& operator=(parser &&source) = delete;
+		/**
+		 * Deleted move assignment.
+		 */
+		parser &operator=(parser &&source) = delete;
 
 		/**
-		 * @brief load
-		 * @param str
-		 * @return
+		 * Load ini configuration from given string and return it.
+		 * @param str ini configuration description
+		 * @return newly created config class
 		 */
 		static config load(const std::string &str);
 		/**
-		 * @brief load
-		 * @param str
-		 * @param schm
-		 * @param md
-		 * @return
+		 * Load ini configuration from given string
+		 * and validate it through schema.
+		 * @param str ini configuration description
+		 * @param schm validation schema
+		 * @param md validation mode
+		 * @return constructed config class which comply given schema
 		 */
-		static config load(const std::string &str, const schema &schm, schema_mode mode);
+		static config load(const std::string &str, const schema &schm,
+			schema_mode mode);
 		/**
-		 * @brief load
-		 * @param str
-		 * @return
+		 * Load ini configuration from given stream and return it.
+		 * @param str ini configuration description
+		 * @return newly created config class
 		 */
 		static config load(std::istream str);
 		/**
-		 * @brief load
-		 * @param str
-		 * @param schm
-		 * @param md
-		 * @return
+		 * Load ini configuration from given stream
+		 * and validate it through schema.
+		 * @param str ini configuration description
+		 * @param schm validation schema
+		 * @param md validation mode
+		 * @return constructed config class which comply given schema
 		 */
-		static config load(std::istream str, const schema &schm, schema_mode mode);
+		static config load(std::istream str, const schema &schm,
+			schema_mode mode);
 
 		/**
-		 * @brief load_file
-		 * @param file
-		 * @return
+		 * Load ini configuration from file with specified name.
+		 * @param file name of file which contains ini configuration
+		 * @return new instance of config class
 		 */
 		static config load_file(const std::string &file);
 		/**
-		 * @brief load_file
-		 * @param file
-		 * @param schm
-		 * @param md
-		 * @return
+		 * Load ini configuration from file with specified name
+		 * and validate it against given schema.
+		 * @param file name of file with ini configuration
+		 * @param schm validation schema
+		 * @param md validation mode
+		 * @return new instance of config class
 		 */
 		static config load_file(const std::string &file, const schema &schm, schema_mode mode);
 
 		/**
-		 * @brief save
-		 * @param cfg
-		 * @param file
+		 * Save given configuration to file.
+		 * @param cfg configuration which will be saved
+		 * @param file name of output file
 		 */
 		static void save(const config &cfg, const std::string &file);
 		/**
-		 * @brief save
-		 * @param cfg
-		 * @param str
+		 * Save configuration to output stream.
+		 * @param cfg configuration which will be saved
+		 * @param str output stream
 		 */
 		static void save(const config &cfg, std::ostream str);
 		/**
-		 * @brief save
-		 * @param schm
-		 * @param file
+		 * Save validation schema to file.
+		 * @param schm schema which will be saved
+		 * @param file name of output file
 		 */
 		static void save(const schema &schm, const std::string &file);
 		/**
-		 * @brief save
-		 * @param schm
-		 * @param file
+		 * Save given validation schema to output stream.
+		 * @param schm schema which will be saved
+		 * @param str output stream
 		 */
-		static void save(const schema &schm, std::ostream file);
+		static void save(const schema &schm, std::ostream str);
 	};
 }
 

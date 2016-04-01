@@ -23,6 +23,8 @@ namespace inicpp
 		bool is_list = false;
 		/** */
 		std::string default_value = "";
+		/** */
+		std::string comment;
 	};
 
 	
@@ -48,7 +50,6 @@ namespace inicpp
 		bool mandatory_;
 		/** */
 		std::string comment_;
-		// TODO: restriction function reference
 
 	public:
 		/**
@@ -109,9 +110,9 @@ namespace inicpp
 		bool validate(const option &opt, schema_mode mode);
 
 		/**
-		 * @brief operator <<
-		 * @param os
-		 * @return
+		 * Classic stream operator for printing this instance to output stream.
+		 * @param os output stream
+		 * @return reference to output stream which allows chaining
 		 */
 		std::ostream &operator<<(std::ostream &os);
 	};

@@ -18,14 +18,15 @@ namespace inicpp
 	
 
 	/**
-	 * @brief The section class
+	 * Represents section from ini format. Can contain multiple options.
+	 * Always should be in config container class.
 	 */
 	class section
 	{
 	private:
-		/** */
+		/** List of options in this instance */
 		std::vector<option> options_;
-		/** */
+		/** Name of this section */
 		std::string name_;
 
 		friend class section_iterator<option>;
@@ -36,129 +37,170 @@ namespace inicpp
 		typedef section_iterator<const option> const_iterator;
 
 		/**
-		 * @brief section
+		 * Default constructor is deleted.
 		 */
-		section();
+		section() = delete;
+		/**
+		 * Copy constructor.
+		 */
 		section(const section &source);
+		/**
+		 * Copy assignment.
+		 */
 		section& operator=(const section &source);
+		/**
+		 * Move constructor.
+		 */
 		section(section &&source);
+		/**
+		 * Move assignment.
+		 */
 		section& operator=(section &&source);
 
 		/**
-		 * @brief section
-		 * @param name
+		 * Construct instance of section class with given name.
+		 * @param name name of newly created section class
 		 */
 		section(const std::string &name);
 		
 		/**
-		 * @brief
-		 * @return
+		 * Getter for name of this section.
+		 * @return name
 		 */
 		const std::string &get_name() const;
 
 		/**
-		 * @brief add_option
-		 * @param name
-		 * @param value
+		 * Creates and add option to this section.
+		 * @param name name of newly created option class
+		 * @param value value which will be stored in option
 		 */
-		template<typename ValueType> void add_option(const std::string &name, const ValueType &value)
+		template<typename ValueType> void add_option(
+			const std::string &option_name, const ValueType &value)
 		{
 			throw not_implemented_exception();
 		}
 		/**
-		 * @brief add_option
-		 * @param opt
+		 * Add given option instance to options container.
+		 * @param opt particular instance of option class
 		 */
 		void add_option(const option &opt);
+		/**
+		 * From list of options remove the one with specified name
+		 * @param option_name name of option which will be removed
+		 * @throws not_found_exception if option with specified was not found
+		 */
+		void remove_option(const std::string &option_name);
 
 		/**
-		 * @brief operator []
+		 * Returns size of options list
+		 * @return unsigned integer
+		 */
+		size_t size();
+		/**
+		 * Access option on specified index.
 		 * @param index
-		 * @return
+		 * @return modifiable reference to stored option
 		 */
 		option &operator[](size_t index);
 		/**
-		 * @brief operator []
+		 * Access option with specified name
 		 * @param option_name
-		 * @return
+		 * @return modifiable reference to stored option
 		 */
 		option &operator[](const std::string &option_name);
 
 		/**
-		 * @brief operator <<
-		 * @param os
-		 * @return
-		 */
-		std::ostream &operator<<(std::ostream &os);
-
-		/**
-		 * @brief validate
-		 * @param sect_schema
-		 * @return
+		 * Validates this section agains given section_schema.
+		 * @param sect_schema rules how this section should look like
+		 * @return true if this section comply given section_schema
 		 */
 		bool validate(const section_schema &sect_schema);
 
 		/**
-		 * @brief begin
-		 * @return
+		 * Classic stream operator for printing this instance to output stream.
+		 * @param os output stream
+		 * @return reference to output stream which allows chaining
+		 */
+		std::ostream &operator<<(std::ostream &os);
+
+		/**
+		 * Iterator pointing at the beginning of options list.
+		 * @return section_iterator
 		 */
 		iterator begin();
 		/**
-		 * @brief end
-		 * @return
+		 * Iterator pointing at the end of options list.
+		 * @return section_iterator
 		 */
 		iterator end();
 		/**
-		 * @brief cbegin
-		 * @return
+		 * Constant iterator pointing at the beginning of options list.
+		 * @return section_iterator
 		 */
 		const_iterator cbegin() const;
 		/**
-		 * @brief cend
-		 * @return
+		 * Constant iterator pointing at the end of options list.
+		 * @return section_iterator
 		 */
 		const_iterator cend() const;
 	};
 	
 
 	/**
-	 *
+	 * Templated section iterator.
+	 * Templates provide const and non-const iterator in one implementation.
+	 * For easier implementation inheritance from std::iterator is used.
 	 */
 	template<typename Element>
-	class section_iterator : public std::iterator<std::random_access_iterator_tag, Element>
+	class section_iterator
+		: public std::iterator<std::random_access_iterator_tag, Element>
 	{
 	private:
 		using typename std::iterator<std::random_access_iterator_tag, Element>::reference;
 		
-		/** */
+		/** Reference to container which can be iterated */
 		section &container_;
-		/** */
+		/** Position in iterable container */
 		size_t position_;
 	public:
 		/**
-		 * @brief section_iterator
+		 * Deleted default constructor.
 		 */
 		section_iterator() = delete;
+		/**
+		 * Copy constructor.
+		 */
 		section_iterator(const section_iterator &source) = default;
+		/**
+		 * Copy assignment.
+		 */
 		section_iterator& operator=(const section_iterator &source) = default;
+		/**
+		 * Move constructor.
+		 */
 		section_iterator(section_iterator &&source) = default;
+		/**
+		 * Move assignment.
+		 */
 		section_iterator& operator=(section_iterator &&source) = default;
 
 		/**
-		 * @brief section_iterator
-		 * @param source
-		 * @param position
+		 * Construct iterator on given container
+		 * and pointing at specified postion.
+		 * @param source container which can be iterated
+		 * @param position initial position to given container
 		 */
-		section_iterator(section &source, size_t position) : container_(source), position_(position) {}
+		section_iterator(section &source, size_t position)
+			: container_(source), position_(position) {}
 		/**
-		 * @brief section_iterator
-		 * @param source
+		 * Construct iterator on given container pointing at the start.
+		 * @param source container which can be iterated
 		 */
 		section_iterator(section &source) : section_iterator(source, 0) {}
 
 		/**
-		 * @brief operator ++
-		 * @return
+		 * Moves iterator to next position.
+		 * @return iterator itself
 		 */
 		section_iterator &operator++()
 		{
@@ -166,8 +208,8 @@ namespace inicpp
 			return *this;
 		}
 		/**
-		 * @brief operator ++
-		 * @return
+		 * Moves iterator to next position.
+		 * @return new iterator with old position
 		 */
 		section_iterator operator++(int)
 		{
@@ -177,18 +219,18 @@ namespace inicpp
 		}
 
 		/**
-		 * @brief operator ==
+		 * Equality compare method for iterators.
 		 * @param second
-		 * @return
+		 * @return true if iterators are the same
 		 */
 		bool operator==(const section_iterator &second)
 		{
 			return this == &second && position_ == second.position_;
 		}
 		/**
-		 * @brief operator !=
+		 * Non-equality compare method for iterators.
 		 * @param second
-		 * @return
+		 * @return true if iterators are different
 		 */
 		bool operator!=(const section_iterator &second)
 		{
@@ -196,8 +238,8 @@ namespace inicpp
 		}
 
 		/**
-		 * @brief operator *
-		 * @return
+		 * Iterator dereference operator.
+		 * @return reference to option on current position
 		 */
 		reference operator*()
 		{

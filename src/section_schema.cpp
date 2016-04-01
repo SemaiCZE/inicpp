@@ -27,7 +27,7 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	section_schema::section_schema(const std::string &name, bool mandatory)
+	section_schema::section_schema(const section_schema_params &arguments)
 	{
 		throw not_implemented_exception();
 	}

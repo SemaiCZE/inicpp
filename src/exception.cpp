@@ -20,12 +20,8 @@ namespace inicpp
 	}
 
 	not_implemented_exception::not_implemented_exception()
+		: inicpp::exception("Not implemented")
 	{}
-
-	const char *not_implemented_exception::what() const noexcept
-	{
-		return "Not implemented";
-	}
 
 	bad_cast_exception::bad_cast_exception(const std::string &what)
 		: inicpp::exception(what)
@@ -35,8 +31,18 @@ namespace inicpp
 		: inicpp::exception("Bad conversion from: " + from + " to: " + to)
 	{}
 
+	not_found_exception::not_found_exception(size_t index)
+		: inicpp::exception("Element on index: " + std::to_string(index) + " was not found")
+	{
+	}
+
 	not_found_exception::not_found_exception(const std::string &element_name)
 		: inicpp::exception("Element: " + element_name + " not found in container")
+	{
+	}
+
+	invalid_config_exception::invalid_config_exception(const std::string &message)
+		: inicpp::exception(message)
 	{
 	}
 }

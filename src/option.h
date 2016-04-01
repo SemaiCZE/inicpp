@@ -76,6 +76,12 @@ namespace inicpp
 		const std::string &get_name() const;
 
 		/**
+		* @brief is_list
+		* @return
+		*/
+		bool is_list() const;
+
+		/**
 		 * @brief set
 		 * @param value
 		 */
@@ -162,17 +168,11 @@ namespace inicpp
 		bool validate(const option_schema &opt_schema);
 
 		/**
-		 * @brief operator <<
-		 * @param os
-		 * @return
+		 * Classic stream operator for printing this instance to output stream.
+		 * @param os output stream
+		 * @return reference to output stream which allows chaining
 		 */
 		std::ostream &operator<<(std::ostream &os);
-
-		/**
-		 * @brief is_list
-		 * @return
-		 */
-		bool is_list() const;
 	};
 }
 

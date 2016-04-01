@@ -47,7 +47,7 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	void parser::save(const schema &schm, std::ostream file)
+	void parser::save(const schema &schm, std::ostream str)
 	{
 		throw not_implemented_exception();
 	}

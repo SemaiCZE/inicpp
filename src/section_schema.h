@@ -11,11 +11,26 @@
 
 namespace inicpp
 {
+	/**
+	 * Creation arguments which has to be supplied to section_schema
+	 */
+	struct section_schema_params
+	{
+		/** Name of section_schema */
+		std::string name;
+		/** Determines whether this section is mandatory in configuration */
+		bool mandatory = true;
+		/** Description of this section */
+		std::string comment;
+	};
+
+
 	/** Forward declaration, stated because of ring dependencies */
 	class section;
 
+
 	/**
-	 * @brief The section_schema class
+	 * 
 	 */
 	class section_schema
 	{
@@ -44,7 +59,7 @@ namespace inicpp
 		 * @param name
 		 * @param is_mandatory
 		 */
-		section_schema(const std::string &name, bool mandatory = true);
+		section_schema(const section_schema_params &arguments);
 
 		/**
 		 * @brief
@@ -81,9 +96,9 @@ namespace inicpp
 		bool validate(const section &sect, schema_mode mode);
 
 		/**
-		 * @brief operator <<
-		 * @param os
-		 * @return
+		 * Classic stream operator for printing this instance to output stream.
+		 * @param os output stream
+		 * @return reference to output stream which allows chaining
 		 */
 		std::ostream &operator<<(std::ostream &os);
 	};
