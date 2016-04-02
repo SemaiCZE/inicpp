@@ -2,11 +2,6 @@
 
 namespace inicpp
 {
-	section_schema::section_schema()
-	{
-		throw not_implemented_exception();
-	}
-
 	section_schema::section_schema(const section_schema &source)
 	{
 		throw not_implemented_exception();

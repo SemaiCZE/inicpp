@@ -72,7 +72,7 @@ namespace inicpp
 		 * Creates option_schema from given arguments
 		 * and adds it to specified section.
 		 * @param section_name
-		 * @param option_name
+		 * @param arguments
 		 * @throws not_found_exception if section_name does not exist
 		 */
 		void add_option(const std::string &section_name,
@@ -81,6 +81,7 @@ namespace inicpp
 		/**
 		 * Validate cfg against this schema in specified mode.
 		 * @param cfg configuration which will be validated
+		 * @param mode validation mode
 		 * @return true if config conforms requirements of this schema,
 		 * false otherwise
 		 */

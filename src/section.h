@@ -28,6 +28,8 @@ namespace inicpp
 		std::vector<option> options_;
 		/** Name of this section */
 		std::string name_;
+		/** Corresponding section_schema if any */
+		std::shared_ptr<section_schema> section_schema_;
 
 		friend class section_iterator<option>;
 		friend class section_iterator<const option>;
@@ -112,9 +114,10 @@ namespace inicpp
 		/**
 		 * Validates this section agains given section_schema.
 		 * @param sect_schema rules how this section should look like
+		 * @param mode validation mode
 		 * @return true if this section comply given section_schema
 		 */
-		bool validate(const section_schema &sect_schema);
+		bool validate(const section_schema &sect_schema, schema_mode mode);
 
 		/**
 		 * Classic stream operator for printing this instance to output stream.

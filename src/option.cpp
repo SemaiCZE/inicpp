@@ -2,11 +2,6 @@
 
 namespace inicpp
 {
-	option::option()
-	{
-		throw not_implemented_exception();
-	}
-
 	option::option(const option &source)
 	{
 		throw not_implemented_exception();
@@ -47,7 +42,7 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	bool option::validate(const option_schema &opt_schema)
+	bool option::validate(const option_schema &opt_schema, schema_mode mode)
 	{
 		throw not_implemented_exception();
 	}
