@@ -28,6 +28,8 @@ namespace inicpp
 	private:
 		/** List of sections in this config instance */
 		std::vector<section> sections_;
+		/** Corresponding schema if any */
+		std::shared_ptr<schema> schema_;
 
 		friend class config_iterator<section>;
 		friend class config_iterator<const section>;
@@ -188,7 +190,8 @@ namespace inicpp
 	 * For easier implementation inheritance from std::iterator is used.
 	 */
 	template<typename Element>
-	class config_iterator : public std::iterator<std::random_access_iterator_tag, Element>
+	class config_iterator
+		: public std::iterator<std::random_access_iterator_tag, Element>
 	{
 	private:
 		using typename std::iterator<std::random_access_iterator_tag, Element>::reference;

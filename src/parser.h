@@ -84,7 +84,8 @@ namespace inicpp
 		 * @param md validation mode
 		 * @return new instance of config class
 		 */
-		static config load_file(const std::string &file, const schema &schm, schema_mode mode);
+		static config load_file(const std::string &file, const schema &schm,
+			schema_mode mode);
 
 		/**
 		 * Save given configuration to file.

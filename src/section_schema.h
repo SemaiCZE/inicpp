@@ -12,7 +12,7 @@
 namespace inicpp
 {
 	/**
-	 * Creation arguments which has to be supplied to section_schema
+	 * Creation arguments which has to be supplied to section_schema.
 	 */
 	struct section_schema_params
 	{
@@ -20,7 +20,7 @@ namespace inicpp
 		std::string name;
 		/** Determines whether this section is mandatory in configuration */
 		bool mandatory = true;
-		/** Description of this section */
+		/** Description of section */
 		std::string comment;
 	};
 
@@ -30,69 +30,83 @@ namespace inicpp
 
 
 	/**
-	 * 
+	 * In section_schema are defined rules which ini section should fulfil.
+	 * Section can be validated against section_schema objects.
 	 */
 	class section_schema
 	{
 	private:
-		/** */
+		/** Section name */
 		std::string name_;
-		/** */
-		std::vector<option_schema> options_;
-		/** */
+		/** Determines if section is mandatory or not */
 		bool mandatory_;
-		/** */
+		/** Description of this section */
 		std::string comment_;
+		/** Options stored in this section. */
+		std::vector<option_schema> options_;
 
 	public:
 		/**
-		 * @brief section_schema
+		 * Default constructor is deleted.
 		 */
-		section_schema();
+		section_schema() = delete;
+		/**
+		 * Copy constructor.
+		 */
 		section_schema(const section_schema &source);
-		section_schema& operator=(const section_schema &source);
+		/**
+		 * Copy assignment.
+		 */
+		section_schema &operator=(const section_schema &source);
+		/**
+		 * Move constructor.
+		 */
 		section_schema(section_schema &&source);
-		section_schema& operator=(section_schema &&source);
+		/**
+		 * Move assignment.
+		 */
+		section_schema &operator=(section_schema &&source);
 
 		/**
-		 * @brief section_schema
-		 * @param name
-		 * @param is_mandatory
+		 * Construct section_schema from given arguments.
+		 * @param arguments creation parameters
 		 */
 		section_schema(const section_schema_params &arguments);
 
 		/**
-		 * @brief
-		 * @return
+		 * Gets name of section.
+		 * @return constant reference
 		 */
 		const std::string &get_name() const;
 		/**
-		 * @brief
-		 * @return
-		 */
-		const std::string &get_comment() const;
-		/**
-		 * @brief
-		 * @return
+		 * Determines whether this section is mandatory.
+		 * @return true if section has to be in configuration
 		 */
 		bool is_mandatory() const;
+		/**
+		 * Get textual description of section.
+		 * @return constant reference
+		 */
+		const std::string &get_comment() const;
 
 		/**
-		 * @brief add_option
-		 * @param opt
+		 * Add option_schema to options list from given parameter.
+		 * @param opt option_schema which will be added to this instance
 		 */
 		void add_option(const option_schema &opt);
 		/**
-		 * @brief add_option
-		 * @param option_name
+		 * Creates option_schema from given arguments
+		 * and add it to options list.
+		 * @param arguments creation paramaters
 		 */
 		template<typename ArgType>
 		void add_option(const option_schema_params<ArgType> &arguments);
 
 		/**
-		 * @brief
-		 * @param schm
-		 * @return
+		 * Validate given section againts this section_schema.
+		 * @param sect validated section
+		 * @param mode validation mode
+		 * @return true if section is successfully validated
 		 */
 		bool validate(const section &sect, schema_mode mode);
 

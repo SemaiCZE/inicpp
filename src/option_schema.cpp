@@ -2,11 +2,6 @@
 
 namespace inicpp
 {
-	option_schema::option_schema()
-	{
-		throw not_implemented_exception();
-	}
-
 	option_schema::option_schema(const option_schema &source)
 	{
 		throw not_implemented_exception();

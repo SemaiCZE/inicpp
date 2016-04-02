@@ -57,12 +57,12 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	std::ostream &section::operator<<(std::ostream &os)
+	bool section::validate(const section_schema &sect_schema, schema_mode mode)
 	{
 		throw not_implemented_exception();
 	}
 
-	bool section::validate(const section_schema &sect_schema)
+	std::ostream &section::operator<<(std::ostream &os)
 	{
 		throw not_implemented_exception();
 	}
