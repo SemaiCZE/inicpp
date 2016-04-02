@@ -56,4 +56,34 @@ namespace inicpp
 	{
 		return values_.size() > 1;
 	}
+
+	option &option::operator=(boolean_t arg)
+	{
+		throw not_implemented_exception();
+	}
+
+	option &option::operator=(signed_t arg)
+	{
+		throw not_implemented_exception();
+	}
+
+	option &option::operator=(unsigned_t arg)
+	{
+		throw not_implemented_exception();
+	}
+
+	option &option::operator=(float_t arg)
+	{
+		throw not_implemented_exception();
+	}
+
+	option &option::operator=(enum_t arg)
+	{
+		throw not_implemented_exception();
+	}
+
+	option &option::operator=(string_t arg)
+	{
+		throw not_implemented_exception();
+	}
 }

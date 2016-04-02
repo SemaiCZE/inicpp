@@ -14,7 +14,7 @@ namespace inicpp
 	/** Forward declaration, stated because of ring dependencies */
 	class section_schema;
 	/** Forward declaration of iterator used in section class */
-	template<typename T> class section_iterator;
+	template<typename Element> class section_iterator;
 	
 
 	/**
