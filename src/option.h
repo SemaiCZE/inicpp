@@ -33,7 +33,7 @@ namespace inicpp
 	 * Class which actually stores option value in templated manner.
 	 * Getter and setter of course provided.
 	 */
-	template<typename T>
+	template<typename ValueType>
 	class option_value : public option_holder
 	{
 	public:
@@ -41,7 +41,7 @@ namespace inicpp
 		 * Construct option_value with given value.
 		 * @param value value which will be stored
 		 */
-		option_value(T value) : value_(value) {}
+		option_value(ValueType value) : value_(value) {}
 		/**
 		 * Stated for completion.
 		 */
@@ -51,7 +51,7 @@ namespace inicpp
 		 * Get this instance internal value.
 		 * @return returned by value
 		 */
-		T get()
+		ValueType get()
 		{
 			return value_;
 		}
@@ -59,14 +59,14 @@ namespace inicpp
 		 * Set internal value to given one.
 		 * @param value
 		 */
-		void set(T value)
+		void set(ValueType value)
 		{
 			value_ = value;
 		}
 
 	private:
 		/** Stored option value. */
-		T value_;
+		ValueType value_;
 	};
 
 	
@@ -138,6 +138,42 @@ namespace inicpp
 		{
 			throw not_implemented_exception();
 		}
+		/**
+		 * Overloaded alias for set() function.
+		 * @param arg boolean_t
+		 * @return reference to this
+		 */
+		option &operator=(boolean_t arg);
+		/**
+		 * Overloaded alias for set() function.
+		 * @param arg signed_t
+		 * @return reference to this
+		 */
+		option &operator=(signed_t arg);
+		/**
+		 * Overloaded alias for set() function.
+		 * @param arg unsigned_t
+		 * @return reference to this
+		 */
+		option &operator=(unsigned_t arg);
+		/**
+		 * Overloaded alias for set() function.
+		 * @param arg float_t
+		 * @return reference to this
+		 */
+		option &operator=(float_t arg);
+		/**
+		 * Overloaded alias for set() function.
+		 * @param arg enum_t
+		 * @return reference to this
+		 */
+		option &operator=(enum_t arg);
+		/**
+		 * Overloaded alias for set() function.
+		 * @param arg string_t
+		 * @return reference to this
+		 */
+		option &operator=(string_t arg);
 
 		/**
 		 * Get single element value.

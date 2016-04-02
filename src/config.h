@@ -15,7 +15,7 @@ namespace inicpp
 	/** Forward declaration, stated because of ring dependencies */
 	class schema;
 	/** Forward declaration of iterator used in config class */
-	template<typename T> class config_iterator;
+	template<typename Element> class config_iterator;
 
 
 	/**
