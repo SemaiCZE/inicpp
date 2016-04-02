@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <functional>
 
 #include "exception.h"
 #include "option.h"
@@ -11,7 +12,7 @@
 namespace inicpp
 {
 	/** */
-	struct option_schema_params
+	struct option_schema_params_base
 	{
 		/** */
 		std::string name;
@@ -28,6 +29,15 @@ namespace inicpp
 	};
 
 	
+	/** */
+	template<typename ArgType>
+	struct option_schema_params : public option_schema_params_base
+	{
+		/**  */
+		std::function<bool(ArgType)> validator = nullptr;
+	};
+
+	
 	/** Forward declaration, stated because of ring dependencies */
 	class option;
 
@@ -39,17 +49,7 @@ namespace inicpp
 	{
 	private:
 		/** */
-		std::string name_;
-		/** */
-		option_type type_;
-		/** */
-		bool is_list_;
-		/** */
-		std::string default_value_;
-		/** */
-		bool mandatory_;
-		/** */
-		std::string comment_;
+		std::shared_ptr<option_schema_params_base> params_;
 
 	public:
 		/**
@@ -69,7 +69,8 @@ namespace inicpp
 		 * @param is_list
 		 * @param default_value
 		 */
-		option_schema(const option_schema_params &arguments);
+		template<typename ArgType>
+		option_schema(const option_schema_params<ArgType> &arguments);
 
 		/**
 		 * @brief

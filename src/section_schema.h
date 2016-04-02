@@ -86,7 +86,8 @@ namespace inicpp
 		 * @brief add_option
 		 * @param option_name
 		 */
-		void add_option(const option_schema_params &arguments);
+		template<typename ArgType>
+		void add_option(const option_schema_params<ArgType> &arguments);
 
 		/**
 		 * @brief

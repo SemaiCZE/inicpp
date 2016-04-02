@@ -75,8 +75,9 @@ namespace inicpp
 		 * @param option_name
 		 * @throws not_found_exception if section_name does not exist
 		 */
+		template<typename ArgType>
 		void add_option(const std::string &section_name,
-			option_schema_params &arguments);
+			option_schema_params<ArgType> &arguments);
 
 		/**
 		 * Validate cfg against this schema in specified mode.

@@ -27,19 +27,20 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	option_schema::option_schema(const option_schema_params &arguments)
+	template<typename ArgType>
+	option_schema::option_schema(const option_schema_params<ArgType> &arguments)
 	{
 		throw not_implemented_exception();
 	}
 
 	const std::string &option_schema::get_name() const
 	{
-		return name_;
+		return params_->name;
 	}
 
 	option_type option_schema::get_type() const
 	{
-		return type_;
+		return params_->type;
 	}
 
 	std::ostream &option_schema::operator<<(std::ostream &os)
@@ -49,22 +50,22 @@ namespace inicpp
 
 	bool option_schema::is_list() const
 	{
-		return is_list_;
+		return params_->is_list;
 	}
 
 	const std::string &option_schema::get_default_value() const
 	{
-		return default_value_;
+		return params_->default_value;
 	}
 
 	bool option_schema::is_mandatory() const
 	{
-		return mandatory_;
+		return params_->mandatory;
 	}
 
 	const std::string &option_schema::get_comment() const
 	{
-		return comment_;
+		return params_->comment;
 	}
 	
 	bool option_schema::validate(const option &opt, schema_mode mode)

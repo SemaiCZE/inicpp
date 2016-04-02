@@ -42,7 +42,8 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	void schema::add_option(const std::string &section_name, option_schema_params &arguments)
+	template<typename ArgType>
+	void schema::add_option(const std::string &section_name, option_schema_params<ArgType> &arguments)
 	{
 		throw not_implemented_exception();
 	}
