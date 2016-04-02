@@ -35,7 +35,7 @@ namespace inicpp
 
 	option_type option_schema::get_type() const
 	{
-		return params_->type;
+		return type_;
 	}
 
 	std::ostream &option_schema::operator<<(std::ostream &os)

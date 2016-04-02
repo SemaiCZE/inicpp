@@ -20,8 +20,6 @@ namespace inicpp
 		std::string name;
 		/** Determines if this option is mandatory or not */
 		bool mandatory = true;
-		/** Assumed type of option */
-		option_type type = option_type::string_e;
 		/** True if list has to be stored in option */
 		bool is_list = false;
 		/** Default value of optional option */
@@ -52,6 +50,8 @@ namespace inicpp
 	class option_schema
 	{
 	private:
+		/** Assumed type of option */
+		option_type type_;
 		/** Internal properties of the option */
 		std::shared_ptr<option_schema_params_base> params_;
 

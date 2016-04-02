@@ -84,7 +84,9 @@ string_t port_str = github_sect["port"].get<string_t>();
 
 // Change some values
 github_sect["port"].set<signed_t>(42222);
+// Following two lines are equivalent
 github_sect["address"].set<string_t>("www.github.com");
+github_sect["address"] = "www.github.com";
 
 // Change sigle value to list by inserting an item
 option &addr_opt = github_sect["address"];
@@ -113,16 +115,20 @@ schema conf_schm;
 
 // Add first section
 conf_schm.add_section("github"); // default is mandatory
-// Add option named "port" into "github" section. The option is mandatory\
+// Add option named "port" into "github" section. The option is mandatory
 // and it's type is unsigned. Default value makes no sense for mandatory
-// options.
-conf_schm.add_option("github", {"port", true, option_type::unsigned_e});
-// Mandatory string option "address" with default value "www.github.com" (one value, not list)
-option_schema_params args = {"address", false, option_type::string_e, false, "www.github.com"};
-conf_schm.add_option("github", args);
+// options. This option has no validating function, so all values are valid.
+conf_schm.add_option("github", option_schema_params<unsigned_t> {"port", true});
+// Mandatory string option "address" with default value "www.github.com" (one value, not list).
+// Option is valid, if given string is greater than "aaa" (using lambda of functor class
+// you can specify whatever you want!
+option_schema_params<string_t> args = {"address", false, false,
+	"www.github.com", [](const string_t &str){ return str > "aaa"; }};
+conf_schm.add_option("github", args); // template argument is deduced
 
 // Alternatively, create the classes first and add them to schema
-option_schema autoconnect_option("autoconnect", false, option_type::boolean_e, false, "off");
+option_schema_params<boolean_t> autoconnect_params = {"autoconnect", false, false, "off"};
+option_schema autoconnect_option(autoconnect_params);
 section_schema connect_section("connect", false); // optional section
 connect_section.add_option(autoconnect_option);
 conf_schm.add_section(connect_section);
