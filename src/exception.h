@@ -50,7 +50,7 @@ namespace inicpp
 		 * General bad_cast_exception constructor with given description.
 		 * @param what exception cause
 		 */
-		bad_cast_exception(const std::string &what);
+		bad_cast_exception(const std::string &message);
 		/**
 		 * Constructor in which casted elements can be specified.
 		 * @param from type from which conversion was invoked
@@ -78,6 +78,35 @@ namespace inicpp
 		 * @param element_name 
 		 */
 		not_found_exception(const std::string &element_name);
+	};
+
+
+	/**
+	 * Element ambiguity exception.
+	 * Raised when there are multiple elements with same name.
+	 */
+	class ambiguity_exception : public exception
+	{
+	public:
+		/**
+		 * There are multiple elements with specified name.
+		 * @param element_name
+		 */
+		ambiguity_exception(const std::string &element_name);
+	};
+
+
+	/**
+	 * Thrown in case of validation error.
+	 */
+	class validation_exception : public exception
+	{
+	public:
+		/**
+		 * Default generic constructor.
+		 * @param message
+		 */
+		validation_exception(const std::string &message);
 	};
 
 

@@ -51,12 +51,14 @@ namespace inicpp
 		/**
 		 * Adds section from given attribute to internal container.
 		 * @param sect_schema constant reference to section_schema object
+		 * @throws ambiguity_exception if section_schema with given name exists
 		 */
 		void add_section(const section_schema &sect_schema);
 		/**
 		 * From given section_schema_params structure
 		 * section_schema is created and added to this scheme.
 		 * @param arguments non-editable reference to input arguments
+		 * @throws ambiguity_exception if section_schema with given name exists
 		 */
 		void add_section(const section_schema_params &arguments);
 
@@ -65,6 +67,7 @@ namespace inicpp
 		 * @param section_name name of existing section
 		 * @param opt_schema options_schema which will be added to section
 		 * @throws not_found_exception if section_name does not exist
+		 * @throws ambiguity_exception if option_schema with given name exists
 		 */
 		void add_option(const std::string &section_name,
 			const option_schema &opt_schema);
@@ -72,8 +75,9 @@ namespace inicpp
 		 * Creates option_schema from given arguments
 		 * and adds it to specified section.
 		 * @param section_name
-		 * @param arguments
+		 * @param arguments option_schema creation parameters
 		 * @throws not_found_exception if section_name does not exist
+		 * @throws ambiguity_exception if option_schema with given name exists
 		 */
 		template<typename ArgType>
 		void add_option(const std::string &section_name,

@@ -75,6 +75,7 @@ namespace inicpp
 		 * Creates and add option to this section.
 		 * @param name name of newly created option class
 		 * @param value value which will be stored in option
+		 * @throws ambiguity_exception if option with specified name exists
 		 */
 		template<typename ValueType> void add_option(
 			const std::string &option_name, const ValueType &value)
@@ -84,12 +85,13 @@ namespace inicpp
 		/**
 		 * Add given option instance to options container.
 		 * @param opt particular instance of option class
+		 * @throws ambiguity_exception if option with specified name exists
 		 */
 		void add_option(const option &opt);
 		/**
 		 * From list of options remove the one with specified name
 		 * @param option_name name of option which will be removed
-		 * @throws not_found_exception if option with specified was not found
+		 * @throws not_found_exception if option with given name was not found
 		 */
 		void remove_option(const std::string &option_name);
 
@@ -102,12 +104,14 @@ namespace inicpp
 		 * Access option on specified index.
 		 * @param index
 		 * @return modifiable reference to stored option
+		 * @throws not_found_exception in case of out of range
 		 */
 		option &operator[](size_t index);
 		/**
 		 * Access option with specified name
 		 * @param option_name
 		 * @return modifiable reference to stored option
+		 * @throws not_found_exception if option with given name does not exist
 		 */
 		option &operator[](const std::string &option_name);
 

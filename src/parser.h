@@ -50,6 +50,7 @@ namespace inicpp
 		 * @param schm validation schema
 		 * @param md validation mode
 		 * @return constructed config class which comply given schema
+		 * @throws validation_exception if configuration does not comply schema
 		 */
 		static config load(const std::string &str, const schema &schm,
 			schema_mode mode);
@@ -66,6 +67,7 @@ namespace inicpp
 		 * @param schm validation schema
 		 * @param md validation mode
 		 * @return constructed config class which comply given schema
+		 * @throws validation_exception if configuration does not comply schema
 		 */
 		static config load(std::istream str, const schema &schm,
 			schema_mode mode);
@@ -83,6 +85,7 @@ namespace inicpp
 		 * @param schm validation schema
 		 * @param md validation mode
 		 * @return new instance of config class
+		 * @throws validation_exception if configuration does not comply schema
 		 */
 		static config load_file(const std::string &file, const schema &schm,
 			schema_mode mode);
@@ -98,7 +101,7 @@ namespace inicpp
 		 * @param cfg configuration which will be saved
 		 * @param str output stream
 		 */
-		static void save(const config &cfg, std::ostream str);
+		static void save(const config &cfg, std::ostream &str);
 		/**
 		 * Save validation schema to file.
 		 * @param schm schema which will be saved
@@ -110,7 +113,7 @@ namespace inicpp
 		 * @param schm schema which will be saved
 		 * @param str output stream
 		 */
-		static void save(const schema &schm, std::ostream str);
+		static void save(const schema &schm, std::ostream &str);
 	};
 }
 

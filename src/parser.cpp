@@ -37,7 +37,7 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	void parser::save(const config &cfg, std::ostream str)
+	void parser::save(const config &cfg, std::ostream &str)
 	{
 		throw not_implemented_exception();
 	}
@@ -47,7 +47,7 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	void parser::save(const schema &schm, std::ostream str)
+	void parser::save(const schema &schm, std::ostream &str)
 	{
 		throw not_implemented_exception();
 	}

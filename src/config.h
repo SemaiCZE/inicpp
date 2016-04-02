@@ -62,36 +62,44 @@ namespace inicpp
 		/**
 		 * Construct ini config from given string.
 		 * @param str input string
+		 * @throws invalid_config_exception in case of bad configuration
 		 */
 		config(const std::string &str);
 		/**
 		 * Construct config from given string and validate it against schema.
 		 * @param str input string
 		 * @param schm validation schema
-		 * @param md validation mode
+		 * @param mode validation mode
+		 * @throws invalid_config_exception in case of bad configuration
+		 * @throws validation_exception if schema was not satisfied
 		 */
 		config(const std::string &str, const schema &schm, schema_mode mode);
 		/**
 		 * Construct ini config from given stream.
 		 * @param str input stream
+		 * @throws invalid_config_exception in case of bad configuration
 		 */
 		config(std::istream &str);
 		/**
 		 * Construct config from stream and validate it against schema.
 		 * @param str input stream
 		 * @param schm validation schema
-		 * @param md validation mode
+		 * @param mode validation mode
+		 * @throws invalid_config_exception in case of bad configuration
+		 * @throws validation_exception if schema was not satisfied
 		 */
 		config(std::istream &str, const schema &schm, schema_mode mode);
 
 		/**
 		 * Add section to this ini configuration.
 		 * @param sect section which will be added
+		 * @throws ambiguity_exception if section with specified name exists
 		 */
 		void add_section(const section &sect);
 		/**
 		 * Create and add section with specified name.
 		 * @param section_name section with same name cannot exist in config
+		 * @throws ambiguity_exception if section with specified name exists
 		 */
 		void add_section(const std::string &section_name);
 		/**
@@ -106,6 +114,7 @@ namespace inicpp
 		 * @param section_name should exist
 		 * @param opt option which will be added to appropriate section
 		 * @throws not_found_exception if section with given name does not exist
+		 * @throws ambiguity_exception if option with specified name exists
 		 */
 		void add_option(const std::string &section_name, const option &opt);
 		/**
@@ -124,6 +133,7 @@ namespace inicpp
 		 * @param option_name option with this name will be removed
 		 * @throws not_found_exception if section or option
 		 * with given name does not exist
+		 * @throws ambiguity_exception if option with specified name exists
 		 */
 		void remove_option(const std::string &section_name,
 			const std::string &option_name);
@@ -137,12 +147,14 @@ namespace inicpp
 		 * Access section on specified index.
 		 * @param index
 		 * @return modifiable reference to stored section
+		 * @throws not_found_exception if index is out of range
 		 */
 		section &operator[](size_t index);
 		/**
 		 * Access section with specified name.
 		 * @param index
 		 * @return modifiable reference to stored section
+		 * @throws not_found_exception if section with given name does not exist
 		 */
 		section &operator[](const std::string &section_name);
 

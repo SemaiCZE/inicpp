@@ -133,6 +133,8 @@ namespace inicpp
 		/**
 		 * Set single element value.
 		 * @param value newly assigned option value
+		 * @throws bad_cast_exception if ValueType cannot be casted
+		 * to internal type
 		 */
 		template<typename ValueType> void set(ValueType value)
 		{
@@ -178,6 +180,7 @@ namespace inicpp
 		/**
 		 * Get single element value.
 		 * @return templated copy by value
+		 * @throws bad_cast_exception if internal type cannot be casted
 		 */
 		template<typename ValueType> ValueType get() const
 		{
@@ -187,6 +190,8 @@ namespace inicpp
 		/**
 		 * Set internal list of values to given one.
 		 * @param value reference to list of new values
+		 * @throws bad_cast_exception if ValueType cannot be casted
+		 * to internal type
 		 */
 		template<typename ValueType> void set_list(
 			const std::vector<ValueType> &value)
@@ -197,6 +202,8 @@ namespace inicpp
 		/**
 		 * Set internal list of values to given one.
 		 * @param value rvalue reference to list of new values
+		 * @throws bad_cast_exception if ValueType cannot be casted
+		 * to internal type
 		 */
 		template<typename ValueType> void set_list(
 			std::vector<ValueType> &&value)
@@ -207,6 +214,7 @@ namespace inicpp
 		/**
 		 * Get list of internal values. Returning list is newly created.
 		 * @return new list of all stored values
+		 * @throws bad_cast_exception if internal type cannot be casted
 		 */
 		template<typename ValueType> std::vector<ValueType> get_list() const
 		{
@@ -216,6 +224,7 @@ namespace inicpp
 		/**
 		 * Adds element to internal value list.
 		 * @param value pushed value
+		 * @throws bad_cast_exception if ValueType cannot be casted
 		 */
 		template<typename ValueType> void add_to_list(ValueType value)
 		{
@@ -226,6 +235,7 @@ namespace inicpp
 		 * Add element to list on specified position.
 		 * @param value added value
 		 * @param position position in internal list
+		 * @throws bad_cast_exception if ValueType cannot be casted
 		 */
 		template<typename ValueType> void add_to_list(ValueType value,
 			size_t position)
@@ -236,6 +246,8 @@ namespace inicpp
 		/**
 		 * Remove element with same value as given one.
 		 * @param value
+		 * @throws bad_cast_exception if ValueType cannot be casted
+		 * @throws not_found_exception if value was not found in list
 		 */
 		template<typename ValueType> void remove_from_list(ValueType value)
 		{
@@ -245,6 +257,7 @@ namespace inicpp
 		/**
 		 * Remove list element on specified position.
 		 * @param position
+		 * @throws not_found_exception in case of out of range
 		 */
 		void remove_from_list(size_t position);
 

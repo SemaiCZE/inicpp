@@ -92,12 +92,14 @@ namespace inicpp
 		/**
 		 * Add option_schema to options list from given parameter.
 		 * @param opt option_schema which will be added to this instance
+		 * @throws ambiguity_exception if option_schema with given name exists
 		 */
 		void add_option(const option_schema &opt);
 		/**
 		 * Creates option_schema from given arguments
 		 * and add it to options list.
 		 * @param arguments creation paramaters
+		 * @throws ambiguity_exception if option_schema with given name exists
 		 */
 		template<typename ArgType>
 		void add_option(const option_schema_params<ArgType> &arguments);

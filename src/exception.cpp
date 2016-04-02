@@ -23,8 +23,8 @@ namespace inicpp
 		: inicpp::exception("Not implemented")
 	{}
 
-	bad_cast_exception::bad_cast_exception(const std::string &what)
-		: inicpp::exception(what)
+	bad_cast_exception::bad_cast_exception(const std::string &message)
+		: inicpp::exception(message)
 	{}
 
 	bad_cast_exception::bad_cast_exception(const std::string &from, const std::string &to)
@@ -43,6 +43,16 @@ namespace inicpp
 
 	invalid_config_exception::invalid_config_exception(const std::string &message)
 		: inicpp::exception(message)
+	{
+	}
+
+	validation_exception::validation_exception(const std::string &message)
+		: inicpp::exception(message)
+	{
+	}
+
+	ambiguity_exception::ambiguity_exception(const std::string &element_name)
+		: inicpp::exception("Ambiguous element with name: " + element_name)
 	{
 	}
 }
