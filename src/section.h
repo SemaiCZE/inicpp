@@ -35,7 +35,9 @@ namespace inicpp
 		friend class section_iterator<const option>;
 
 	public:
+		/** type of iterator */
 		typedef section_iterator<option> iterator;
+		/** type of const iterator */
 		typedef section_iterator<const option> const_iterator;
 
 		/**
@@ -73,7 +75,7 @@ namespace inicpp
 
 		/**
 		 * Creates and add option to this section.
-		 * @param name name of newly created option class
+		 * @param option_name name of newly created option class
 		 * @param value value which will be stored in option
 		 * @throws ambiguity_exception if option with specified name exists
 		 */

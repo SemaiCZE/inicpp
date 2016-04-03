@@ -35,7 +35,9 @@ namespace inicpp
 		friend class config_iterator<const section>;
 
 	public:
+		/** type of iterator */
 		typedef config_iterator<section> iterator;
+		/** type of const iterator */
 		typedef config_iterator<const section> const_iterator;
 
 		/**
@@ -145,14 +147,14 @@ namespace inicpp
 		size_t size();
 		/**
 		 * Access section on specified index.
-		 * @param index
+		 * @param index index of requested value
 		 * @return modifiable reference to stored section
 		 * @throws not_found_exception if index is out of range
 		 */
 		section &operator[](size_t index);
 		/**
 		 * Access section with specified name.
-		 * @param index
+		 * @param section_name name of requested section
 		 * @return modifiable reference to stored section
 		 * @throws not_found_exception if section with given name does not exist
 		 */

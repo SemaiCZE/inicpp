@@ -48,7 +48,7 @@ namespace inicpp
 	public:
 		/**
 		 * General bad_cast_exception constructor with given description.
-		 * @param what exception cause
+		 * @param message exception cause
 		 */
 		bad_cast_exception(const std::string &message);
 		/**

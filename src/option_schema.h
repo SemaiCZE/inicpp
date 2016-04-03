@@ -12,7 +12,8 @@
 namespace inicpp
 {
 	/**
-	 * Struct which sums up all information needed for option_schema creation.
+	 * Base struct which sums up all common information needed
+	 * for option_schema creation.
 	 */
 	struct option_schema_params_base
 	{
@@ -25,15 +26,21 @@ namespace inicpp
 		/** Default value of optional option */
 		std::string default_value = "";
 		/** Description of option */
-		std::string comment;
+		std::string comment = "";
 	};
 
 	
-	/** */
+	/**
+	 * Extended struct which adds type of the option (as template argument)
+	 * and holds in addition to parent functor for value validation.
+	 */
 	template<typename ArgType>
 	struct option_schema_params : public option_schema_params_base
 	{
-		/**  */
+		/**
+		 * Validating function - takes one argument of @a ArgType
+		 * and returns bool if valid or not
+		 */
 		std::function<bool(ArgType)> validator = nullptr;
 	};
 

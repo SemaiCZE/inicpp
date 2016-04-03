@@ -48,7 +48,7 @@ namespace inicpp
 		 * and validate it through schema.
 		 * @param str ini configuration description
 		 * @param schm validation schema
-		 * @param md validation mode
+		 * @param mode validation mode
 		 * @return constructed config class which comply given schema
 		 * @throws validation_exception if configuration does not comply schema
 		 */
@@ -65,7 +65,7 @@ namespace inicpp
 		 * and validate it through schema.
 		 * @param str ini configuration description
 		 * @param schm validation schema
-		 * @param md validation mode
+		 * @param mode validation mode
 		 * @return constructed config class which comply given schema
 		 * @throws validation_exception if configuration does not comply schema
 		 */
@@ -83,7 +83,7 @@ namespace inicpp
 		 * and validate it against given schema.
 		 * @param file name of file with ini configuration
 		 * @param schm validation schema
-		 * @param md validation mode
+		 * @param mode validation mode
 		 * @return new instance of config class
 		 * @throws validation_exception if configuration does not comply schema
 		 */
