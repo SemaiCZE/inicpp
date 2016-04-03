@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['not_5fimplemented_5fexception',['not_implemented_exception',['../classinicpp_1_1not__implemented__exception.html',1,'inicpp']]]
+  ['config',['config',['../classinicpp_1_1config.html',1,'inicpp']]],
+  ['config_5fiterator',['config_iterator',['../classinicpp_1_1config__iterator.html',1,'inicpp']]]
 ];

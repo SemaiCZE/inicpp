@@ -15,5 +15,6 @@ var dir_68267d1309a1af8e8297ef4c3efbcdba =
     [ "section.cpp", "section_8cpp_source.html", null ],
     [ "section.h", "section_8h_source.html", null ],
     [ "section_schema.cpp", "section__schema_8cpp_source.html", null ],
-    [ "section_schema.h", "section__schema_8h_source.html", null ]
+    [ "section_schema.h", "section__schema_8h_source.html", null ],
+    [ "types.h", "types_8h_source.html", null ]
 ];

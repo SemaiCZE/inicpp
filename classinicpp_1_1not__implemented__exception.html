@@ -72,6 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
       <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
       <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
+      <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -112,6 +113,8 @@ $(document).ready(function(){initNavTree('classinicpp_1_1not__implemented__excep
 <div class="title">inicpp::not_implemented_exception Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="exception_8h_source.html">exception.h</a>&gt;</code></p>
 <div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for inicpp::not_implemented_exception:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -126,20 +129,91 @@ $(document).ready(function(){initNavTree('classinicpp_1_1not__implemented__excep
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af347677b11c5c6dfc98149fe1653bf69"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af347677b11c5c6dfc98149fe1653bf69"></a>
-virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><b>what</b> () const  noexcept</td></tr>
-<tr class="separator:af347677b11c5c6dfc98149fe1653bf69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abfe222bbcbbfef4cb65ec3248aa7c91f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinicpp_1_1not__implemented__exception.html#abfe222bbcbbfef4cb65ec3248aa7c91f">not_implemented_exception</a> ()</td></tr>
+<tr class="separator:abfe222bbcbbfef4cb65ec3248aa7c91f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2fa8f9a3a29485c02cb7bdd0eb0782e2"><td class="memItemLeft" align="right" valign="top">virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinicpp_1_1exception.html#a2fa8f9a3a29485c02cb7bdd0eb0782e2">what</a> () const  noexcept</td></tr>
+<tr class="separator:a2fa8f9a3a29485c02cb7bdd0eb0782e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:ae90ab565cdc2112d2e2dcee96ad9889b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae90ab565cdc2112d2e2dcee96ad9889b"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>what_</b></td></tr>
+<tr class="memitem:ae90ab565cdc2112d2e2dcee96ad9889b"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinicpp_1_1exception.html#ae90ab565cdc2112d2e2dcee96ad9889b">what_</a></td></tr>
 <tr class="separator:ae90ab565cdc2112d2e2dcee96ad9889b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p>Definition at line <a class="el" href="exception_8h_source.html#l00023">23</a> of file <a class="el" href="exception_8h_source.html">exception.h</a>.</p>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+<div class="textblock"><p>Thrown in case of missing function implementation. </p>
+
+<p>Definition at line <a class="el" href="exception_8h_source.html#l00130">130</a> of file <a class="el" href="exception_8h_source.html">exception.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="abfe222bbcbbfef4cb65ec3248aa7c91f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">inicpp::not_implemented_exception::not_implemented_exception </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Generic constructor. </p>
+
+<p>Definition at line <a class="el" href="exception_8cpp_source.html#l00022">22</a> of file <a class="el" href="exception_8cpp_source.html">exception.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a2fa8f9a3a29485c02cb7bdd0eb0782e2"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * inicpp::exception::what </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">noexcept</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return description of this exception instance. </p><dl class="section return"><dt>Returns</dt><dd>c-string textual description </dd></dl>
+
+<p>Definition at line <a class="el" href="exception_8cpp_source.html#l00017">17</a> of file <a class="el" href="exception_8cpp_source.html">exception.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="ae90ab565cdc2112d2e2dcee96ad9889b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string inicpp::exception::what_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Description of exception </p>
+
+<p>Definition at line <a class="el" href="exception_8h_source.html#l00018">18</a> of file <a class="el" href="exception_8h_source.html">exception.h</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/<a class="el" href="exception_8h_source.html">exception.h</a></li>
 <li>src/<a class="el" href="exception_8cpp_source.html">exception.cpp</a></li>
 </ul>
@@ -149,7 +223,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>what_</b></td>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>inicpp</b></li><li class="navelem"><a class="el" href="classinicpp_1_1not__implemented__exception.html">not_implemented_exception</a></li>
-    <li class="footer">Generated on Wed Mar 30 2016 20:37:42 for inicpp by
+    <li class="footer">Generated on Sun Apr 3 2016 11:29:38 for inicpp by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>
   </ul>

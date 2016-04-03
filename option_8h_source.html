@@ -110,55 +110,156 @@ $(document).ready(function(){initNavTree('option_8h_source.html','');});
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define INICPP_OPTION_H</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;exception.h&quot;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceinicpp.html">inicpp</a></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;{</div>
-<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="classinicpp_1_1option.html">   11</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classinicpp_1_1option.html">option</a></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    {</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        std::string name_;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        std::string value_;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <span class="comment">// TODO: access methods for private members</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;exception.h&quot;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;types.h&quot;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;option_schema.h&quot;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceinicpp.html">inicpp</a></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;{</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keyword">class </span>option_schema;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <a class="code" href="classinicpp_1_1option.html">option</a>();</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <a class="code" href="classinicpp_1_1option.html">option</a>(<span class="keyword">const</span> <a class="code" href="classinicpp_1_1option.html">option</a> &amp;source);</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <a class="code" href="classinicpp_1_1option.html">option</a> &amp;operator=(<span class="keyword">const</span> <a class="code" href="classinicpp_1_1option.html">option</a> &amp;source);</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <a class="code" href="classinicpp_1_1option.html">option</a>(<a class="code" href="classinicpp_1_1option.html">option</a> &amp;&amp;source);</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <a class="code" href="classinicpp_1_1option.html">option</a> &amp;operator=(<a class="code" href="classinicpp_1_1option.html">option</a> &amp;&amp;source);</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> ValueType&gt; <span class="keywordtype">void</span> set(ValueType value)</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        {</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;            <span class="keywordflow">throw</span> <a class="code" href="classinicpp_1_1not__implemented__exception.html">not_implemented_exception</a>();</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        }</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> ValueType&gt; ValueType <span class="keyword">get</span>()</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        {</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            <span class="keywordflow">throw</span> <a class="code" href="classinicpp_1_1not__implemented__exception.html">not_implemented_exception</a>();</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        }</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> ValueType&gt; std::vector&lt;ValueType&gt; get_list()</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        {</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            <span class="keywordflow">throw</span> <a class="code" href="classinicpp_1_1not__implemented__exception.html">not_implemented_exception</a>();</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        }</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        std::ostream &amp;operator&lt;&lt;(std::ostream &amp;os);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keywordtype">bool</span> is_list();</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    };</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;}</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="classinicpp_1_1not__implemented__exception_html"><div class="ttname"><a href="classinicpp_1_1not__implemented__exception.html">inicpp::not_implemented_exception</a></div><div class="ttdef"><b>Definition:</b> <a href="exception_8h_source.html#l00023">exception.h:23</a></div></div>
+<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="classinicpp_1_1option__holder.html">   22</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classinicpp_1_1option__holder.html">option_holder</a></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    {</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="classinicpp_1_1option__holder.html#ae9a936149174cbc21bb27f2c7177fd9b">   28</a></span>&#160;        <span class="keyword">virtual</span> <a class="code" href="classinicpp_1_1option__holder.html#ae9a936149174cbc21bb27f2c7177fd9b">~option_holder</a>() {}</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    };</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> ValueType&gt;</div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="classinicpp_1_1option__value.html">   37</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classinicpp_1_1option__value.html">option_value</a> : <span class="keyword">public</span> <a class="code" href="classinicpp_1_1option__holder.html">option_holder</a></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    {</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="classinicpp_1_1option__value.html#a4b08f42d883380bf0105d18bdb542f47">   44</a></span>&#160;        <a class="code" href="classinicpp_1_1option__value.html#a4b08f42d883380bf0105d18bdb542f47">option_value</a>(ValueType value) : value_(value) {}</div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="classinicpp_1_1option__value.html#a6ad26fd1f043ad45fe4420a417f49e9e">   48</a></span>&#160;        <span class="keyword">virtual</span> <a class="code" href="classinicpp_1_1option__value.html#a6ad26fd1f043ad45fe4420a417f49e9e">~option_value</a>() {}</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="classinicpp_1_1option__value.html#a04c428c36944410ce66923fba3576bc7">   54</a></span>&#160;        ValueType <span class="keyword">get</span>()</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        {</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;            <span class="keywordflow">return</span> value_;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        }</div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="classinicpp_1_1option__value.html#a3264e3858a2f29b41e7285c025cfe560">   62</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classinicpp_1_1option__value.html#a3264e3858a2f29b41e7285c025cfe560">set</a>(ValueType value)</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        {</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            value_ = value;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        }</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        ValueType value_;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    };</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    </div>
+<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="classinicpp_1_1option.html">   78</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classinicpp_1_1option.html">option</a></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    {</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        std::string name_;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        option_type type_;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        std::vector&lt;std::unique_ptr&lt;option_holder&gt;&gt; values_;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        std::shared_ptr&lt;option_schema&gt; option_schema_;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        <a class="code" href="classinicpp_1_1option.html#a021749404fa024edb88dcb32ffc5993d">option</a>() = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        <a class="code" href="classinicpp_1_1option.html#a021749404fa024edb88dcb32ffc5993d">option</a>(<span class="keyword">const</span> <a class="code" href="classinicpp_1_1option.html">option</a> &amp;source);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        <a class="code" href="classinicpp_1_1option.html">option</a> &amp;<a class="code" href="classinicpp_1_1option.html#adfb1c2bf57cf5ed28c8712e5c9cbf625">operator=</a>(<span class="keyword">const</span> <a class="code" href="classinicpp_1_1option.html">option</a> &amp;source);</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <a class="code" href="classinicpp_1_1option.html#a021749404fa024edb88dcb32ffc5993d">option</a>(<a class="code" href="classinicpp_1_1option.html">option</a> &amp;&amp;source);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        <a class="code" href="classinicpp_1_1option.html">option</a> &amp;<a class="code" href="classinicpp_1_1option.html#adfb1c2bf57cf5ed28c8712e5c9cbf625">operator=</a>(<a class="code" href="classinicpp_1_1option.html">option</a> &amp;&amp;source);</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        <a class="code" href="classinicpp_1_1option.html#a021749404fa024edb88dcb32ffc5993d">option</a>(<span class="keyword">const</span> std::string &amp;name, <span class="keyword">const</span> std::string &amp;value = <span class="stringliteral">&quot;&quot;</span>,</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;            option_type type = option_type::string_e);</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;        <span class="keyword">const</span> std::string &amp;<a class="code" href="classinicpp_1_1option.html#a212c230e7d263fbfc0fe91a29a232cb1">get_name</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classinicpp_1_1option.html#a5961126b599253f836501ac1b076222c">is_list</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;</div>
+<div class="line"><a name="l00139"></a><span class="lineno"><a class="line" href="classinicpp_1_1option.html#ab580c78eee15eaad4ec3c9e4a4dc373e">  139</a></span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> ValueType&gt; <span class="keywordtype">void</span> <a class="code" href="classinicpp_1_1option.html#ab580c78eee15eaad4ec3c9e4a4dc373e">set</a>(ValueType value)</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;        {</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;            <span class="keywordflow">throw</span> <a class="code" href="classinicpp_1_1not__implemented__exception.html">not_implemented_exception</a>();</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;        }</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;        <a class="code" href="classinicpp_1_1option.html">option</a> &amp;<a class="code" href="classinicpp_1_1option.html#adfb1c2bf57cf5ed28c8712e5c9cbf625">operator=</a>(boolean_t arg);</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;        <a class="code" href="classinicpp_1_1option.html">option</a> &amp;<a class="code" href="classinicpp_1_1option.html#adfb1c2bf57cf5ed28c8712e5c9cbf625">operator=</a>(signed_t arg);</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;        <a class="code" href="classinicpp_1_1option.html">option</a> &amp;<a class="code" href="classinicpp_1_1option.html#adfb1c2bf57cf5ed28c8712e5c9cbf625">operator=</a>(unsigned_t arg);</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;        <a class="code" href="classinicpp_1_1option.html">option</a> &amp;<a class="code" href="classinicpp_1_1option.html#adfb1c2bf57cf5ed28c8712e5c9cbf625">operator=</a>(float_t arg);</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;        <a class="code" href="classinicpp_1_1option.html">option</a> &amp;<a class="code" href="classinicpp_1_1option.html#adfb1c2bf57cf5ed28c8712e5c9cbf625">operator=</a>(enum_t arg);</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;        <a class="code" href="classinicpp_1_1option.html">option</a> &amp;<a class="code" href="classinicpp_1_1option.html#adfb1c2bf57cf5ed28c8712e5c9cbf625">operator=</a>(string_t arg);</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;</div>
+<div class="line"><a name="l00185"></a><span class="lineno"><a class="line" href="classinicpp_1_1option.html#a04bf94d0f09c407ca013fbe0f315d6ec">  185</a></span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> ValueType&gt; ValueType <span class="keyword">get</span>() <span class="keyword">const</span></div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;        {</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;            <span class="keywordflow">throw</span> <a class="code" href="classinicpp_1_1not__implemented__exception.html">not_implemented_exception</a>();</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;        }</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;</div>
+<div class="line"><a name="l00196"></a><span class="lineno"><a class="line" href="classinicpp_1_1option.html#a2a2abb289ce69a7209db671d7cef94c2">  196</a></span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> ValueType&gt; <span class="keywordtype">void</span> <a class="code" href="classinicpp_1_1option.html#a2a2abb289ce69a7209db671d7cef94c2">set_list</a>(</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;            <span class="keyword">const</span> std::vector&lt;ValueType&gt; &amp;value)</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;        {</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;            <span class="keywordflow">throw</span> <a class="code" href="classinicpp_1_1not__implemented__exception.html">not_implemented_exception</a>();</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;        }</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;        </div>
+<div class="line"><a name="l00208"></a><span class="lineno"><a class="line" href="classinicpp_1_1option.html#abf745f31eac663e665ac9e25027c9e53">  208</a></span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> ValueType&gt; <span class="keywordtype">void</span> <a class="code" href="classinicpp_1_1option.html#abf745f31eac663e665ac9e25027c9e53">set_list</a>(</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;            std::vector&lt;ValueType&gt; &amp;&amp;value)</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;        {</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;            <span class="keywordflow">throw</span> <a class="code" href="classinicpp_1_1not__implemented__exception.html">not_implemented_exception</a>();</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;        }</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;        </div>
+<div class="line"><a name="l00219"></a><span class="lineno"><a class="line" href="classinicpp_1_1option.html#a5509588c466ed8e6dc35be49ef974808">  219</a></span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> ValueType&gt; std::vector&lt;ValueType&gt; <a class="code" href="classinicpp_1_1option.html#a5509588c466ed8e6dc35be49ef974808">get_list</a>()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;<span class="keyword">        </span>{</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;            <span class="keywordflow">throw</span> <a class="code" href="classinicpp_1_1not__implemented__exception.html">not_implemented_exception</a>();</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;        }</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;</div>
+<div class="line"><a name="l00229"></a><span class="lineno"><a class="line" href="classinicpp_1_1option.html#a8791f9947aab383b94a489ede16a137b">  229</a></span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> ValueType&gt; <span class="keywordtype">void</span> <a class="code" href="classinicpp_1_1option.html#a8791f9947aab383b94a489ede16a137b">add_to_list</a>(ValueType value)</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;        {</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;            <span class="keywordflow">throw</span> <a class="code" href="classinicpp_1_1not__implemented__exception.html">not_implemented_exception</a>();</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;        }</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;</div>
+<div class="line"><a name="l00240"></a><span class="lineno"><a class="line" href="classinicpp_1_1option.html#a2bb4da8ffaacd204bc30e37387a1c84d">  240</a></span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> ValueType&gt; <span class="keywordtype">void</span> <a class="code" href="classinicpp_1_1option.html#a2bb4da8ffaacd204bc30e37387a1c84d">add_to_list</a>(ValueType value,</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;            <span class="keywordtype">size_t</span> position)</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;        {</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;            <span class="keywordflow">throw</span> <a class="code" href="classinicpp_1_1not__implemented__exception.html">not_implemented_exception</a>();</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;        }</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;</div>
+<div class="line"><a name="l00252"></a><span class="lineno"><a class="line" href="classinicpp_1_1option.html#a8467a05e2e0e90cbe1db26835b48653e">  252</a></span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> ValueType&gt; <span class="keywordtype">void</span> <a class="code" href="classinicpp_1_1option.html#a8467a05e2e0e90cbe1db26835b48653e">remove_from_list</a>(ValueType value)</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;        {</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;            <span class="keywordflow">throw</span> <a class="code" href="classinicpp_1_1not__implemented__exception.html">not_implemented_exception</a>();</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;        }</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classinicpp_1_1option.html#a8467a05e2e0e90cbe1db26835b48653e">remove_from_list</a>(<span class="keywordtype">size_t</span> position);</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classinicpp_1_1option.html#a4e6f26c345043645d6b00e257136bc0f">validate</a>(<span class="keyword">const</span> <a class="code" href="classinicpp_1_1option__schema.html">option_schema</a> &amp;opt_schema, schema_mode mode);</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;        std::ostream &amp;<a class="code" href="classinicpp_1_1option.html#a06e3913d8f33bc6809ac3dd8823dcf5d">operator&lt;&lt;</a>(std::ostream &amp;os);</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;    };</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;}</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="classinicpp_1_1option_html_a5961126b599253f836501ac1b076222c"><div class="ttname"><a href="classinicpp_1_1option.html#a5961126b599253f836501ac1b076222c">inicpp::option::is_list</a></div><div class="ttdeci">bool is_list() const </div><div class="ttdef"><b>Definition:</b> <a href="option_8cpp_source.html#l00055">option.cpp:55</a></div></div>
+<div class="ttc" id="classinicpp_1_1option_html_a8791f9947aab383b94a489ede16a137b"><div class="ttname"><a href="classinicpp_1_1option.html#a8791f9947aab383b94a489ede16a137b">inicpp::option::add_to_list</a></div><div class="ttdeci">void add_to_list(ValueType value)</div><div class="ttdef"><b>Definition:</b> <a href="option_8h_source.html#l00229">option.h:229</a></div></div>
+<div class="ttc" id="classinicpp_1_1option__holder_html"><div class="ttname"><a href="classinicpp_1_1option__holder.html">inicpp::option_holder</a></div><div class="ttdef"><b>Definition:</b> <a href="option_8h_source.html#l00022">option.h:22</a></div></div>
+<div class="ttc" id="classinicpp_1_1option__value_html_a4b08f42d883380bf0105d18bdb542f47"><div class="ttname"><a href="classinicpp_1_1option__value.html#a4b08f42d883380bf0105d18bdb542f47">inicpp::option_value::option_value</a></div><div class="ttdeci">option_value(ValueType value)</div><div class="ttdef"><b>Definition:</b> <a href="option_8h_source.html#l00044">option.h:44</a></div></div>
+<div class="ttc" id="classinicpp_1_1option_html_abf745f31eac663e665ac9e25027c9e53"><div class="ttname"><a href="classinicpp_1_1option.html#abf745f31eac663e665ac9e25027c9e53">inicpp::option::set_list</a></div><div class="ttdeci">void set_list(std::vector&lt; ValueType &gt; &amp;&amp;value)</div><div class="ttdef"><b>Definition:</b> <a href="option_8h_source.html#l00208">option.h:208</a></div></div>
+<div class="ttc" id="classinicpp_1_1not__implemented__exception_html"><div class="ttname"><a href="classinicpp_1_1not__implemented__exception.html">inicpp::not_implemented_exception</a></div><div class="ttdef"><b>Definition:</b> <a href="exception_8h_source.html#l00130">exception.h:130</a></div></div>
+<div class="ttc" id="classinicpp_1_1option_html_a021749404fa024edb88dcb32ffc5993d"><div class="ttname"><a href="classinicpp_1_1option.html#a021749404fa024edb88dcb32ffc5993d">inicpp::option::option</a></div><div class="ttdeci">option()=delete</div></div>
+<div class="ttc" id="classinicpp_1_1option__value_html_a3264e3858a2f29b41e7285c025cfe560"><div class="ttname"><a href="classinicpp_1_1option__value.html#a3264e3858a2f29b41e7285c025cfe560">inicpp::option_value::set</a></div><div class="ttdeci">void set(ValueType value)</div><div class="ttdef"><b>Definition:</b> <a href="option_8h_source.html#l00062">option.h:62</a></div></div>
 <div class="ttc" id="namespaceinicpp_html"><div class="ttname"><a href="namespaceinicpp.html">inicpp</a></div><div class="ttdef"><b>Definition:</b> <a href="config_8cpp_source.html#l00003">config.cpp:3</a></div></div>
-<div class="ttc" id="classinicpp_1_1option_html"><div class="ttname"><a href="classinicpp_1_1option.html">inicpp::option</a></div><div class="ttdef"><b>Definition:</b> <a href="option_8h_source.html#l00011">option.h:11</a></div></div>
+<div class="ttc" id="classinicpp_1_1option_html_adfb1c2bf57cf5ed28c8712e5c9cbf625"><div class="ttname"><a href="classinicpp_1_1option.html#adfb1c2bf57cf5ed28c8712e5c9cbf625">inicpp::option::operator=</a></div><div class="ttdeci">option &amp; operator=(const option &amp;source)</div><div class="ttdef"><b>Definition:</b> <a href="option_8cpp_source.html#l00010">option.cpp:10</a></div></div>
+<div class="ttc" id="classinicpp_1_1option_html_a212c230e7d263fbfc0fe91a29a232cb1"><div class="ttname"><a href="classinicpp_1_1option.html#a212c230e7d263fbfc0fe91a29a232cb1">inicpp::option::get_name</a></div><div class="ttdeci">const std::string &amp; get_name() const </div><div class="ttdef"><b>Definition:</b> <a href="option_8cpp_source.html#l00030">option.cpp:30</a></div></div>
+<div class="ttc" id="classinicpp_1_1option_html_a2bb4da8ffaacd204bc30e37387a1c84d"><div class="ttname"><a href="classinicpp_1_1option.html#a2bb4da8ffaacd204bc30e37387a1c84d">inicpp::option::add_to_list</a></div><div class="ttdeci">void add_to_list(ValueType value, size_t position)</div><div class="ttdef"><b>Definition:</b> <a href="option_8h_source.html#l00240">option.h:240</a></div></div>
+<div class="ttc" id="classinicpp_1_1option__holder_html_ae9a936149174cbc21bb27f2c7177fd9b"><div class="ttname"><a href="classinicpp_1_1option__holder.html#ae9a936149174cbc21bb27f2c7177fd9b">inicpp::option_holder::~option_holder</a></div><div class="ttdeci">virtual ~option_holder()</div><div class="ttdef"><b>Definition:</b> <a href="option_8h_source.html#l00028">option.h:28</a></div></div>
+<div class="ttc" id="classinicpp_1_1option_html_a8467a05e2e0e90cbe1db26835b48653e"><div class="ttname"><a href="classinicpp_1_1option.html#a8467a05e2e0e90cbe1db26835b48653e">inicpp::option::remove_from_list</a></div><div class="ttdeci">void remove_from_list(ValueType value)</div><div class="ttdef"><b>Definition:</b> <a href="option_8h_source.html#l00252">option.h:252</a></div></div>
+<div class="ttc" id="classinicpp_1_1option_html"><div class="ttname"><a href="classinicpp_1_1option.html">inicpp::option</a></div><div class="ttdef"><b>Definition:</b> <a href="option_8h_source.html#l00078">option.h:78</a></div></div>
+<div class="ttc" id="classinicpp_1_1option_html_a5509588c466ed8e6dc35be49ef974808"><div class="ttname"><a href="classinicpp_1_1option.html#a5509588c466ed8e6dc35be49ef974808">inicpp::option::get_list</a></div><div class="ttdeci">std::vector&lt; ValueType &gt; get_list() const </div><div class="ttdef"><b>Definition:</b> <a href="option_8h_source.html#l00219">option.h:219</a></div></div>
+<div class="ttc" id="classinicpp_1_1option_html_a2a2abb289ce69a7209db671d7cef94c2"><div class="ttname"><a href="classinicpp_1_1option.html#a2a2abb289ce69a7209db671d7cef94c2">inicpp::option::set_list</a></div><div class="ttdeci">void set_list(const std::vector&lt; ValueType &gt; &amp;value)</div><div class="ttdef"><b>Definition:</b> <a href="option_8h_source.html#l00196">option.h:196</a></div></div>
+<div class="ttc" id="classinicpp_1_1option__schema_html"><div class="ttname"><a href="classinicpp_1_1option__schema.html">inicpp::option_schema</a></div><div class="ttdef"><b>Definition:</b> <a href="option__schema_8h_source.html#l00057">option_schema.h:57</a></div></div>
+<div class="ttc" id="classinicpp_1_1option_html_a06e3913d8f33bc6809ac3dd8823dcf5d"><div class="ttname"><a href="classinicpp_1_1option.html#a06e3913d8f33bc6809ac3dd8823dcf5d">inicpp::option::operator&lt;&lt;</a></div><div class="ttdeci">std::ostream &amp; operator&lt;&lt;(std::ostream &amp;os)</div><div class="ttdef"><b>Definition:</b> <a href="option_8cpp_source.html#l00050">option.cpp:50</a></div></div>
+<div class="ttc" id="classinicpp_1_1option_html_ab580c78eee15eaad4ec3c9e4a4dc373e"><div class="ttname"><a href="classinicpp_1_1option.html#ab580c78eee15eaad4ec3c9e4a4dc373e">inicpp::option::set</a></div><div class="ttdeci">void set(ValueType value)</div><div class="ttdef"><b>Definition:</b> <a href="option_8h_source.html#l00139">option.h:139</a></div></div>
+<div class="ttc" id="classinicpp_1_1option__value_html"><div class="ttname"><a href="classinicpp_1_1option__value.html">inicpp::option_value</a></div><div class="ttdef"><b>Definition:</b> <a href="option_8h_source.html#l00037">option.h:37</a></div></div>
+<div class="ttc" id="classinicpp_1_1option__value_html_a6ad26fd1f043ad45fe4420a417f49e9e"><div class="ttname"><a href="classinicpp_1_1option__value.html#a6ad26fd1f043ad45fe4420a417f49e9e">inicpp::option_value::~option_value</a></div><div class="ttdeci">virtual ~option_value()</div><div class="ttdef"><b>Definition:</b> <a href="option_8h_source.html#l00048">option.h:48</a></div></div>
+<div class="ttc" id="classinicpp_1_1option_html_a4e6f26c345043645d6b00e257136bc0f"><div class="ttname"><a href="classinicpp_1_1option.html#a4e6f26c345043645d6b00e257136bc0f">inicpp::option::validate</a></div><div class="ttdeci">bool validate(const option_schema &amp;opt_schema, schema_mode mode)</div><div class="ttdef"><b>Definition:</b> <a href="option_8cpp_source.html#l00045">option.cpp:45</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><b>option.h</b></li>
-    <li class="footer">Generated on Wed Mar 30 2016 20:37:41 for inicpp by
+    <li class="footer">Generated on Sun Apr 3 2016 11:29:38 for inicpp by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>
   </ul>

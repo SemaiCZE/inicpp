@@ -1,13 +1,28 @@
 var classinicpp_1_1option =
 [
-    [ "option", "classinicpp_1_1option.html#a536fde527b33dd51ef8ac2b467eb1092", null ],
+    [ "option", "classinicpp_1_1option.html#a021749404fa024edb88dcb32ffc5993d", null ],
     [ "option", "classinicpp_1_1option.html#aad5082ed23f2a3ce3852bcb84852be46", null ],
     [ "option", "classinicpp_1_1option.html#a42d225f50eead78032d53f902ccc456f", null ],
-    [ "get", "classinicpp_1_1option.html#adbac663cf4a62a713b08ece470298373", null ],
-    [ "get_list", "classinicpp_1_1option.html#a1242dde0233dedfa33d0ca88e0b15b72", null ],
-    [ "is_list", "classinicpp_1_1option.html#aaa7aa2d3396a6be4c218e42beab89101", null ],
+    [ "option", "classinicpp_1_1option.html#aa416dd22735f9d06dd37d26644ef597a", null ],
+    [ "add_to_list", "classinicpp_1_1option.html#a8791f9947aab383b94a489ede16a137b", null ],
+    [ "add_to_list", "classinicpp_1_1option.html#a2bb4da8ffaacd204bc30e37387a1c84d", null ],
+    [ "get", "classinicpp_1_1option.html#a04bf94d0f09c407ca013fbe0f315d6ec", null ],
+    [ "get_list", "classinicpp_1_1option.html#a5509588c466ed8e6dc35be49ef974808", null ],
+    [ "get_name", "classinicpp_1_1option.html#a212c230e7d263fbfc0fe91a29a232cb1", null ],
+    [ "is_list", "classinicpp_1_1option.html#a5961126b599253f836501ac1b076222c", null ],
     [ "operator<<", "classinicpp_1_1option.html#a06e3913d8f33bc6809ac3dd8823dcf5d", null ],
     [ "operator=", "classinicpp_1_1option.html#adfb1c2bf57cf5ed28c8712e5c9cbf625", null ],
     [ "operator=", "classinicpp_1_1option.html#a5e73d1a958a7dcf7b94d530cb9ed5281", null ],
-    [ "set", "classinicpp_1_1option.html#ab580c78eee15eaad4ec3c9e4a4dc373e", null ]
+    [ "operator=", "classinicpp_1_1option.html#a5cb6614c0cd54a875e34e38e572616e1", null ],
+    [ "operator=", "classinicpp_1_1option.html#a275375209c7748c8400e34c8b5c2fcd3", null ],
+    [ "operator=", "classinicpp_1_1option.html#af30aa6c4637f76bb38518f620872e2dc", null ],
+    [ "operator=", "classinicpp_1_1option.html#a14011cd63b6619cc6b34cd9d72a8f353", null ],
+    [ "operator=", "classinicpp_1_1option.html#ae6be0db188cc404e9f368d51f4d57bd0", null ],
+    [ "operator=", "classinicpp_1_1option.html#ada2ff4e377bc3c57e69fee21b35b0f23", null ],
+    [ "remove_from_list", "classinicpp_1_1option.html#a8467a05e2e0e90cbe1db26835b48653e", null ],
+    [ "remove_from_list", "classinicpp_1_1option.html#a521382d3ac64ef0dcbcfadc8fa18612d", null ],
+    [ "set", "classinicpp_1_1option.html#ab580c78eee15eaad4ec3c9e4a4dc373e", null ],
+    [ "set_list", "classinicpp_1_1option.html#a2a2abb289ce69a7209db671d7cef94c2", null ],
+    [ "set_list", "classinicpp_1_1option.html#abf745f31eac663e665ac9e25027c9e53", null ],
+    [ "validate", "classinicpp_1_1option.html#a4e6f26c345043645d6b00e257136bc0f", null ]
 ];

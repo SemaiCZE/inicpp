@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['schema',['schema',['../classinicpp_1_1schema.html',1,'inicpp']]],
-  ['section',['section',['../classinicpp_1_1section.html',1,'inicpp']]],
-  ['section_5fiterator',['section_iterator',['../classinicpp_1_1section__iterator.html',1,'inicpp']]],
-  ['section_5fschema',['section_schema',['../classinicpp_1_1section__schema.html',1,'inicpp']]]
+  ['not_5ffound_5fexception',['not_found_exception',['../classinicpp_1_1not__found__exception.html',1,'inicpp']]],
+  ['not_5fimplemented_5fexception',['not_implemented_exception',['../classinicpp_1_1not__implemented__exception.html',1,'inicpp']]]
 ];
