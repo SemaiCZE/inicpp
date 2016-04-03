@@ -129,101 +129,99 @@ $(document).ready(function(){initNavTree('index.html','');});
 <p>_**To be done...**_</p>
 <h2>Examples</h2>
 <h3>Basic usage without schema</h3>
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;{C++}</div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;using namespace inicpp;</div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;// Load config file from file</div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;config example_conf = parser::load_file(&quot;conf.ini&quot;);</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;// Iterate through sections</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;for(auto &amp;sect : example_conf) {</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    std::cout &lt;&lt; &quot;Section: &quot; &lt;&lt; sect.get_name() &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    // Iterate through options in a section</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    for(auto &amp;opt : sect) {</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        std::cout &lt;&lt; &quot;Option: &quot; &lt;&lt; opt.get_name() &lt;&lt; &quot; with value &quot;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;            &lt;&lt; opt.get&lt;string_t&gt;() &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    }</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;}</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;// Get known item from known section</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;try {</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    signed_t port = config[&quot;github&quot;][&quot;port&quot;].get&lt;signed_t&gt;();</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;} catch (bad_cast_exception) {</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    // item cannot be casted to signed_t type</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;}</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;// Make reference to the section</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;section &amp;github_sect = config[&quot;github&quot;];</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;// Get a string always work</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;string_t port_str = github_sect[&quot;port&quot;].get&lt;string_t&gt;();</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;// Change some values</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;github_sect[&quot;port&quot;].set&lt;signed_t&gt;(42222);</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;// Following two lines are equivalent</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;github_sect[&quot;address&quot;].set&lt;string_t&gt;(&quot;www.github.com&quot;);</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;github_sect[&quot;address&quot;] = &quot;www.github.com&quot;;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;// Change sigle value to list by inserting an item</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;option &amp;addr_opt = github_sect[&quot;address&quot;];</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;addr_opt.add_to_list&lt;string_t&gt;(&quot;https://github.io&quot;);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;assert(addr_opt.is_list()); // now it&#39;s a list</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;// Remove item from the list (specifying position)</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;addr_opt.remove_from_list(0); // remove first item</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;assert(!addr_opt.is_list());</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;// Save changes</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;std::ofstream ofs(&quot;conf_new.ini&quot;);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;ofs &lt;&lt; config;</div>
+<div class="fragment"><div class="line"><span class="keyword">using namespace </span><a class="code" href="namespaceinicpp.html">inicpp</a>;</div>
+<div class="line"></div>
+<div class="line"><span class="comment">// Load config file from file</span></div>
+<div class="line"><a class="code" href="classinicpp_1_1config.html">config</a> example_conf = <a class="code" href="classinicpp_1_1parser.html#a58a66620156ab1256067674c96e63cb1">parser::load_file</a>(<span class="stringliteral">&quot;conf.ini&quot;</span>);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">// Iterate through sections</span></div>
+<div class="line"><span class="keywordflow">for</span>(<span class="keyword">auto</span> &amp;sect : example_conf) {</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Section: &quot;</span> &lt;&lt; sect.get_name() &lt;&lt; std::endl;</div>
+<div class="line">    <span class="comment">// Iterate through options in a section</span></div>
+<div class="line">    <span class="keywordflow">for</span>(<span class="keyword">auto</span> &amp;opt : sect) {</div>
+<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;Option: &quot;</span> &lt;&lt; opt.get_name() &lt;&lt; <span class="stringliteral">&quot; with value &quot;</span></div>
+<div class="line">            &lt;&lt; opt.get&lt;string_t&gt;() &lt;&lt; std::endl;</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="comment">// Get known item from known section</span></div>
+<div class="line"><span class="keywordflow">try</span> {</div>
+<div class="line">    signed_t port = <a class="code" href="classinicpp_1_1config.html">config</a>[<span class="stringliteral">&quot;github&quot;</span>][<span class="stringliteral">&quot;port&quot;</span>].get&lt;signed_t&gt;();</div>
+<div class="line">} <span class="keywordflow">catch</span> (<a class="code" href="classinicpp_1_1bad__cast__exception.html">bad_cast_exception</a>) {</div>
+<div class="line">    <span class="comment">// item cannot be casted to signed_t type</span></div>
+<div class="line">}</div>
+<div class="line"><span class="comment">// Make reference to the section</span></div>
+<div class="line"><a class="code" href="classinicpp_1_1section.html">section</a> &amp;github_sect = <a class="code" href="classinicpp_1_1config.html">config</a>[<span class="stringliteral">&quot;github&quot;</span>];</div>
+<div class="line"><span class="comment">// Get a string always work</span></div>
+<div class="line">string_t port_str = github_sect[<span class="stringliteral">&quot;port&quot;</span>].get&lt;string_t&gt;();</div>
+<div class="line"></div>
+<div class="line"><span class="comment">// Change some values</span></div>
+<div class="line">github_sect[<span class="stringliteral">&quot;port&quot;</span>].set&lt;signed_t&gt;(42222);</div>
+<div class="line"><span class="comment">// Following two lines are equivalent</span></div>
+<div class="line">github_sect[<span class="stringliteral">&quot;address&quot;</span>].set&lt;string_t&gt;(<span class="stringliteral">&quot;www.github.com&quot;</span>);</div>
+<div class="line">github_sect[<span class="stringliteral">&quot;address&quot;</span>] = <span class="stringliteral">&quot;www.github.com&quot;</span>;</div>
+<div class="line"></div>
+<div class="line"><span class="comment">// Change sigle value to list by inserting an item</span></div>
+<div class="line"><a class="code" href="classinicpp_1_1option.html">option</a> &amp;addr_opt = github_sect[<span class="stringliteral">&quot;address&quot;</span>];</div>
+<div class="line">addr_opt.<a class="code" href="classinicpp_1_1option.html#a8791f9947aab383b94a489ede16a137b">add_to_list</a>&lt;string_t&gt;(<span class="stringliteral">&quot;https://github.io&quot;</span>);</div>
+<div class="line">assert(addr_opt.<a class="code" href="classinicpp_1_1option.html#a5961126b599253f836501ac1b076222c">is_list</a>()); <span class="comment">// now it&#39;s a list</span></div>
+<div class="line"><span class="comment">// Remove item from the list (specifying position)</span></div>
+<div class="line">addr_opt.<a class="code" href="classinicpp_1_1option.html#a8467a05e2e0e90cbe1db26835b48653e">remove_from_list</a>(0); <span class="comment">// remove first item</span></div>
+<div class="line">assert(!addr_opt.<a class="code" href="classinicpp_1_1option.html#a5961126b599253f836501ac1b076222c">is_list</a>());</div>
+<div class="line"></div>
+<div class="line"><span class="comment">// Save changes</span></div>
+<div class="line">std::ofstream ofs(<span class="stringliteral">&quot;conf_new.ini&quot;</span>);</div>
+<div class="line">ofs &lt;&lt; <a class="code" href="classinicpp_1_1config.html">config</a>;</div>
 </div><!-- fragment --><p>Without schema all items are treated as string type, but runtime conversion could be done to one of supported types if possible.</p>
 <h3>Schema validation support</h3>
 <p>Schema validation can bring you ability to make sure, that a config file contain what you expect with type safety. In addition, this implies better performance on heavy reading of validated configuration.</p>
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;{C++}</div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;using namespace inicpp;</div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;// First prepare the schema:</div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;schema conf_schm;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;// Add first section</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;conf_schm.add_section(&quot;github&quot;); // default is mandatory</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;// Add option named &quot;port&quot; into &quot;github&quot; section. The option is mandatory</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;// and it&#39;s type is unsigned. Default value makes no sense for mandatory</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;// options. This option has no validating function, so all values are valid.</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;conf_schm.add_option(&quot;github&quot;, option_schema_params&lt;unsigned_t&gt; {&quot;port&quot;, true});</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;// Mandatory string option &quot;address&quot; with default value &quot;www.github.com&quot; (one value, not list).</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;// Option is valid, if given string is greater than &quot;aaa&quot; (using lambda of functor class</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;// you can specify whatever you want!</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;option_schema_params&lt;string_t&gt; args = {&quot;address&quot;, false, false,</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    &quot;www.github.com&quot;, [](const string_t &amp;str){ return str &gt; &quot;aaa&quot;; }};</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;conf_schm.add_option(&quot;github&quot;, args); // template argument is deduced</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;// Alternatively, create the classes first and add them to schema</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;option_schema_params&lt;boolean_t&gt; autoconnect_params = {&quot;autoconnect&quot;, false, false, &quot;off&quot;};</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;option_schema autoconnect_option(autoconnect_params);</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;section_schema connect_section(&quot;connect&quot;, false); // optional section</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;connect_section.add_option(autoconnect_option);</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;conf_schm.add_section(connect_section);</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;// Then load file with validation (from stream conf_istream, just to show a different way)</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;try {</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    config example_conf = parser::load(conf_istream, conf_schm, schema_mode::strict);</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;} catch (invalid_config_exception) {</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    // config is not valid</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;}</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;// Or you can validate already loaded config!</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;config example_conf = parser::load_file(&quot;conf.ini&quot;);</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;if(example_conf.validate(conf_schm, schema_mode::relaxed)) {</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    // now the config is valid and all values are internaly</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    // stored as their correct type</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;}</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;// Default configuration (schema) can be written to a file using output stream or parser save method</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;parser::save(conf_schm, &quot;default_conf.ini&quot;);</div>
+<div class="fragment"><div class="line"><span class="keyword">using namespace </span><a class="code" href="namespaceinicpp.html">inicpp</a>;</div>
+<div class="line"></div>
+<div class="line"><span class="comment">// First prepare the schema:</span></div>
+<div class="line"><a class="code" href="classinicpp_1_1schema.html">schema</a> conf_schm;</div>
+<div class="line"></div>
+<div class="line"><span class="comment">// Add first section</span></div>
+<div class="line">conf_schm.<a class="code" href="classinicpp_1_1schema.html#a2d2034c14f4b2a8a3e774ef0f42eeba0">add_section</a>(<span class="stringliteral">&quot;github&quot;</span>); <span class="comment">// default is mandatory</span></div>
+<div class="line"><span class="comment">// Add option named &quot;port&quot; into &quot;github&quot; section. The option is mandatory</span></div>
+<div class="line"><span class="comment">// and it&#39;s type is unsigned. Default value makes no sense for mandatory</span></div>
+<div class="line"><span class="comment">// options. This option has no validating function, so all values are valid.</span></div>
+<div class="line">conf_schm.<a class="code" href="classinicpp_1_1schema.html#ad4034b706d3f9c5cde96fa06b3b4ccb1">add_option</a>(<span class="stringliteral">&quot;github&quot;</span>, <a class="code" href="structinicpp_1_1option__schema__params.html">option_schema_params&lt;unsigned_t&gt;</a> {<span class="stringliteral">&quot;port&quot;</span>, <span class="keyword">true</span>});</div>
+<div class="line"><span class="comment">// Mandatory string option &quot;address&quot; with default value &quot;www.github.com&quot; (one value, not list).</span></div>
+<div class="line"><span class="comment">// Option is valid, if given string is greater than &quot;aaa&quot; (using lambda of functor class</span></div>
+<div class="line"><span class="comment">// you can specify whatever you want!</span></div>
+<div class="line"><a class="code" href="structinicpp_1_1option__schema__params.html">option_schema_params&lt;string_t&gt;</a> args = {<span class="stringliteral">&quot;address&quot;</span>, <span class="keyword">false</span>, <span class="keyword">false</span>,</div>
+<div class="line">    <span class="stringliteral">&quot;www.github.com&quot;</span>, [](<span class="keyword">const</span> string_t &amp;str){ <span class="keywordflow">return</span> str &gt; <span class="stringliteral">&quot;aaa&quot;</span>; }};</div>
+<div class="line">conf_schm.<a class="code" href="classinicpp_1_1schema.html#ad4034b706d3f9c5cde96fa06b3b4ccb1">add_option</a>(<span class="stringliteral">&quot;github&quot;</span>, args); <span class="comment">// template argument is deduced</span></div>
+<div class="line"></div>
+<div class="line"><span class="comment">// Alternatively, create the classes first and add them to schema</span></div>
+<div class="line"><a class="code" href="structinicpp_1_1option__schema__params.html">option_schema_params&lt;boolean_t&gt;</a> autoconnect_params = {<span class="stringliteral">&quot;autoconnect&quot;</span>, <span class="keyword">false</span>, <span class="keyword">false</span>, <span class="stringliteral">&quot;off&quot;</span>};</div>
+<div class="line"><a class="code" href="classinicpp_1_1option__schema.html">option_schema</a> autoconnect_option(autoconnect_params);</div>
+<div class="line"><a class="code" href="classinicpp_1_1section__schema.html">section_schema</a> connect_section(<span class="stringliteral">&quot;connect&quot;</span>, <span class="keyword">false</span>); <span class="comment">// optional section</span></div>
+<div class="line">connect_section.add_option(autoconnect_option);</div>
+<div class="line">conf_schm.<a class="code" href="classinicpp_1_1schema.html#a2d2034c14f4b2a8a3e774ef0f42eeba0">add_section</a>(connect_section);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">// Then load file with validation (from stream conf_istream, just to show a different way)</span></div>
+<div class="line"><span class="keywordflow">try</span> {</div>
+<div class="line">    config example_conf = <a class="code" href="classinicpp_1_1parser.html#afd8aa07cf7226074f4659e5a89269c60">parser::load</a>(conf_istream, conf_schm, schema_mode::strict);</div>
+<div class="line">} <span class="keywordflow">catch</span> (<a class="code" href="classinicpp_1_1invalid__config__exception.html">invalid_config_exception</a>) {</div>
+<div class="line">    <span class="comment">// config is not valid</span></div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="comment">// Or you can validate already loaded config!</span></div>
+<div class="line">config example_conf = <a class="code" href="classinicpp_1_1parser.html#a58a66620156ab1256067674c96e63cb1">parser::load_file</a>(<span class="stringliteral">&quot;conf.ini&quot;</span>);</div>
+<div class="line"><span class="keywordflow">if</span>(example_conf.<a class="code" href="classinicpp_1_1config.html#adbc8b54a0354f043b0ea1b894e87efec">validate</a>(conf_schm, schema_mode::relaxed)) {</div>
+<div class="line">    <span class="comment">// now the config is valid and all values are internaly</span></div>
+<div class="line">    <span class="comment">// stored as their correct type</span></div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="comment">// Default configuration (schema) can be written to a file using output stream or parser save method</span></div>
+<div class="line"><a class="code" href="classinicpp_1_1parser.html#a0f1a5c0ebb84ba4c4e5e4640d1d8088d">parser::save</a>(conf_schm, <span class="stringliteral">&quot;default_conf.ini&quot;</span>);</div>
 </div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sun Apr 3 2016 11:29:38 for inicpp by
+    <li class="footer">Generated on Sun Apr 3 2016 14:31:39 for inicpp by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>
   </ul>
