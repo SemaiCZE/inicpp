@@ -31,7 +31,7 @@ Also C++ compiler with at least C++14 support is required.
 
 To build the library run following commands from root of source code directory:
 
-```Shell
+```{.sh}
 $ mkdir -p build
 $ cd build
 $ cmake ..
@@ -40,7 +40,7 @@ $ make
 
 To build and run unit tests using Google Test framework run additional commands:
 
-```Shell
+```{.sh}
 $ make -f tests/Makefile
 $ ./tests/run_tests
 ```
@@ -55,7 +55,7 @@ _**To be done...**_
 
 ### Basic usage without schema
 
-```C++
+```{.cpp}
 using namespace inicpp;
 
 // Load config file from file
@@ -107,7 +107,7 @@ Without schema all items are treated as string type, but runtime conversion coul
 
 Schema validation can bring you ability to make sure, that a config file contain what you expect with type safety. In addition, this implies better performance on heavy reading of validated configuration.
 
-```C++
+```{.cpp}
 using namespace inicpp;
 
 // First prepare the schema:
