@@ -8,6 +8,7 @@
 
 #include "exception.h"
 #include "option.h"
+#include "types.h"
 
 namespace inicpp
 {
@@ -20,9 +21,9 @@ namespace inicpp
 		/** Name of option_schema */
 		std::string name;
 		/** Determines if this option is mandatory or not */
-		bool mandatory = true;
+		item_requirement requirement = item_requirement::mandatory;
 		/** True if list has to be stored in option */
-		bool is_list = false;
+		option_item type = option_item::single;
 		/** Default value of optional option */
 		std::string default_value = "";
 		/** Description of option */

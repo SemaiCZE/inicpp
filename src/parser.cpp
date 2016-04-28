@@ -51,4 +51,15 @@ namespace inicpp
 	{
 		throw not_implemented_exception();
 	}
+
+	void parser::save(const config &cfg, const schema &schm, const std::string &file)
+	{
+		throw not_implemented_exception();
+	}
+
+	void parser::save(const config &cfg, const schema &schm, std::ostream &str)
+	{
+		throw not_implemented_exception();
+	}
+
 }

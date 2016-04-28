@@ -22,8 +22,20 @@ namespace inicpp
 	typedef int64_t signed_t;
 	typedef uint64_t unsigned_t;
 	typedef double float_t;
-	typedef std::vector<std::string> enum_t;
+	typedef std::string enum_t;
 	typedef std::string string_t;
+
+	/**
+	 * Enumeration type used in schema specification which distinguishes
+	 * between single item and list of items.
+	 */
+	enum class option_item: bool { single, list };
+
+	/**
+	 * Type used to distinguish between mandatory and optional values
+	 * in schema specification.
+	 */
+	enum class item_requirement : bool { mandatory, optional };
 
 	/**
 	 * Mode in which schema can be validated.

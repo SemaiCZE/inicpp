@@ -29,4 +29,5 @@
 
 build/
 doc/
+CMakeLists.txt.user
 

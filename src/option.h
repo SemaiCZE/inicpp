@@ -169,7 +169,8 @@ namespace inicpp
 		 * @param arg enum_t
 		 * @return reference to this
 		 */
-		option &operator=(enum_t arg);
+		// TODO: enum_t is std::string as string_t .. so no overload needed
+		//option &operator=(enum_t arg);
 		/**
 		 * Overloaded alias for set() function.
 		 * @param arg string_t

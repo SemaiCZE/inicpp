@@ -114,6 +114,22 @@ namespace inicpp
 		 * @param str output stream
 		 */
 		static void save(const schema &schm, std::ostream &str);
+		/**
+		 * Save given configuration (could be only partial) to a file. Options
+		 * which are not specified will be substitued by default values from schema.
+		 * @param cfg configuration which will be saved
+		 * @param schm schema which will be saved
+		 * @param file name of output file
+		 */
+		static void save(const config &cfg, const schema &schm, const std::string &file);
+		/**
+		 * Save given configuration (could be only partial) to output stream. Options
+		 * which are not specified will be substitued by default values from schema.
+		 * @param cfg configuration which will be saved
+		 * @param schm schema which will be saved
+		 * @param str output stream
+		 */
+		static void save(const config &cfg, const schema &schm, std::ostream &str);
 	};
 }
 

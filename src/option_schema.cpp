@@ -45,7 +45,7 @@ namespace inicpp
 
 	bool option_schema::is_list() const
 	{
-		return params_->is_list;
+		return params_->type == option_item::list;
 	}
 
 	const std::string &option_schema::get_default_value() const
@@ -55,7 +55,7 @@ namespace inicpp
 
 	bool option_schema::is_mandatory() const
 	{
-		return params_->mandatory;
+		return params_->requirement == item_requirement::mandatory;
 	}
 
 	const std::string &option_schema::get_comment() const
