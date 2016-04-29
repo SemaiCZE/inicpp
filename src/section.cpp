@@ -62,11 +62,6 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	std::ostream &section::operator<<(std::ostream &os)
-	{
-		throw not_implemented_exception();
-	}
-
 	section::iterator section::begin()
 	{
 		throw not_implemented_exception();
@@ -83,6 +78,11 @@ namespace inicpp
 	}
 	
 	section::const_iterator section::cend() const
+	{
+		throw not_implemented_exception();
+	}
+
+	std::ostream &operator<<(std::ostream &os, const section &sect)
 	{
 		throw not_implemented_exception();
 	}

@@ -18,6 +18,14 @@ add_executable(${TESTS_NAME}
 	${SRC_DIR}/section.cpp
 	${SRC_DIR}/section_schema.cpp
 	option.cpp
+	section_iterator.cpp
+	section.cpp
+	config_iterator.cpp
+	config.cpp
+	exception.cpp
+	parser.cpp
+	option_schema.cpp
+	section_schema.cpp
 )
 
 # Link with Google libraries

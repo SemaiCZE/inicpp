@@ -126,13 +126,6 @@ namespace inicpp
 		bool validate(const section_schema &sect_schema, schema_mode mode);
 
 		/**
-		 * Classic stream operator for printing this instance to output stream.
-		 * @param os output stream
-		 * @return reference to output stream which allows chaining
-		 */
-		std::ostream &operator<<(std::ostream &os);
-
-		/**
 		 * Iterator pointing at the beginning of options list.
 		 * @return section_iterator
 		 */
@@ -152,8 +145,16 @@ namespace inicpp
 		 * @return section_iterator
 		 */
 		const_iterator cend() const;
+
+		/**
+		 * Classic stream operator for printing this instance to output stream.
+		 * @param os output stream
+		 * @return reference to output stream which allows chaining
+		 */
+		friend std::ostream &operator<<(std::ostream &os, const section &sect);
 	};
 	
+	std::ostream &operator<<(std::ostream &os, const section &sect);
 
 	/**
 	 * Templated section iterator.
@@ -166,6 +167,7 @@ namespace inicpp
 	{
 	private:
 		using typename std::iterator<std::random_access_iterator_tag, Element>::reference;
+		using typename std::iterator<std::random_access_iterator_tag, Element>::pointer;
 		
 		/** Reference to container which can be iterated */
 		section &container_;
@@ -232,7 +234,7 @@ namespace inicpp
 		 * @param second
 		 * @return true if iterators are the same
 		 */
-		bool operator==(const section_iterator &second)
+		bool operator==(const section_iterator &second) const
 		{
 			return this == &second && position_ == second.position_;
 		}
@@ -241,7 +243,7 @@ namespace inicpp
 		 * @param second
 		 * @return true if iterators are different
 		 */
-		bool operator!=(const section_iterator &second)
+		bool operator!=(const section_iterator &second) const
 		{
 			return !(*this == second);
 		}
@@ -253,6 +255,15 @@ namespace inicpp
 		reference operator*()
 		{
 			return container_.options_.at(position_);
+		}
+
+		/**
+		 * Iterator -> operator
+		 * @return pointer to option on current position
+		 */
+		pointer operator->()
+		{
+			return &(operator*());
 		}
 	};
 }
