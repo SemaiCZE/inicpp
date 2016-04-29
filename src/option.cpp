@@ -27,17 +27,17 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	const std::string &option::get_name() const
-	{
-		return name_;
-	}
-		
-	void remove_from_list(size_t position)
+	option::option(const std::string &name, const std::vector<std::string> &values, option_type type)
 	{
 		throw not_implemented_exception();
 	}
 
-	void option::remove_from_list(size_t position)
+	const std::string &option::get_name() const
+	{
+		return name_;
+	}
+
+	void option::remove_from_list_pos(size_t position)
 	{
 		throw not_implemented_exception();
 	}
@@ -47,32 +47,27 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	std::ostream &option::operator<<(std::ostream &os)
-	{
-		throw not_implemented_exception();
-	}
-
 	bool option::is_list() const
 	{
 		return values_.size() > 1;
 	}
 
-	option &option::operator=(boolean_t arg)
+	option &option::operator=(boolean_ini_t arg)
 	{
 		throw not_implemented_exception();
 	}
 
-	option &option::operator=(signed_t arg)
+	option &option::operator=(signed_ini_t arg)
 	{
 		throw not_implemented_exception();
 	}
 
-	option &option::operator=(unsigned_t arg)
+	option &option::operator=(unsigned_ini_t arg)
 	{
 		throw not_implemented_exception();
 	}
 
-	option &option::operator=(float_t arg)
+	option &option::operator=(float_ini_t arg)
 	{
 		throw not_implemented_exception();
 	}
@@ -82,7 +77,13 @@ namespace inicpp
 		throw not_implemented_exception();
 	}*/
 
-	option &option::operator=(string_t arg)
+	option &option::operator=(string_ini_t arg)
+	{
+		throw not_implemented_exception();
+	}
+
+
+	std::ostream &operator<<(std::ostream &os, const option &opt)
 	{
 		throw not_implemented_exception();
 	}

@@ -18,12 +18,12 @@ namespace inicpp
 		string_e
 	};
 	
-	typedef bool boolean_t;
-	typedef int64_t signed_t;
-	typedef uint64_t unsigned_t;
-	typedef double float_t;
-	typedef std::string enum_t;
-	typedef std::string string_t;
+	typedef bool boolean_ini_t;
+	typedef int64_t signed_ini_t;
+	typedef uint64_t unsigned_ini_t;
+	typedef double float_ini_t;
+	typedef std::string enum_ini_t;
+	typedef std::string string_ini_t;
 
 	/**
 	 * Enumeration type used in schema specification which distinguishes

@@ -117,6 +117,14 @@ namespace inicpp
 		 */
 		option(const std::string &name, const std::string &value = "",
 			option_type type = option_type::string_e);
+		/**
+		 * Construct ini option with specified value of specified list type.
+		 * @param name name of newly created option
+		 * @param value initial value
+		 * @param type non-editable option type
+		 */
+		option(const std::string &name, const std::vector<std::string> &values = {},
+			option_type type = option_type::string_e);
 
 		/**
 		 * Gets this option name.
@@ -145,25 +153,25 @@ namespace inicpp
 		 * @param arg boolean_t
 		 * @return reference to this
 		 */
-		option &operator=(boolean_t arg);
+		option &operator=(boolean_ini_t arg);
 		/**
 		 * Overloaded alias for set() function.
 		 * @param arg signed_t
 		 * @return reference to this
 		 */
-		option &operator=(signed_t arg);
+		option &operator=(signed_ini_t arg);
 		/**
 		 * Overloaded alias for set() function.
 		 * @param arg unsigned_t
 		 * @return reference to this
 		 */
-		option &operator=(unsigned_t arg);
+		option &operator=(unsigned_ini_t arg);
 		/**
 		 * Overloaded alias for set() function.
 		 * @param arg float_t
 		 * @return reference to this
 		 */
-		option &operator=(float_t arg);
+		option &operator=(float_ini_t arg);
 		/**
 		 * Overloaded alias for set() function.
 		 * @param arg enum_t
@@ -176,7 +184,7 @@ namespace inicpp
 		 * @param arg string_t
 		 * @return reference to this
 		 */
-		option &operator=(string_t arg);
+		option &operator=(string_ini_t arg);
 
 		/**
 		 * Get single element value.
@@ -260,7 +268,7 @@ namespace inicpp
 		 * @param position
 		 * @throws not_found_exception in case of out of range
 		 */
-		void remove_from_list(size_t position);
+		void remove_from_list_pos(size_t position);
 
 		/**
 		 * Validate this option against given option_schema.
@@ -275,8 +283,10 @@ namespace inicpp
 		 * @param os output stream
 		 * @return reference to output stream which allows chaining
 		 */
-		std::ostream &operator<<(std::ostream &os);
+		friend std::ostream &operator<<(std::ostream &os, const option &opt);
 	};
+
+	std::ostream &operator<<(std::ostream &os, const option &opt);
 }
 
 #endif

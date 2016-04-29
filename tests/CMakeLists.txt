@@ -17,6 +17,7 @@ add_executable(${TESTS_NAME}
 	${SRC_DIR}/schema.cpp
 	${SRC_DIR}/section.cpp
 	${SRC_DIR}/section_schema.cpp
+	option.cpp
 )
 
 # Link with Google libraries
