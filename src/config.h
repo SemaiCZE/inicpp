@@ -128,7 +128,11 @@ namespace inicpp
 		 */
 		template<typename ValueType>
 		void add_option(const std::string &section_name,
-			const std::string &option_name, const ValueType &value);
+			const std::string &option_name, const ValueType &value)
+		{
+			throw not_implemented_exception();
+		}
+
 		/**
 		 * Removes option with given name from given section.
 		 * @param section_name index to section list
@@ -144,7 +148,7 @@ namespace inicpp
 		 * Returns size of sections list
 		 * @return unsigned integer
 		 */
-		size_t size();
+		size_t size() const;
 		/**
 		 * Access section on specified index.
 		 * @param index index of requested value
@@ -169,11 +173,17 @@ namespace inicpp
 		bool validate(const schema &schm, schema_mode mode);
 
 		/**
-		 * Classic stream operator for printing this instance to output stream.
-		 * @param os output stream
-		 * @return reference to output stream which allows chaining
+		 * Equality operator.
+		 * @param other
+		 * @return
 		 */
-		std::ostream &operator<<(std::ostream &os);
+		bool operator ==(const config &other) const;
+		/**
+		 * Inequality operator.
+		 * @param other
+		 * @return
+		 */
+		bool operator !=(const config &other) const;
 
 		/**
 		 * Iterator pointing at the beginning of sections list.
@@ -195,7 +205,16 @@ namespace inicpp
 		 * @return config_iterator
 		 */
 		const_iterator cend() const;
+
+		/**
+		 * Classic stream operator for printing this instance to output stream.
+		 * @param os output stream
+		 * @return reference to output stream which allows chaining
+		 */
+		friend std::ostream &operator<<(std::ostream &os, const config &conf);
 	};
+
+	std::ostream &operator<<(std::ostream &os, const config &conf);
 
 
 	/**
@@ -209,6 +228,7 @@ namespace inicpp
 	{
 	private:
 		using typename std::iterator<std::random_access_iterator_tag, Element>::reference;
+		using typename std::iterator<std::random_access_iterator_tag, Element>::pointer;
 
 		/** Reference to container which can be iterated */
 		config &container_;
@@ -243,7 +263,7 @@ namespace inicpp
 		 * @param position initial position to given container
 		 */
 		config_iterator(config &source, size_t position)
-			: container_(), position_(position) {}
+			: container_(source), position_(position) {}
 		/**
 		 * Construct iterator on given container pointing at the start.
 		 * @param source container which can be iterated
@@ -275,7 +295,7 @@ namespace inicpp
 		 * @param second
 		 * @return true if iterators are the same
 		 */
-		bool operator==(const config_iterator &second)
+		bool operator==(const config_iterator &second) const
 		{
 			return this == &second && position_ == second.position_;
 		}
@@ -284,7 +304,7 @@ namespace inicpp
 		 * @param second
 		 * @return true if iterators are different
 		 */
-		bool operator!=(const config_iterator &second)
+		bool operator!=(const config_iterator &second) const
 		{
 			return !(*this == second);
 		}
@@ -296,6 +316,15 @@ namespace inicpp
 		reference operator*()
 		{
 			return container_.sections_.at(position_);
+		}
+
+		/**
+		 * Iterator -> operator
+		 * @return pointer to option on current position
+		 */
+		pointer operator->()
+		{
+			return &(operator*());
 		}
 	};
 }

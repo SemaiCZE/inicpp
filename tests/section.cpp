@@ -21,7 +21,7 @@ TEST(section, creation_and_assignments)
 	section move_constructed(std::move(copy_constructed));
 	EXPECT_EQ(move_constructed.get_name(), sect.get_name());
 	section move_assigned = std::move(copy_assigned);
-	EXPECT_EQ(move_assigned.get_name(), copy_assigned.get_name());
+	EXPECT_EQ(move_assigned.get_name(), sect.get_name());
 }
 
 TEST(section, adding_and_removing_options)

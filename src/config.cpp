@@ -66,19 +66,13 @@ namespace inicpp
 	{
 		throw not_implemented_exception();
 	}
-
-	template<typename ValueType>
-	void config::add_option(const std::string &section_name, const std::string &option_name, const ValueType &value)
-	{
-		throw not_implemented_exception();
-	}
 	
 	void config::remove_option(const std::string &section_name, const std::string &option_name)
 	{
 		throw not_implemented_exception();
 	}
 
-	size_t config::size()
+	size_t config::size() const
 	{
 		throw not_implemented_exception();
 	}
@@ -98,9 +92,14 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	std::ostream &config::operator<<(std::ostream& os)
+	bool config::operator ==(const config &other) const
 	{
 		throw not_implemented_exception();
+	}
+
+	bool config::operator !=(const config &other) const
+	{
+		return !(*this == other);
 	}
 
 	config::iterator config::begin()
@@ -119,6 +118,11 @@ namespace inicpp
 	}
 
 	config::const_iterator config::cend() const
+	{
+		throw not_implemented_exception();
+	}
+
+	std::ostream &operator<<(std::ostream &os, const config &conf)
 	{
 		throw not_implemented_exception();
 	}
