@@ -4,21 +4,22 @@
 #include <string>
 #include <cctype>
 #include <algorithm>
+#include <vector>
+#include <sstream>
 
 namespace inicpp
 {
 	namespace string_utils
 	{
-		inline std::string trim(const std::string &str)
-		{
-			auto front = std::find_if(str.begin(), str.end(), [] (int c) { return !std::isspace(c); });
-			auto back = std::find_if(str.rbegin(), str.rend(), [] (int c) { return !std::isspace(c); }).base();
+		std::string trim(const std::string &str);
 
-			if (back <= front) {
-				return "";
-			}
-			return std::string(front, back);
-		}
+		bool find_needle(const std::string &haystack, const std::string &needle);
+
+		bool starts_with(const std::string &str, const std::string &search_str);
+
+		bool ends_with(const std::string &str, const std::string &search_str);
+
+		std::vector<std::string> split(const std::string &str, char delim);
 	}
 }
 

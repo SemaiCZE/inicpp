@@ -9,6 +9,7 @@
 #include "exception.h"
 #include "config.h"
 #include "schema.h"
+#include "string_utils.h"
 
 namespace inicpp
 {
@@ -19,6 +20,7 @@ namespace inicpp
 	class parser
 	{
 	private:
+		static std::string delete_comment(const std::string &str);
 		static config internal_load(std::istream &str);
 		static void internal_save(const config &cfg, const schema &schm, std::ostream &str);
 
@@ -48,6 +50,7 @@ namespace inicpp
 		 * Load ini configuration from given string and return it.
 		 * @param str ini configuration description
 		 * @return newly created config class
+		 * @throws parser_exception if ini configuration is wrong
 		 */
 		static config load(const std::string &str);
 		/**
@@ -57,6 +60,7 @@ namespace inicpp
 		 * @param schm validation schema
 		 * @param mode validation mode
 		 * @return constructed config class which comply given schema
+		 * @throws parser_exception if ini configuration is wrong
 		 * @throws validation_exception if configuration does not comply schema
 		 */
 		static config load(const std::string &str, const schema &schm,
@@ -65,6 +69,7 @@ namespace inicpp
 		 * Load ini configuration from given stream and return it.
 		 * @param str ini configuration description
 		 * @return newly created config class
+		 * @throws parser_exception if ini configuration is wrong
 		 */
 		static config load(std::istream &str);
 		/**
@@ -74,6 +79,7 @@ namespace inicpp
 		 * @param schm validation schema
 		 * @param mode validation mode
 		 * @return constructed config class which comply given schema
+		 * @throws parser_exception if ini configuration is wrong
 		 * @throws validation_exception if configuration does not comply schema
 		 */
 		static config load(std::istream &str, const schema &schm,
@@ -83,6 +89,7 @@ namespace inicpp
 		 * Load ini configuration from file with specified name.
 		 * @param file name of file which contains ini configuration
 		 * @return new instance of config class
+		 * @throws parser_exception if ini configuration is wrong
 		 */
 		static config load_file(const std::string &file);
 		/**
@@ -92,6 +99,7 @@ namespace inicpp
 		 * @param schm validation schema
 		 * @param mode validation mode
 		 * @return new instance of config class
+		 * @throws parser_exception if ini configuration is wrong
 		 * @throws validation_exception if configuration does not comply schema
 		 */
 		static config load_file(const std::string &file, const schema &schm,

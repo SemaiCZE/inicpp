@@ -22,6 +22,7 @@ set(SOURCE_FILES
 	${SRC_DIR}/section_schema.cpp
 	${SRC_DIR}/types.h
 	${SRC_DIR}/string_utils.h
+	${SRC_DIR}/string_utils.cpp
 )
 
 # Set options to disable build of shared and static library

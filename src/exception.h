@@ -41,6 +41,20 @@ namespace inicpp
 
 
 	/**
+	* Occurs when parsing went wrong in some way
+	*/
+	class parser_exception : public exception
+	{
+	public:
+		/**
+		* General parser_exception constructor with given description.
+		* @param message exception cause
+		*/
+		parser_exception(const std::string &message);
+	};
+
+
+	/**
 	 * Occurs when two elements cannot be successfully casted.
 	 */
 	class bad_cast_exception : public exception

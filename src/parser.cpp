@@ -2,13 +2,65 @@
 
 namespace inicpp
 {
+	std::string parser::delete_comment(const std::string &str)
+	{
+		std::string res = str;
+		size_t pos = std::string::npos;
+
+		while ((pos = res.find_first_of(";", pos)) != std::string::npos) {
+			char prev = 0;
+			if (pos > 0) { prev = res[pos]; }
+
+			if (prev != '\\') {
+				res = res.substr(0, pos);
+				break;
+			}
+
+			pos--;
+		}
+
+		return res;
+	}
+
 	config parser::internal_load(std::istream &str)
 	{
+		using namespace string_utils;
+
 		config cfg;
+		std::shared_ptr<section> last_section = nullptr;
 		std::string line;
+		size_t line_number = 0;
 
 		while (std::getline(str, line)) {
-			// TODO
+			line_number++;
+
+			// if there was comment delete it
+			line = delete_comment(line);
+			line = trim(line);
+
+			if (line.empty()) { // empty line
+				continue;
+			} else if (starts_with(line, "[")) { // start of section
+				if (ends_with(line, "]")) {
+					// if there is cached section save it
+					if (last_section != nullptr) {
+						cfg.add_section(*last_section);
+					}
+
+					std::string sect_name = line.substr(1, line.length() - 2);
+					last_section = std::make_shared<section>(sect_name);
+				} else {
+					throw parser_exception("Section not ended on line " + line_number);
+				}
+			} else if (find_needle(line, "=")) { // option
+				if (last_section == nullptr) {
+					throw parser_exception("Option not in section on line " + line_number);
+				}
+
+				// TODO
+			} else {
+				throw parser_exception("Unknown element on line " + line_number);
+			}
 		}
 
 		return cfg;

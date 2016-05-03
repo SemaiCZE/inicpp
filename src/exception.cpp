@@ -19,6 +19,10 @@ namespace inicpp
 		return what_.c_str();
 	}
 
+	parser_exception::parser_exception(const std::string &message)
+		: inicpp::exception(message)
+	{}
+
 	not_implemented_exception::not_implemented_exception()
 		: inicpp::exception("Not implemented")
 	{}
