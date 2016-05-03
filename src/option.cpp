@@ -77,7 +77,6 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-
 	std::ostream &operator<<(std::ostream &os, const option &opt)
 	{
 		throw not_implemented_exception();

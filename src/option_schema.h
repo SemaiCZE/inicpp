@@ -139,8 +139,10 @@ namespace inicpp
 		 * @param os output stream
 		 * @return reference to output stream which allows chaining
 		 */
-		std::ostream &operator<<(std::ostream &os);
+		friend std::ostream &operator<<(std::ostream &os, const option_schema &opt_schema);
 	};
+
+	std::ostream &operator<<(std::ostream &os, const option_schema &opt_schema);
 }
 
 #endif

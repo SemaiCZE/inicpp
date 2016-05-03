@@ -32,11 +32,6 @@ namespace inicpp
 		return type_;
 	}
 
-	std::ostream &option_schema::operator<<(std::ostream &os)
-	{
-		throw not_implemented_exception();
-	}
-
 	bool option_schema::is_list() const
 	{
 		return params_->type == option_item::list;
@@ -58,6 +53,11 @@ namespace inicpp
 	}
 	
 	bool option_schema::validate(const option &opt, schema_mode mode)
+	{
+		throw not_implemented_exception();
+	}
+
+	std::ostream &operator<<(std::ostream &os, const option_schema &opt_schema)
 	{
 		throw not_implemented_exception();
 	}

@@ -58,7 +58,7 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	std::ostream &section_schema::operator<<(std::ostream &os)
+	std::ostream &operator<<(std::ostream &os, const section_schema &sect_schema)
 	{
 		throw not_implemented_exception();
 	}
