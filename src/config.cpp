@@ -104,22 +104,32 @@ namespace inicpp
 
 	config::iterator config::begin()
 	{
-		throw not_implemented_exception();
+		return iterator(*this);
 	}
 
 	config::iterator config::end()
 	{
-		throw not_implemented_exception();
+		return iterator(*this, sections_.size());
+	}
+
+	config::const_iterator config::begin() const
+	{
+		return const_iterator((config &)*this);
+	}
+
+	config::const_iterator config::end() const
+	{
+		return const_iterator((config &)*this, sections_.size());
 	}
 
 	config::const_iterator config::cbegin() const
 	{
-		throw not_implemented_exception();
+		return const_iterator((config &)*this);
 	}
 
 	config::const_iterator config::cend() const
 	{
-		throw not_implemented_exception();
+		return const_iterator((config &)*this, sections_.size());
 	}
 
 	std::ostream &operator<<(std::ostream &os, const config &conf)

@@ -136,6 +136,16 @@ namespace inicpp
 		 */
 		iterator end();
 		/**
+		* Constant iterator pointing at the beginning of options list.
+		* @return section_iterator
+		*/
+		const_iterator begin() const;
+		/**
+		* Constant iterator pointing at the end of options list.
+		* @return section_iterator
+		*/
+		const_iterator end() const;
+		/**
 		 * Constant iterator pointing at the beginning of options list.
 		 * @return section_iterator
 		 */
