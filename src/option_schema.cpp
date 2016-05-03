@@ -22,12 +22,6 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	template<typename ArgType>
-	option_schema::option_schema(const option_schema_params<ArgType> &arguments)
-	{
-		throw not_implemented_exception();
-	}
-
 	const std::string &option_schema::get_name() const
 	{
 		return params_->name;

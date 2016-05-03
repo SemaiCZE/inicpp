@@ -186,15 +186,25 @@ namespace inicpp
 		bool operator !=(const config &other) const;
 
 		/**
-		 * Iterator pointing at the beginning of sections list.
-		 * @return config_iterator
-		 */
+		* Iterator pointing at the beginning of sections list.
+		* @return config_iterator
+		*/
 		iterator begin();
 		/**
-		 * Iterator pointing at the end of sections list.
+		* Iterator pointing at the end of sections list.
+		* @return config_iterator
+		*/
+		iterator end();
+		/**
+		 * Constant iterator pointing at the beginning of sections list.
 		 * @return config_iterator
 		 */
-		iterator end();
+		const_iterator begin() const;
+		/**
+		 * Constant iterator pointing at the end of sections list.
+		 * @return config_iterator
+		 */
+		const_iterator end() const;
 		/**
 		 * Constant iterator pointing at the beginning of sections list.
 		 * @return config_iterator

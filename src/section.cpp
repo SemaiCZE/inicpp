@@ -44,12 +44,12 @@ namespace inicpp
 
 	size_t section::size()
 	{
-		throw not_implemented_exception();
+		return options_.size();
 	}
 
 	option &section::operator[](size_t index)
 	{
-		throw not_implemented_exception();
+		return options_[index];
 	}
 
 	option &section::operator[](const std::string &option_name)
@@ -64,22 +64,32 @@ namespace inicpp
 
 	section::iterator section::begin()
 	{
-		throw not_implemented_exception();
+		return iterator(*this);
 	}
 	
 	section::iterator section::end()
 	{
-		throw not_implemented_exception();
+		return iterator(*this, options_.size());
 	}
 	
+	section::const_iterator section::begin() const
+	{
+		return const_iterator((section &)*this);
+	}
+
+	section::const_iterator section::end() const
+	{
+		return const_iterator((section &)*this, options_.size());
+	}
+
 	section::const_iterator section::cbegin() const
 	{
-		throw not_implemented_exception();
+		return const_iterator((section &)*this);
 	}
 	
 	section::const_iterator section::cend() const
 	{
-		throw not_implemented_exception();
+		return const_iterator((section &)*this, options_.size());
 	}
 
 	std::ostream &operator<<(std::ostream &os, const section &sect)

@@ -174,13 +174,6 @@ namespace inicpp
 		option &operator=(float_ini_t arg);
 		/**
 		 * Overloaded alias for set() function.
-		 * @param arg enum_t
-		 * @return reference to this
-		 */
-		// TODO: enum_t is std::string as string_t .. so no overload needed
-		//option &operator=(enum_t arg);
-		/**
-		 * Overloaded alias for set() function.
 		 * @param arg string_t
 		 * @return reference to this
 		 */

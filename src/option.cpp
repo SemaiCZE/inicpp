@@ -72,11 +72,6 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	/*option &option::operator=(enum_t arg)
-	{
-		throw not_implemented_exception();
-	}*/
-
 	option &option::operator=(string_ini_t arg)
 	{
 		throw not_implemented_exception();

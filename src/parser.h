@@ -2,6 +2,9 @@
 #define INICPP_PARSER_H
 
 #include <iostream>
+#include <sstream>
+#include <fstream>
+#include <string>
 
 #include "exception.h"
 #include "config.h"
@@ -15,6 +18,10 @@ namespace inicpp
 	 */
 	class parser
 	{
+	private:
+		static config internal_load(std::istream &str);
+		static void internal_save(const config &cfg, const schema &schm, std::ostream &str);
+
 	public:
 		/**
 		 * Deleted default constructor.
@@ -59,7 +66,7 @@ namespace inicpp
 		 * @param str ini configuration description
 		 * @return newly created config class
 		 */
-		static config load(std::istream str);
+		static config load(std::istream &str);
 		/**
 		 * Load ini configuration from given stream
 		 * and validate it through schema.
@@ -69,7 +76,7 @@ namespace inicpp
 		 * @return constructed config class which comply given schema
 		 * @throws validation_exception if configuration does not comply schema
 		 */
-		static config load(std::istream str, const schema &schm,
+		static config load(std::istream &str, const schema &schm,
 			schema_mode mode);
 
 		/**
@@ -103,18 +110,6 @@ namespace inicpp
 		 */
 		static void save(const config &cfg, std::ostream &str);
 		/**
-		 * Save validation schema to file.
-		 * @param schm schema which will be saved
-		 * @param file name of output file
-		 */
-		static void save(const schema &schm, const std::string &file);
-		/**
-		 * Save given validation schema to output stream.
-		 * @param schm schema which will be saved
-		 * @param str output stream
-		 */
-		static void save(const schema &schm, std::ostream &str);
-		/**
 		 * Save given configuration (could be only partial) to a file. Options
 		 * which are not specified will be substitued by default values from schema.
 		 * @param cfg configuration which will be saved
@@ -130,6 +125,18 @@ namespace inicpp
 		 * @param str output stream
 		 */
 		static void save(const config &cfg, const schema &schm, std::ostream &str);
+		/**
+		* Save validation schema to file.
+		* @param schm schema which will be saved
+		* @param file name of output file
+		*/
+		static void save(const schema &schm, const std::string &file);
+		/**
+		* Save given validation schema to output stream.
+		* @param schm schema which will be saved
+		* @param str output stream
+		*/
+		static void save(const schema &schm, std::ostream &str);
 	};
 }
 
