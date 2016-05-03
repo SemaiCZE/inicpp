@@ -22,12 +22,6 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	template<typename ArgType>
-	option_schema::option_schema(const option_schema_params<ArgType> &arguments)
-	{
-		throw not_implemented_exception();
-	}
-
 	const std::string &option_schema::get_name() const
 	{
 		return params_->name;
@@ -36,11 +30,6 @@ namespace inicpp
 	option_type option_schema::get_type() const
 	{
 		return type_;
-	}
-
-	std::ostream &option_schema::operator<<(std::ostream &os)
-	{
-		throw not_implemented_exception();
 	}
 
 	bool option_schema::is_list() const
@@ -64,6 +53,11 @@ namespace inicpp
 	}
 	
 	bool option_schema::validate(const option &opt, schema_mode mode)
+	{
+		throw not_implemented_exception();
+	}
+
+	std::ostream &operator<<(std::ostream &os, const option_schema &opt_schema)
 	{
 		throw not_implemented_exception();
 	}

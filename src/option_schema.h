@@ -90,7 +90,10 @@ namespace inicpp
 		 * @param arguments creation arguments
 		 */
 		template<typename ArgType>
-		option_schema(const option_schema_params<ArgType> &arguments);
+		option_schema(const option_schema_params<ArgType> &arguments)
+		{
+			throw not_implemented_exception();
+		}
 
 		/**
 		 * Get name of this option.
@@ -136,8 +139,10 @@ namespace inicpp
 		 * @param os output stream
 		 * @return reference to output stream which allows chaining
 		 */
-		std::ostream &operator<<(std::ostream &os);
+		friend std::ostream &operator<<(std::ostream &os, const option_schema &opt_schema);
 	};
+
+	std::ostream &operator<<(std::ostream &os, const option_schema &opt_schema);
 }
 
 #endif
