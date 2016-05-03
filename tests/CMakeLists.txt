@@ -26,6 +26,7 @@ add_executable(${TESTS_NAME}
 	parser.cpp
 	option_schema.cpp
 	section_schema.cpp
+	string_utils.cpp
 )
 
 # Link with Google libraries
