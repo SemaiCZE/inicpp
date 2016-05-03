@@ -3,6 +3,11 @@
 
 #include "../src/exception.h"
 
+// import literals
+// we use string operator "" s() - the 's' suffix
+// of const char * string makes it std::string. For example:
+// auto str = "hello"s;
+// str variable is std::string type. This needs C++14 support.
 using namespace std::literals;
 using namespace inicpp;
 

@@ -7,6 +7,7 @@
 #include "exception.h"
 #include "option_schema.h"
 #include "section.h"
+#include "types.h"
 
 
 namespace inicpp
@@ -19,7 +20,7 @@ namespace inicpp
 		/** Name of section_schema */
 		std::string name;
 		/** Determines whether this section is mandatory in configuration */
-		bool mandatory = true;
+		item_requirement requirement = item_requirement::mandatory;
 		/** Description of section */
 		std::string comment;
 	};
@@ -102,7 +103,16 @@ namespace inicpp
 		 * @throws ambiguity_exception if option_schema with given name exists
 		 */
 		template<typename ArgType>
-		void add_option(const option_schema_params<ArgType> &arguments);
+		void add_option(const option_schema_params<ArgType> &arguments)
+		{
+			throw not_implemented_exception();
+		}
+		/**
+		 * Remove containing option schema of given name.
+		 * @param name name of option schema to be removed
+		 * @throws not_found_exception if given option does not exist
+		 */
+		void remove_option(const std::string &name);
 
 		/**
 		 * Validate given section againts this section_schema.

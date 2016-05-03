@@ -126,6 +126,6 @@ TEST(option_schema, writing_to_ostream)
 	std::string expected_output =
 		";comment\n"
 		";multiline\n"
-		"name = default_value\n";
+		"name = default_value ;optional\n";
 	EXPECT_EQ(str.str(), expected_output);
 }
