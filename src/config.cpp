@@ -2,49 +2,56 @@
 
 namespace inicpp
 {
-	config::config()
+	config::config() : schema_(nullptr)
 	{
-		throw not_implemented_exception();
 	}
 
-	config::config(const config &src)
+	config::config(const config &source)
 	{
-		throw not_implemented_exception();
+		// we have to do deep copies of sections
+		sections_.reserve(source.sections_.size());
+		for (auto &sect : source.sections_) {
+			sections_.push_back(std::make_shared<section>(*sect));
+		}
+		
+		// we already have constructed section... now push them into map
+		for (auto &sect : sections_) {
+			sections_map_.insert(sections_map_pair(sect->get_name(), sect));
+		}
+
+		// and finally deep copy schema
+		schema_ = std::make_shared<schema>(*source.schema_);
 	}
 
 	config &config::operator=(const config &source)
 	{
-		throw not_implemented_exception();
+		// in case of self assignment
+		if (this == &source) {
+			return *this;
+		}
+
+		// make copy of input source config
+		config new_src(source);
+
+		// and then swap all elements with mines
+		std::swap(sections_, new_src.sections_);
+		std::swap(sections_map_, new_src.sections_map_);
+		std::swap(schema_, new_src.schema_);
+
+		return *this;
 	}
 
-	config::config(config &&src)
+	config::config(config &&source) : sections_(source.sections_),
+		sections_map_(source.sections_map_), schema_(source.schema_)
 	{
-		throw not_implemented_exception();
 	}
 
 	config &config::operator=(config &&source)
 	{
-		throw not_implemented_exception();
-	}
-
-	config::config(const std::string &str)
-	{
-		throw not_implemented_exception();
-	}
-
-	config::config(const std::string &str, const schema &schm, schema_mode mode)
-	{
-		throw not_implemented_exception();
-	}
-
-	config::config(std::istream &str)
-	{
-		throw not_implemented_exception();
-	}
-
-	config::config(std::istream &str, const schema &schm, schema_mode mode)
-	{
-		throw not_implemented_exception();
+		sections_ = source.sections_;
+		sections_map_ = source.sections_map_;
+		schema_ = source.schema_;
+		return *this;
 	}
 
 	void config::add_section(const section &sect)

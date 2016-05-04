@@ -54,7 +54,7 @@ namespace inicpp
 		/**
 		 * Copy constructor.
 		 */
-		config(const config &src);
+		config(const config &source);
 		/**
 		 * Copy assignment.
 		 */
@@ -62,42 +62,11 @@ namespace inicpp
 		/**
 		 * Move constructor.
 		 */
-		config(config &&src);
+		config(config &&source);
 		/**
 		 * Move assignment.
 		 */
 		config &operator=(config &&source);
-
-		/**
-		 * Construct ini config from given string.
-		 * @param str input string
-		 * @throws invalid_config_exception in case of bad configuration
-		 */
-		config(const std::string &str);
-		/**
-		 * Construct config from given string and validate it against schema.
-		 * @param str input string
-		 * @param schm validation schema
-		 * @param mode validation mode
-		 * @throws invalid_config_exception in case of bad configuration
-		 * @throws validation_exception if schema was not satisfied
-		 */
-		config(const std::string &str, const schema &schm, schema_mode mode);
-		/**
-		 * Construct ini config from given stream.
-		 * @param str input stream
-		 * @throws invalid_config_exception in case of bad configuration
-		 */
-		config(std::istream &str);
-		/**
-		 * Construct config from stream and validate it against schema.
-		 * @param str input stream
-		 * @param schm validation schema
-		 * @param mode validation mode
-		 * @throws invalid_config_exception in case of bad configuration
-		 * @throws validation_exception if schema was not satisfied
-		 */
-		config(std::istream &str, const schema &schm, schema_mode mode);
 
 		/**
 		 * Add section to this ini configuration.
