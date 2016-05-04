@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <iostream>
+#include <map>
 
 #include "exception.h"
 #include "section.h"
@@ -27,12 +28,18 @@ namespace inicpp
 	{
 	private:
 		/** List of sections in this config instance */
-		std::vector<section> sections_;
+		std::vector<std::shared_ptr<section>> sections_;
+		/** Map of sections for better searching */
+		std::map<std::string, std::shared_ptr<section>> sections_map_;
 		/** Corresponding schema if any */
 		std::shared_ptr<schema> schema_;
 
 		friend class config_iterator<section>;
 		friend class config_iterator<const section>;
+
+		typedef std::vector<std::shared_ptr<section>> sections_vector;
+		typedef std::map<std::string, std::shared_ptr<section>> sections_map;
+		typedef std::pair<std::string, std::shared_ptr<section>> sections_map_pair;
 
 	public:
 		/** type of iterator */
@@ -325,7 +332,7 @@ namespace inicpp
 		 */
 		reference operator*()
 		{
-			return container_.sections_.at(position_);
+			return *container_.sections_.at(position_);
 		}
 
 		/**

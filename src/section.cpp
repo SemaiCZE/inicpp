@@ -34,7 +34,9 @@ namespace inicpp
 
 	void section::add_option(const option &opt)
 	{
-		throw not_implemented_exception();
+		std::shared_ptr<option> add = std::make_shared<option>(opt);
+		options_.push_back(add);
+		options_map_.insert(options_map_pair(add->get_name(), add));
 	}
 
 	void section::remove_option(const std::string &option_name)
@@ -49,12 +51,22 @@ namespace inicpp
 
 	option &section::operator[](size_t index)
 	{
-		return options_[index];
+		if (index >= size()) {
+			throw not_found_exception("Index out of range");
+		}
+
+		return *options_[index];
 	}
 
 	option &section::operator[](const std::string &option_name)
 	{
-		throw not_implemented_exception();
+		std::shared_ptr<option> result;
+		try {
+			result = options_map_.at(option_name);
+		} catch (std::out_of_range) {
+			throw not_found_exception("Index out of range");
+		}
+		return *result;
 	}
 
 	bool section::validate(const section_schema &sect_schema, schema_mode mode)

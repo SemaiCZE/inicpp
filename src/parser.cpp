@@ -5,18 +5,20 @@ namespace inicpp
 	std::string parser::delete_comment(const std::string &str)
 	{
 		std::string res = str;
-		size_t pos = std::string::npos;
+		bool escaped = false;
 
-		while ((pos = res.find_first_of(";", pos)) != std::string::npos) {
-			char prev = 0;
-			if (pos > 0) { prev = res[pos]; }
-
-			if (prev != '\\') {
-				res = res.substr(0, pos);
+		for (size_t i = 0; i < str.length(); ++i) {
+			if (escaped) {
+				// escaped character, do not do anything
+				escaped = false;
+			} else if (str[i] == '//') {
+				// next character will be escaped
+				escaped = true;
+			} else if (str[i] == ';') {
+				// we tracked down a comment... delete it and return
+				res = res.substr(0, i);
 				break;
 			}
-
-			pos--;
 		}
 
 		return res;

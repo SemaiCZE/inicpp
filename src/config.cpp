@@ -49,7 +49,9 @@ namespace inicpp
 
 	void config::add_section(const section &sect)
 	{
-		throw not_implemented_exception();
+		std::shared_ptr<section> add = std::make_shared<section>(sect);
+		sections_.push_back(add);
+		sections_map_.insert(sections_map_pair(add->get_name(), add));
 	}
 
 	void config::add_section(const std::string &section_name)
@@ -74,17 +76,27 @@ namespace inicpp
 
 	size_t config::size() const
 	{
-		throw not_implemented_exception();
+		return sections_.size();
 	}
 
 	section &config::operator[](size_t index)
 	{
-		throw not_implemented_exception();
+		if (index >= size()) {
+			throw not_found_exception("Index out of range");
+		}
+		
+		return *sections_[index];
 	}
 
 	section &config::operator[](const std::string &section_name)
 	{
-		throw not_implemented_exception();
+		std::shared_ptr<section> result;
+		try {
+			result = sections_map_.at(section_name);
+		} catch (std::out_of_range) {
+			throw not_found_exception("Index out of range");
+		}
+		return *result;
 	}
 
 	bool config::validate(const schema &schm, schema_mode mode)
