@@ -20,6 +20,12 @@ TEST(exceptions, generic)
 	EXPECT_EQ(ex_init.what(), "text"s);
 }
 
+TEST(exceptions, parser)
+{
+	parser_exception ex("message");
+	EXPECT_EQ(ex.what(), "message"s);
+}
+
 TEST(exceptions, bad_cast)
 {
 	bad_cast_exception ex_init("text");
