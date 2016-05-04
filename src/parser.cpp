@@ -11,7 +11,7 @@ namespace inicpp
 			if (escaped) {
 				// escaped character, do not do anything
 				escaped = false;
-			} else if (str[i] == '//') {
+			} else if (str[i] == '\\') {
 				// next character will be escaped
 				escaped = true;
 			} else if (str[i] == ';') {

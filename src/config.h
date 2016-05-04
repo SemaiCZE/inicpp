@@ -131,7 +131,7 @@ namespace inicpp
 		 * @param section_name should exist in this config
 		 * @param option_name name of newly created option
 		 * @param value value which will be stored in new option
-		 * @throws not_found_exception if section with given name does not exist
+		 * @throws ambiguity_exception if option with specified name exists
 		 */
 		template<typename ValueType>
 		void add_option(const std::string &section_name,
@@ -146,7 +146,7 @@ namespace inicpp
 		 * @param option_name option with this name will be removed
 		 * @throws not_found_exception if section or option
 		 * with given name does not exist
-		 * @throws ambiguity_exception if option with specified name exists
+		 * @throws not_found_exception if section or option with given name does not exist
 		 */
 		void remove_option(const std::string &section_name,
 			const std::string &option_name);

@@ -148,5 +148,41 @@ TEST(string_utils, split)
 
 	ASSERT_EQ(expected, split(str, 0));
 
-	// TODO
+	str = ":";
+	expected.resize(1);
+	ASSERT_EQ(expected, split(str, ':'));
+
+	str = "A:A";
+	expected.resize(2);
+	expected[0] = "A";
+	expected[1] = "A";
+	ASSERT_EQ(expected, split(str, ':'));
+
+	str = "Hello World!";
+	expected.resize(2);
+	expected[0] = "Hello";
+	expected[1] = "World!";
+	ASSERT_EQ(expected, split(str, ' '));
+
+	str = "This sentence will be splitted";
+	expected.resize(5);
+	expected[0] = "This";
+	expected[1] = "sentence";
+	expected[2] = "will";
+	expected[3] = "be";
+	expected[4] = "splitted";
+	ASSERT_EQ(expected, split(str, ' '));
+
+	str = " Multiple      delims  ";
+	expected.resize(9);
+	expected[0] = "";
+	expected[1] = "Multiple";
+	expected[2] = "";
+	expected[3] = "";
+	expected[4] = "";
+	expected[5] = "";
+	expected[6] = "";
+	expected[7] = "delims";
+	expected[8] = "";
+	ASSERT_EQ(expected, split(str, ' '));
 }

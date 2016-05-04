@@ -49,29 +49,61 @@ namespace inicpp
 
 	void config::add_section(const section &sect)
 	{
-		std::shared_ptr<section> add = std::make_shared<section>(sect);
-		sections_.push_back(add);
-		sections_map_.insert(sections_map_pair(add->get_name(), add));
+		auto add_it = sections_map_.find(sect.get_name());
+		if (add_it == sections_map_.end()) {
+			std::shared_ptr<section> add = std::make_shared<section>(sect);
+			sections_.push_back(add);
+			sections_map_.insert(sections_map_pair(add->get_name(), add));
+		} else {
+			throw ambiguity_exception("Section name is already defined");
+		}
 	}
 
 	void config::add_section(const std::string &section_name)
 	{
-		throw not_implemented_exception();
+		auto add_it = sections_map_.find(section_name);
+		if (add_it == sections_map_.end()) {
+			std::shared_ptr<section> add = std::make_shared<section>(section_name);
+			sections_.push_back(add);
+			sections_map_.insert(sections_map_pair(add->get_name(), add));
+		} else {
+			throw ambiguity_exception("Section name is already defined");
+		}
 	}
 
 	void config::remove_section(const std::string &section_name)
 	{
-		throw not_implemented_exception();
+		auto del_it = sections_map_.find(section_name);
+		if (del_it != sections_map_.end()) {
+			// remove from map
+			sections_map_.erase(del_it);
+			// remove from vector
+			std::remove_if(sections_.begin(), sections_.end(), [&](std::shared_ptr<section> sect) {
+				return (sect->get_name() == section_name ? true : false);
+			});
+		} else {
+			throw not_found_exception("Index out of range");
+		}
 	}
 
 	void config::add_option(const std::string &section_name, const option &opt)
 	{
-		throw not_implemented_exception();
+		auto sect_it = sections_map_.find(section_name);
+		if (sect_it != sections_map_.end()) {
+			sect_it->second->add_option(opt);
+		} else {
+			throw not_found_exception("Index out of range");
+		}
 	}
 	
 	void config::remove_option(const std::string &section_name, const std::string &option_name)
 	{
-		throw not_implemented_exception();
+		auto sect_it = sections_map_.find(section_name);
+		if (sect_it != sections_map_.end()) {
+			sect_it->second->remove_option(option_name);
+		} else {
+			throw not_found_exception("Index out of range");
+		}
 	}
 
 	size_t config::size() const

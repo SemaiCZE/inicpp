@@ -5,6 +5,7 @@
 #include <iostream>
 #include <iterator>
 #include <map>
+#include <algorithm>
 
 #include "exception.h"
 #include "option.h"

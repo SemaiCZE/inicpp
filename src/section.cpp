@@ -34,14 +34,29 @@ namespace inicpp
 
 	void section::add_option(const option &opt)
 	{
-		std::shared_ptr<option> add = std::make_shared<option>(opt);
-		options_.push_back(add);
-		options_map_.insert(options_map_pair(add->get_name(), add));
+		auto add_it = options_map_.find(opt.get_name());
+		if (add_it == options_map_.end()) {
+			std::shared_ptr<option> add = std::make_shared<option>(opt);
+			options_.push_back(add);
+			options_map_.insert(options_map_pair(add->get_name(), add));
+		} else {
+			throw ambiguity_exception("Option name is already defined");
+		}
 	}
 
 	void section::remove_option(const std::string &option_name)
 	{
-		throw not_implemented_exception();
+		auto del_it = options_map_.find(option_name);
+		if (del_it != options_map_.end()) {
+			// remove from map
+			options_map_.erase(del_it);
+			// remove from vector
+			std::remove_if(options_.begin(), options_.end(), [&](std::shared_ptr<option> opt) {
+				return (opt->get_name() == option_name ? true : false);
+			});
+		} else {
+			throw not_found_exception("Index out of range");
+		}
 	}
 
 	size_t section::size()
