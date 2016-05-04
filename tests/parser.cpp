@@ -78,6 +78,10 @@ TEST(parser, store_config)
 	schema validatin_schema;
 	section_schema sect_schema({"section_name", item_requirement::mandatory, "comment"});
 
+	// Following will be possible in C++17
+	//option_schema_params<string_ini_t> opt { {"opt", item_requirement::mandatory,
+	//	option_item::single, "default value", "opt comment"}, nullptr};
+
 	option_schema_params<string_ini_t> opt1;
 	opt1.name = "opt";
 	opt1.requirement = item_requirement::mandatory;

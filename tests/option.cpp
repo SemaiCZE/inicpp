@@ -4,6 +4,7 @@
 #include <vector>
 #include "../src/option.h"
 
+using namespace std::literals;
 using namespace inicpp;
 
 /**
@@ -39,7 +40,7 @@ TEST(option, option_list_creation)
 	option string_option("name of option", values, option_type::string_e);
 	EXPECT_EQ(string_option.get_name(), "name of option");
 	EXPECT_TRUE(string_option.is_list());
-	EXPECT_THROW(string_option.get<string_ini_t>(), bad_cast_exception);
+	EXPECT_EQ(string_option.get<string_ini_t>(), "value1");
 	EXPECT_EQ(string_option.get_list<string_ini_t>(), values);
 }
 
@@ -84,11 +85,11 @@ TEST(option, setting_values)
 	EXPECT_EQ(my_option.get<double_t>(), 5.2f);
 	my_option.set<boolean_ini_t>(true);
 	EXPECT_TRUE(my_option.get<boolean_ini_t>());
-	struct custom_type { int a, b; } instance {4, 5};
-	EXPECT_THROW(my_option.set<custom_type>(instance), bad_cast_exception);
+	//struct custom_type { int a, b; } instance {4, 5};
+	//EXPECT_THROW(my_option.set<custom_type>(instance), bad_cast_exception);
 
 	// assignmet operators
-	my_option = "string";
+	my_option = "string"s;
 	EXPECT_EQ(my_option.get<string_ini_t>(), "string");
 	my_option = false;
 	EXPECT_FALSE(my_option.get<boolean_ini_t>());
@@ -103,9 +104,6 @@ TEST(option, setting_values)
 	std::vector<signed_ini_t> values = {5, 6, 8, 9};
 	my_option.set_list<signed_ini_t>(values);
 	EXPECT_EQ(my_option.get_list<signed_ini_t>(), values);
-	std::vector<signed_ini_t> values_copy(values);
-	my_option.set_list<signed_ini_t>(std::move(values));
-	EXPECT_EQ(my_option.get_list<signed_ini_t>(), values_copy);
 }
 
 /**

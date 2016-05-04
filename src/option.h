@@ -87,6 +87,14 @@ namespace inicpp
 		/** Corresponding option_schema if any */
 		std::shared_ptr<option_schema> option_schema_;
 
+		template <typename ValueType>
+		void copy_option(const std::unique_ptr<option_holder> &opt)
+		{
+			option_value<ValueType> *ptr = dynamic_cast<option_value<ValueType> *>(&*opt);
+			auto new_option_value = std::make_unique<option_value<ValueType>>(ptr->get());
+			values_.push_back(std::move(new_option_value));
+		}
+
 	public:
 		/**
 		 * Default constructor is deleted.
@@ -130,7 +138,7 @@ namespace inicpp
 		 * Gets this option name.
 		 * @return constant reference to name
 		 */
-		const std::string &get_name() const;
+		std::string get_name() const;
 
 		/**
 		* Determines if option is list or not.
@@ -141,12 +149,10 @@ namespace inicpp
 		/**
 		 * Set single element value.
 		 * @param value newly assigned option value
-		 * @throws bad_cast_exception if ValueType cannot be casted
-		 * to internal type
 		 */
 		template<typename ValueType> void set(ValueType value)
 		{
-			throw not_implemented_exception();
+			this->operator =(value);
 		}
 		/**
 		 * Overloaded alias for set() function.
@@ -183,44 +189,58 @@ namespace inicpp
 		 * Get single element value.
 		 * @return templated copy by value
 		 * @throws bad_cast_exception if internal type cannot be casted
+		 * @throws not_found_exception if there is no value
 		 */
 		template<typename ValueType> ValueType get() const
 		{
-			throw not_implemented_exception();
+			if (values_.empty()) {
+				throw not_found_exception(0);
+			}
+			option_value<ValueType> *ptr = dynamic_cast<option_value<ValueType> *>(&*values_[0]);
+			if (ptr == nullptr) {
+				throw bad_cast_exception("Cannot cast to requested type");
+			}
+
+			return ptr->get();
 		}
 
 		/**
 		 * Set internal list of values to given one.
-		 * @param value reference to list of new values
+		 * @param list reference to list of new values
 		 * @throws bad_cast_exception if ValueType cannot be casted
 		 * to internal type
 		 */
 		template<typename ValueType> void set_list(
-			const std::vector<ValueType> &value)
+			const std::vector<ValueType> &list)
 		{
-			throw not_implemented_exception();
-		}
-		
-		/**
-		 * Set internal list of values to given one.
-		 * @param value rvalue reference to list of new values
-		 * @throws bad_cast_exception if ValueType cannot be casted
-		 * to internal type
-		 */
-		template<typename ValueType> void set_list(
-			std::vector<ValueType> &&value)
-		{
-			throw not_implemented_exception();
+			values_.clear();
+			//TODO: set type_
+			for (const auto &item : list) {
+				add_to_list(item);
+			}
 		}
 		
 		/**
 		 * Get list of internal values. Returning list is newly created.
 		 * @return new list of all stored values
 		 * @throws bad_cast_exception if internal type cannot be casted
+		 * @throws not_found_exception if there is no value
 		 */
 		template<typename ValueType> std::vector<ValueType> get_list() const
 		{
-			throw not_implemented_exception();
+			if (values_.empty()) {
+				throw not_found_exception(0);
+			}
+			std::vector<ValueType> results;
+			for (const auto &value : values_) {
+				option_value<ValueType> *ptr = dynamic_cast<option_value<ValueType> *>(&*value);
+				if (ptr == nullptr) {
+					throw bad_cast_exception("Cannot cast to requested type");
+				}
+				results.push_back(ptr->get());
+			}
+
+			return results;
 		}
 
 		/**
@@ -230,7 +250,9 @@ namespace inicpp
 		 */
 		template<typename ValueType> void add_to_list(ValueType value)
 		{
-			throw not_implemented_exception();
+			//TODO: check ValueType against type_
+			auto new_option_value = std::make_unique<option_value<ValueType>>(value);
+			values_.push_back(std::move(new_option_value));
 		}
 
 		/**
@@ -238,11 +260,17 @@ namespace inicpp
 		 * @param value added value
 		 * @param position position in internal list
 		 * @throws bad_cast_exception if ValueType cannot be casted
+		 * @throws not_found_exception if position is not in internal list
 		 */
 		template<typename ValueType> void add_to_list(ValueType value,
 			size_t position)
 		{
-			throw not_implemented_exception();
+			//TODO: check ValueType against type_
+			if (position > values_.size()) {
+				throw not_found_exception(position);
+			}
+			auto new_option_value = std::make_unique<option_value<ValueType>>(value);
+			values_.insert(values_.begin() + position, std::move(new_option_value));
 		}
 
 		/**
@@ -253,7 +281,15 @@ namespace inicpp
 		 */
 		template<typename ValueType> void remove_from_list(ValueType value)
 		{
-			throw not_implemented_exception();
+			//TODO: check ValueType against type_
+			for (auto it = values_.cbegin(); it != values_.cend(); ++it) {
+				option_value<ValueType> *ptr = dynamic_cast<option_value<ValueType> *>(&*(*it));
+				if (ptr->get() == value) {
+					values_.erase(it);
+					break;
+				}
+
+			}
 		}
 
 		/**
