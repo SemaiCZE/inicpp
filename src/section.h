@@ -134,6 +134,19 @@ namespace inicpp
 		bool validate(const section_schema &sect_schema, schema_mode mode);
 
 		/**
+		 * Equality operator.
+		 * @param other
+		 * @return
+		 */
+		bool operator==(const section &other) const;
+		/**
+		 * Inequality operator.
+		 * @param other
+		 * @return
+		 */
+		bool operator!=(const section &other) const;
+
+		/**
 		 * Iterator pointing at the beginning of options list.
 		 * @return section_iterator
 		 */

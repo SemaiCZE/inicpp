@@ -86,7 +86,17 @@ namespace inicpp
 
 	bool section::validate(const section_schema &sect_schema, schema_mode mode)
 	{
+		return sect_schema.validate_section(*this, mode);
+	}
+
+	bool section::operator==(const section &other) const
+	{
 		throw not_implemented_exception();
+	}
+
+	bool section::operator!=(const section &other) const
+	{
+		return !(*this == other);
 	}
 
 	section::iterator section::begin()

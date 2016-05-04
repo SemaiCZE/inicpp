@@ -44,7 +44,17 @@ namespace inicpp
 
 	bool option::validate(const option_schema &opt_schema, schema_mode mode)
 	{
+		return opt_schema.validate_option(*this, mode);
+	}
+
+	bool option::operator==(const option &other) const
+	{
 		throw not_implemented_exception();
+	}
+
+	bool option::operator!=(const option &other) const
+	{
+		return !(*this == other);
 	}
 
 	bool option::is_list() const

@@ -90,7 +90,7 @@ namespace inicpp
 		 * @return true if config conforms requirements of this schema,
 		 * false otherwise
 		 */
-		bool validate(const config &cfg, schema_mode mode);
+		bool validate_config(config &cfg, schema_mode mode) const;
 
 		/**
 		 * Classic stream operator for printing this instance to output stream.

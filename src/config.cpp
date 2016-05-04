@@ -7,6 +7,7 @@ namespace inicpp
 	}
 
 	config::config(const config &source)
+		: schema_(std::make_shared<schema>(*source.schema_))
 	{
 		// we have to do deep copies of sections
 		sections_.reserve(source.sections_.size());
@@ -18,9 +19,6 @@ namespace inicpp
 		for (auto &sect : sections_) {
 			sections_map_.insert(sections_map_pair(sect->get_name(), sect));
 		}
-
-		// and finally deep copy schema
-		schema_ = std::make_shared<schema>(*source.schema_);
 	}
 
 	config &config::operator=(const config &source)
@@ -89,7 +87,7 @@ namespace inicpp
 				return (sect->get_name() == section_name ? true : false);
 			});
 		} else {
-			throw not_found_exception("Index out of range");
+			throw not_found_exception("Index out of range, section not found");
 		}
 	}
 
@@ -99,7 +97,7 @@ namespace inicpp
 		if (sect_it != sections_map_.end()) {
 			sect_it->second->add_option(opt);
 		} else {
-			throw not_found_exception("Index out of range");
+			throw not_found_exception("Index out of range, section not found");
 		}
 	}
 	
@@ -109,7 +107,7 @@ namespace inicpp
 		if (sect_it != sections_map_.end()) {
 			sect_it->second->remove_option(option_name);
 		} else {
-			throw not_found_exception("Index out of range");
+			throw not_found_exception("Index out of range, section not found");
 		}
 	}
 
@@ -140,12 +138,15 @@ namespace inicpp
 
 	bool config::validate(const schema &schm, schema_mode mode)
 	{
-		throw not_implemented_exception();
+		return schm.validate_config(*this, mode);
 	}
 
 	bool config::operator ==(const config &other) const
 	{
-		throw not_implemented_exception();
+		return std::equal(sections_.begin(), sections_.end(), other.sections_.begin(),
+			[](const std::shared_ptr<section> &first, const std::shared_ptr<section> &second) {
+			return *first == *second;
+		});
 	}
 
 	bool config::operator !=(const config &other) const
@@ -185,6 +186,10 @@ namespace inicpp
 
 	std::ostream &operator<<(std::ostream &os, const config &conf)
 	{
-		throw not_implemented_exception();
+		for (auto &sect : conf.sections_) {
+			os << sect;
+		}
+
+		return os;
 	}
 }

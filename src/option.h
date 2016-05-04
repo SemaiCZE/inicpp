@@ -272,6 +272,19 @@ namespace inicpp
 		bool validate(const option_schema &opt_schema, schema_mode mode);
 
 		/**
+		 * Equality operator.
+		 * @param other
+		 * @return
+		 */
+		bool operator==(const option &other) const;
+		/**
+		 * Inequality operator.
+		 * @param other
+		 * @return
+		 */
+		bool operator!=(const option &other) const;
+
+		/**
 		 * Classic stream operator for printing this instance to output stream.
 		 * @param os output stream
 		 * @return reference to output stream which allows chaining

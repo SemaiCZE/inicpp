@@ -52,7 +52,7 @@ namespace inicpp
 		return params_->comment;
 	}
 	
-	bool option_schema::validate(const option &opt, schema_mode mode)
+	bool option_schema::validate_option(const option &opt, schema_mode mode) const
 	{
 		throw not_implemented_exception();
 	}

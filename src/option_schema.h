@@ -132,7 +132,7 @@ namespace inicpp
 		 * @param mode validation mode
 		 * @return true if option comply option_schema
 		 */
-		bool validate(const option &opt, schema_mode mode);
+		bool validate_option(const option &opt, schema_mode mode) const;
 
 		/**
 		 * Classic stream operator for printing this instance to output stream.

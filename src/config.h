@@ -213,14 +213,16 @@ namespace inicpp
 		: public std::iterator<std::random_access_iterator_tag, Element>
 	{
 	private:
-		using typename std::iterator<std::random_access_iterator_tag, Element>::reference;
-		using typename std::iterator<std::random_access_iterator_tag, Element>::pointer;
-
 		/** Reference to container which can be iterated */
 		config &container_;
 		/** Position in iterable container */
 		size_t position_;
+
 	public:
+
+		using typename std::iterator<std::random_access_iterator_tag, Element>::reference;
+		using typename std::iterator<std::random_access_iterator_tag, Element>::pointer;
+
 		/**
 		 * Deleted default constructor.
 		 */
@@ -293,6 +295,15 @@ namespace inicpp
 		bool operator!=(const config_iterator &second) const
 		{
 			return !(*this == second);
+		}
+		/**
+		 * Less than compare method for iterators.
+		 * @param second
+		 * @return true if this iterator is lesser than second
+		 */
+		bool operator<(const config_iterator &second) const
+		{
+			return position_ < second.position_;
 		}
 
 		/**

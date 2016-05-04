@@ -120,7 +120,7 @@ namespace inicpp
 		 * @param mode validation mode
 		 * @return true if section is successfully validated
 		 */
-		bool validate(const section &sect, schema_mode mode);
+		bool validate_section(const section &sect, schema_mode mode) const;
 
 		/**
 		 * Classic stream operator for printing this instance to output stream.
