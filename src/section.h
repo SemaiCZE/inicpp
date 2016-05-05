@@ -271,7 +271,7 @@ namespace inicpp
 		 */
 		bool operator==(const section_iterator &second) const
 		{
-			return this == &second && position_ == second.position_;
+			return &container_ == &second.container_ && position_ == second.position_;
 		}
 		/**
 		 * Non-equality compare method for iterators.

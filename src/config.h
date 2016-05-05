@@ -97,6 +97,8 @@ namespace inicpp
 		void add_option(const std::string &section_name, const option &opt);
 		/**
 		 * Creates and add option to specified section.
+		 * Function add_option(const std::string &section_name, const option &opt)
+		 *   is used after option creation.
 		 * @param section_name should exist in this config
 		 * @param option_name name of newly created option
 		 * @param value value which will be stored in new option
@@ -104,9 +106,11 @@ namespace inicpp
 		 */
 		template<typename ValueType>
 		void add_option(const std::string &section_name,
-			const std::string &option_name, const ValueType &value)
+			const std::string &option_name, ValueType value)
 		{
-			throw not_implemented_exception();
+			option opt(option_name);
+			opt.set<ValueType>(value);
+			add_option(section_name, opt);
 		}
 
 		/**
@@ -285,7 +289,7 @@ namespace inicpp
 		 */
 		bool operator==(const config_iterator &second) const
 		{
-			return this == &second && position_ == second.position_;
+			return &container_ == &second.container_ && position_ == second.position_;
 		}
 		/**
 		 * Non-equality compare method for iterators.
