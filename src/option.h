@@ -95,6 +95,15 @@ namespace inicpp
 			values_.push_back(std::move(new_option_value));
 		}
 
+		template <typename ValueType>
+		bool compare_option(const std::unique_ptr<option_holder> &local,
+			const std::unique_ptr<option_holder> &remote) const
+		{
+			option_value<ValueType> *loc = dynamic_cast<option_value<ValueType> *>(&*local);
+			option_value<ValueType> *rem = dynamic_cast<option_value<ValueType> *>(&*remote);
+			return loc->get() == rem->get();
+		}
+
 	public:
 		/**
 		 * Default constructor is deleted.
@@ -128,7 +137,7 @@ namespace inicpp
 		 * @param name name of newly created option
 		 * @param value initial value
 		 */
-		option(const std::string &name, const std::vector<std::string> &values = {});
+		option(const std::string &name, const std::vector<std::string> &values);
 
 		/**
 		 * Gets this option name.

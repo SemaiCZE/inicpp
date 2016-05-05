@@ -97,15 +97,52 @@ namespace inicpp
 
 	bool option::operator==(const option &other) const
 	{
-		bool same_values = true;
+		if (name_ != other.name_ || type_ != other.type_) {
+			return false;
+		}
+
 		if (values_.size() != other.values_.size()) {
-			same_values = false;
+			return false;
 		} else {
 			for (size_t i = 0; i < values_.size(); ++i) {
-				//TODO: compare values
+				switch (type_) {
+				case option_type::boolean_e:
+					if (!compare_option<boolean_ini_t>(values_[i], other.values_[i])) {
+						return false;
+					}
+					break;
+				case option_type::enum_e:
+					if (!compare_option<enum_ini_t>(values_[i], other.values_[i])) {
+						return false;
+					}
+					break;
+				case option_type::float_e:
+					if (!compare_option<float_ini_t>(values_[i], other.values_[i])) {
+						return false;
+					}
+					break;
+				case option_type::signed_e:
+					if (!compare_option<signed_ini_t>(values_[i], other.values_[i])) {
+						return false;
+					}
+					break;
+				case option_type::string_e:
+					if (!compare_option<string_ini_t>(values_[i], other.values_[i])) {
+						return false;
+					}
+					break;
+				case option_type::unsigned_e:
+					if (!compare_option<unsigned_ini_t>(values_[i], other.values_[i])) {
+						return false;
+					}
+					break;
+				default:
+					throw invalid_config_exception("Invalid option type");
+					break;
+				}
 			}
 		}
-		return name_ == other.name_ && type_ == other.type_ && same_values;
+		return true;
 	}
 
 	bool option::operator!=(const option &other) const

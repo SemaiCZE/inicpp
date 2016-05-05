@@ -20,6 +20,9 @@ namespace inicpp
 		{
 			return data_;
 		}
+		bool operator ==(const internal_enum_type &other) {
+			return data_ == other.data_;
+		}
 
 	private:
 		std::string data_;
