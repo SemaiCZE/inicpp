@@ -2,12 +2,11 @@
 
 namespace inicpp
 {
-	config::config() : schema_(nullptr)
+	config::config()
 	{
 	}
 
 	config::config(const config &source)
-		: schema_(std::make_shared<schema>(*source.schema_))
 	{
 		// we have to do deep copies of sections
 		sections_.reserve(source.sections_.size());
@@ -15,9 +14,14 @@ namespace inicpp
 			sections_.push_back(std::make_shared<section>(*sect));
 		}
 		
-		// we already have constructed section... now push them into map
+		// we already have constructed sections... now push them into map
 		for (auto &sect : sections_) {
 			sections_map_.insert(sections_map_pair(sect->get_name(), sect));
+		}
+
+		// now deep copy schema if any available
+		if (source.schema_ != nullptr) {
+			schema_ = std::make_shared<schema>(*source.schema_);
 		}
 	}
 
@@ -32,16 +36,20 @@ namespace inicpp
 		return *this;
 	}
 
-	config::config(config &&source) : sections_(source.sections_),
-		sections_map_(source.sections_map_), schema_(source.schema_)
-	{
-	}
-
-	config &config::operator=(config &&source)
+	config::config(config &&source)
 	{
 		sections_ = std::move(source.sections_);
 		sections_map_ = std::move(source.sections_map_);
 		schema_ = std::move(source.schema_);
+	}
+
+	config &config::operator=(config &&source)
+	{
+		if (this != &source) {
+			sections_ = std::move(source.sections_);
+			sections_map_ = std::move(source.sections_map_);
+			schema_ = std::move(source.schema_);
+		}
 		return *this;
 	}
 
@@ -53,7 +61,7 @@ namespace inicpp
 			sections_.push_back(add);
 			sections_map_.insert(sections_map_pair(add->get_name(), add));
 		} else {
-			throw ambiguity_exception("Section name is already defined");
+			throw ambiguity_exception(sect.get_name());
 		}
 	}
 
@@ -65,7 +73,7 @@ namespace inicpp
 			sections_.push_back(add);
 			sections_map_.insert(sections_map_pair(add->get_name(), add));
 		} else {
-			throw ambiguity_exception("Section name is already defined");
+			throw ambiguity_exception(section_name);
 		}
 	}
 
@@ -76,11 +84,12 @@ namespace inicpp
 			// remove from map
 			sections_map_.erase(del_it);
 			// remove from vector
-			std::remove_if(sections_.begin(), sections_.end(), [&](std::shared_ptr<section> sect) {
+			sections_.erase(
+				std::remove_if(sections_.begin(), sections_.end(), [&](std::shared_ptr<section> sect) {
 				return (sect->get_name() == section_name ? true : false);
-			});
+			}), sections_.end());
 		} else {
-			throw not_found_exception("Index out of range, section not found");
+			throw not_found_exception(section_name);
 		}
 	}
 
@@ -90,7 +99,7 @@ namespace inicpp
 		if (sect_it != sections_map_.end()) {
 			sect_it->second->add_option(opt);
 		} else {
-			throw not_found_exception("Index out of range, section not found");
+			throw not_found_exception(section_name);
 		}
 	}
 	
@@ -100,7 +109,7 @@ namespace inicpp
 		if (sect_it != sections_map_.end()) {
 			sect_it->second->remove_option(option_name);
 		} else {
-			throw not_found_exception("Index out of range, section not found");
+			throw not_found_exception(section_name);
 		}
 	}
 
@@ -112,7 +121,7 @@ namespace inicpp
 	section &config::operator[](size_t index)
 	{
 		if (index >= size()) {
-			throw not_found_exception("Index out of range");
+			throw not_found_exception(index);
 		}
 		
 		return *sections_[index];
@@ -124,7 +133,7 @@ namespace inicpp
 		try {
 			result = sections_map_.at(section_name);
 		} catch (std::out_of_range) {
-			throw not_found_exception("Index out of range");
+			throw not_found_exception(section_name);
 		}
 		return *result;
 	}
@@ -159,28 +168,28 @@ namespace inicpp
 
 	config::const_iterator config::begin() const
 	{
-		return const_iterator((config &)*this);
+		return const_iterator(const_cast<config &>(*this));
 	}
 
 	config::const_iterator config::end() const
 	{
-		return const_iterator((config &)*this, sections_.size());
+		return const_iterator(const_cast<config &>(*this), sections_.size());
 	}
 
 	config::const_iterator config::cbegin() const
 	{
-		return const_iterator((config &)*this);
+		return const_iterator(const_cast<config &>(*this));
 	}
 
 	config::const_iterator config::cend() const
 	{
-		return const_iterator((config &)*this, sections_.size());
+		return const_iterator(const_cast<config &>(*this), sections_.size());
 	}
 
 	std::ostream &operator<<(std::ostream &os, const config &conf)
 	{
 		for (auto &sect : conf.sections_) {
-			os << sect;
+			os << *sect;
 		}
 
 		return os;

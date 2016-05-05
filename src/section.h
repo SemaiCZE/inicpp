@@ -83,14 +83,17 @@ namespace inicpp
 
 		/**
 		 * Creates and add option to this section.
+		 * Function add_option(const option &opt) is used after option creation.
 		 * @param option_name name of newly created option class
 		 * @param value value which will be stored in option
 		 * @throws ambiguity_exception if option with specified name exists
 		 */
 		template<typename ValueType> void add_option(
-			const std::string &option_name, const ValueType &value)
+			const std::string &option_name, ValueType value)
 		{
-			throw not_implemented_exception();
+			option opt(option_name);
+			opt.set<ValueType>(value);
+			add_option(opt);
 		}
 		/**
 		 * Add given option instance to options container.
@@ -196,15 +199,16 @@ namespace inicpp
 	class section_iterator
 		: public std::iterator<std::random_access_iterator_tag, Element>
 	{
-	private:
-		using typename std::iterator<std::random_access_iterator_tag, Element>::reference;
-		using typename std::iterator<std::random_access_iterator_tag, Element>::pointer;
-		
+	private:		
 		/** Reference to container which can be iterated */
 		section &container_;
 		/** Position in iterable container */
 		size_t position_;
+
 	public:
+		using typename std::iterator<std::random_access_iterator_tag, Element>::reference;
+		using typename std::iterator<std::random_access_iterator_tag, Element>::pointer;
+
 		/**
 		 * Deleted default constructor.
 		 */

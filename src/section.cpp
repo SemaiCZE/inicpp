@@ -3,28 +3,57 @@
 namespace inicpp
 {
 	section::section(const section &source)
+		: name_(source.name_)
 	{
-		throw not_implemented_exception();
+		// we have to do deep copies of options
+		options_.reserve(source.options_.size());
+		for (auto &opt : source.options_) {
+			options_.push_back(std::make_shared<option>(*opt));
+		}
+
+		// we already have constructed options... now push them into map
+		for (auto &opt : options_) {
+			options_map_.insert(options_map_pair(opt->get_name(), opt));
+		}
+
+		// deep copy section_schema if any available
+		if (source.section_schema_ != nullptr) {
+			section_schema_ = std::make_shared<section_schema>(*source.section_schema_);
+		}
 	}
 
 	section &section::operator=(const section &source)
 	{
-		throw not_implemented_exception();
+		if (this != &source) {
+			// make copy of input source section and swap it with this
+			section new_src(source);
+			std::swap(*this, new_src);
+		}
+
+		return *this;
 	}
 
 	section::section(section &&source)
 	{
-		throw not_implemented_exception();
+		options_ = std::move(source.options_);
+		options_map_ = std::move(source.options_map_);
+		name_ = std::move(source.name_);
+		section_schema_ = std::move(source.section_schema_);
 	}
 
 	section &section::operator=(section &&source)
 	{
-		throw not_implemented_exception();
+		if (this != &source) {
+			options_ = std::move(source.options_);
+			options_map_ = std::move(source.options_map_);
+			name_ = std::move(source.name_);
+			section_schema_ = std::move(source.section_schema_);
+		}
+		return *this;
 	}
 
-	section::section(const std::string &name)
+	section::section(const std::string &name) : name_(name)
 	{
-		throw not_implemented_exception();
 	}
 
 	const std::string &section::get_name() const
@@ -40,7 +69,7 @@ namespace inicpp
 			options_.push_back(add);
 			options_map_.insert(options_map_pair(add->get_name(), add));
 		} else {
-			throw ambiguity_exception("Option name is already defined");
+			throw ambiguity_exception(opt.get_name());
 		}
 	}
 
@@ -51,11 +80,12 @@ namespace inicpp
 			// remove from map
 			options_map_.erase(del_it);
 			// remove from vector
-			std::remove_if(options_.begin(), options_.end(), [&](std::shared_ptr<option> opt) {
+			options_.erase(
+				std::remove_if(options_.begin(), options_.end(), [&](std::shared_ptr<option> opt) {
 				return (opt->get_name() == option_name ? true : false);
-			});
+			}), options_.end());
 		} else {
-			throw not_found_exception("Index out of range");
+			throw not_found_exception(option_name);
 		}
 	}
 
@@ -67,7 +97,7 @@ namespace inicpp
 	option &section::operator[](size_t index)
 	{
 		if (index >= size()) {
-			throw not_found_exception("Index out of range");
+			throw not_found_exception(index);
 		}
 
 		return *options_[index];
@@ -79,7 +109,7 @@ namespace inicpp
 		try {
 			result = options_map_.at(option_name);
 		} catch (std::out_of_range) {
-			throw not_found_exception("Index out of range");
+			throw not_found_exception(option_name);
 		}
 		return *result;
 	}
@@ -91,7 +121,14 @@ namespace inicpp
 
 	bool section::operator==(const section &other) const
 	{
-		throw not_implemented_exception();
+		if (name_ != other.name_) {
+			return false;
+		}
+
+		return std::equal(options_.begin(), options_.end(), other.options_.begin(),
+			[](const std::shared_ptr<option> &first, const std::shared_ptr<option> &second) {
+			return *first == *second;
+		});
 	}
 
 	bool section::operator!=(const section &other) const
@@ -111,26 +148,31 @@ namespace inicpp
 	
 	section::const_iterator section::begin() const
 	{
-		return const_iterator((section &)*this);
+		return const_iterator(const_cast<section &>(*this));
 	}
 
 	section::const_iterator section::end() const
 	{
-		return const_iterator((section &)*this, options_.size());
+		return const_iterator(const_cast<section &>(*this), options_.size());
 	}
 
 	section::const_iterator section::cbegin() const
 	{
-		return const_iterator((section &)*this);
+		return const_iterator(const_cast<section &>(*this));
 	}
 	
 	section::const_iterator section::cend() const
 	{
-		return const_iterator((section &)*this, options_.size());
+		return const_iterator(const_cast<section &>(*this), options_.size());
 	}
 
 	std::ostream &operator<<(std::ostream &os, const section &sect)
 	{
-		throw not_implemented_exception();
+		os << "[" << sect.get_name() << "]" << std::endl;
+		for (auto &opt : sect.options_) {
+			os << *opt;
+		}
+
+		return os;
 	}
 }

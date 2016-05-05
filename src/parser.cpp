@@ -2,26 +2,33 @@
 
 namespace inicpp
 {
-	std::string parser::delete_comment(const std::string &str)
+	size_t parser::find_first_nonescaped(const std::string &str, char ch)
 	{
-		std::string res = str;
+		size_t result = std::string::npos;
 		bool escaped = false;
 
 		for (size_t i = 0; i < str.length(); ++i) {
 			if (escaped) {
 				// escaped character, do not do anything
 				escaped = false;
-			} else if (str[i] == '\\') {
+			}
+			else if (str[i] == '\\') {
 				// next character will be escaped
 				escaped = true;
-			} else if (str[i] == ';') {
-				// we tracked down a comment... delete it and return
-				res = res.substr(0, i);
+			}
+			else if (str[i] == ch) {
+				// we tracked down non escaped character... return it
+				result = i;
 				break;
 			}
 		}
 
-		return res;
+		return result;
+	}
+
+	std::string parser::delete_comment(const std::string &str)
+	{
+		return str.substr(0, find_first_nonescaped(str, ';'));
 	}
 
 	config parser::internal_load(std::istream &str)

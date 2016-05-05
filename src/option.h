@@ -183,6 +183,7 @@ namespace inicpp
 		 * @return reference to this
 		 */
 		option &operator=(float_ini_t arg);
+		option &operator=(const char *arg); // TODO: how to do this properly?
 		/**
 		 * Overloaded alias for set() function.
 		 * @param arg string_t

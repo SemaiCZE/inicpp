@@ -187,6 +187,14 @@ namespace inicpp
 		return *this;
 	}
 
+	option &option::operator=(const char *arg)
+	{
+		values_.clear();
+		type_ = option_type::string_e;
+		add_to_list<string_ini_t>(arg);
+		return *this;
+	}
+
 	option &option::operator=(string_ini_t arg)
 	{
 		values_.clear();

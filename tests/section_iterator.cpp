@@ -6,6 +6,7 @@
 #include "../src/option.h"
 
 using namespace inicpp;
+using namespace std::literals;
 
 
 TEST(section_iterator, construction_and_copying)

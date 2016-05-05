@@ -20,6 +20,12 @@ namespace inicpp
 	class parser
 	{
 	private:
+		/**
+		 * Finds first nonescaped character given as parameter
+		 * Escaping character is '\'
+		 * @return std::string::npos if not found
+		 */
+		static size_t parser::find_first_nonescaped(const std::string &str, char ch);
 		static std::string delete_comment(const std::string &str);
 		static config internal_load(std::istream &str);
 		static void internal_save(const config &cfg, const schema &schm, std::ostream &str);
