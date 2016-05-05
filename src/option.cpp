@@ -33,6 +33,10 @@ namespace inicpp
 				case option_type::unsigned_e:
 					copy_option<unsigned_ini_t>(value);
 					break;
+				case option_type::invalid_e:
+					// never reached
+					throw invalid_config_exception("Invalid option type");
+					break;
 				}
 			}
 			option_schema_ = source.option_schema_;
@@ -57,21 +61,23 @@ namespace inicpp
 		return *this;
 	}
 
+	//TODO:
 	option::option(const std::string &name, const std::string &value, option_type type)
-		: name_(name), type_(type)
+		: name_(name), type_(option_type::string_e)
 	{
 		add_to_list<string_ini_t>(value);
 	}
 
+	//TODO:
 	option::option(const std::string &name, const std::vector<std::string> &values, option_type type)
-		: name_(name), type_(type)
+		: name_(name), type_(option_type::string_e)
 	{
 		for (const auto &input_value : values) {
 			add_to_list<string_ini_t>(input_value);
 		}
 	}
 
-	std::string option::get_name() const
+	const std::string &option::get_name() const
 	{
 		return name_;
 	}

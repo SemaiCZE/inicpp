@@ -1,6 +1,9 @@
 #ifndef INICPP_TYPES_H
 #define INICPP_TYPES_H
 
+#include <type_traits>
+
+
 namespace inicpp
 {
 	/**
@@ -15,7 +18,8 @@ namespace inicpp
 		unsigned_e,
 		float_e,
 		enum_e,
-		string_e
+		string_e,
+		invalid_e
 	};
 	
 	typedef bool boolean_ini_t;
@@ -43,6 +47,32 @@ namespace inicpp
 	 *  Relaxed - config can contain unknown sections and options.
 	 */
 	enum class schema_mode : bool { strict, relaxed };
+
+	/**
+	 * Function for convert type (one of *_ini_t) to option_type
+	 * enumeration type. If type cannot be converted, invalid_e
+	 * is returned.
+	 * @return enum representation of templated type
+	 */
+	template <typename ValueType>
+	option_type get_enum_type()
+	{
+		if (std::is_same<ValueType, boolean_ini_t>::value) {
+			return option_type::boolean_e;
+		} else if (std::is_same<ValueType, signed_ini_t>::value) {
+			return option_type::signed_e;
+		} else if (std::is_same<ValueType, unsigned_ini_t>::value) {
+			return option_type::unsigned_e;
+		} else if (std::is_same<ValueType, float_ini_t>::value) {
+			return option_type::float_e;
+		} else if (std::is_same<ValueType, string_ini_t>::value) {
+			return option_type::string_e;
+		} else if (std::is_same<ValueType, enum_ini_t>::value) {
+			return option_type::enum_e;
+		} else {
+			return option_type::invalid_e;
+		}
+	}
 }
 
 #endif // INICPP_TYPES_H

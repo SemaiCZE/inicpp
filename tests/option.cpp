@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "../src/option.h"
+#include "../src/types.h"
 
 using namespace std::literals;
 using namespace inicpp;
@@ -186,4 +187,16 @@ TEST(option, writing_to_stream)
 	my_option.set_list<string_ini_t>({"option 1", "option 2"});
 	str << my_option;
 	EXPECT_EQ(str.str(), "name = option 1,option 2\n");
+}
+
+
+TEST(types, get_enum_type)
+{
+	EXPECT_EQ(get_enum_type<boolean_ini_t>(), option_type::boolean_e);
+	//EXPECT_EQ(get_enum_type<enum_ini_t>(), option_type::enum_e);
+	EXPECT_EQ(get_enum_type<float_ini_t>(), option_type::float_e);
+	EXPECT_EQ(get_enum_type<signed_ini_t>(), option_type::signed_e);
+	EXPECT_EQ(get_enum_type<unsigned_ini_t>(), option_type::unsigned_e);
+	EXPECT_EQ(get_enum_type<string_ini_t>(), option_type::string_e);
+	EXPECT_EQ(get_enum_type<const char *>(), option_type::invalid_e);
 }

@@ -138,7 +138,7 @@ namespace inicpp
 		 * Gets this option name.
 		 * @return constant reference to name
 		 */
-		std::string get_name() const;
+		const std::string &get_name() const;
 
 		/**
 		* Determines if option is list or not.
@@ -214,7 +214,7 @@ namespace inicpp
 			const std::vector<ValueType> &list)
 		{
 			values_.clear();
-			//TODO: set type_
+			type_ = get_enum_type<ValueType>();
 			for (const auto &item : list) {
 				add_to_list(item);
 			}
@@ -250,7 +250,9 @@ namespace inicpp
 		 */
 		template<typename ValueType> void add_to_list(ValueType value)
 		{
-			//TODO: check ValueType against type_
+			if (get_enum_type<ValueType>() != type_) {
+				throw bad_cast_exception("Cannot cast to requested type");
+			}
 			auto new_option_value = std::make_unique<option_value<ValueType>>(value);
 			values_.push_back(std::move(new_option_value));
 		}
@@ -265,7 +267,9 @@ namespace inicpp
 		template<typename ValueType> void add_to_list(ValueType value,
 			size_t position)
 		{
-			//TODO: check ValueType against type_
+			if (get_enum_type<ValueType>() != type_) {
+				throw bad_cast_exception("Cannot cast to requested type");
+			}
 			if (position > values_.size()) {
 				throw not_found_exception(position);
 			}
@@ -277,11 +281,12 @@ namespace inicpp
 		 * Remove element with same value as given one.
 		 * @param value
 		 * @throws bad_cast_exception if ValueType cannot be casted
-		 * @throws not_found_exception if value was not found in list
 		 */
 		template<typename ValueType> void remove_from_list(ValueType value)
 		{
-			//TODO: check ValueType against type_
+			if (get_enum_type<ValueType>() != type_) {
+				throw bad_cast_exception("Cannot cast to requested type");
+			}
 			for (auto it = values_.cbegin(); it != values_.cend(); ++it) {
 				option_value<ValueType> *ptr = dynamic_cast<option_value<ValueType> *>(&*(*it));
 				if (ptr->get() == value) {
