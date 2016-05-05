@@ -31,7 +31,7 @@ TEST(section, adding_and_removing_options)
 	sect.add_option("opt_key", "value");
 	EXPECT_EQ(sect.size(), 1u);
 	EXPECT_EQ(sect[0].get_name(), "opt_key");
-	option opt("opt2", "12", option_type::unsigned_e);
+	option opt("opt2", "12");
 	sect.add_option(opt);
 	EXPECT_EQ(sect.size(), 2u);
 	EXPECT_EQ(sect[1].get_name(), "opt2");

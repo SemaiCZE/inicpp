@@ -24,7 +24,7 @@ TEST(option, option_value_helper_class)
  */
 TEST(option, simple_option_class)
 {
-	option string_option("name of option", "simple value", option_type::string_e);
+	option string_option("name of option", "simple value");
 	EXPECT_EQ(string_option.get_name(), "name of option");
 	EXPECT_FALSE(string_option.is_list());
 	EXPECT_EQ(string_option.get<string_ini_t>(), "simple value");
@@ -38,7 +38,7 @@ TEST(option, simple_option_class)
 TEST(option, option_list_creation)
 {
 	std::vector<std::string> values = {"value1", "value2"};
-	option string_option("name of option", values, option_type::string_e);
+	option string_option("name of option", values);
 	EXPECT_EQ(string_option.get_name(), "name of option");
 	EXPECT_TRUE(string_option.is_list());
 	EXPECT_EQ(string_option.get<string_ini_t>(), "value1");
@@ -51,7 +51,7 @@ TEST(option, option_list_creation)
  */
 TEST(option, value_list_manipulation)
 {
-	option string_option("name of option", "simple value", option_type::string_e);
+	option string_option("name of option", "simple value");
 	EXPECT_FALSE(string_option.is_list());
 	string_option.add_to_list<string_ini_t>("value 2");
 	EXPECT_TRUE(string_option.is_list());
@@ -113,7 +113,7 @@ TEST(option, setting_values)
  */
 TEST(option, copying)
 {
-	option my_option("name", "value", option_type::string_e);
+	option my_option("name", "value");
 
 	// copy constructor
 	option copied(my_option);
@@ -136,14 +136,6 @@ TEST(option, copying)
 	moved_assignment = std::move(copied_assingment);
 	EXPECT_EQ(moved_assignment.get_name(), my_option.get_name());
 	EXPECT_EQ(moved_assignment.get<string_ini_t>(), my_option.get<string_ini_t>());
-}
-
-/**
- * Validate option with given schema, assert the type is changed properly.
- */
-TEST(option, validation)
-{
-	// TODO
 }
 
 /**
@@ -180,23 +172,18 @@ TEST(option, writing_to_stream)
 	str.str("");
 	my_option.set<boolean_ini_t>(true);
 	str << my_option;
-	EXPECT_EQ(str.str(), "name = on\n"); // TODO: which version of bool is preferred?
+	EXPECT_EQ(str.str(), "name = yes\n");
+
+	// enum
+	str.str("");
+	enum_ini_t en("enum_value");
+	my_option.set<enum_ini_t>(en);
+	str << my_option;
+	EXPECT_EQ(str.str(), "name = enum_value\n");
 
 	// string list
 	str.str("");
 	my_option.set_list<string_ini_t>({"option 1", "option 2"});
 	str << my_option;
 	EXPECT_EQ(str.str(), "name = option 1,option 2\n");
-}
-
-
-TEST(types, get_enum_type)
-{
-	EXPECT_EQ(get_enum_type<boolean_ini_t>(), option_type::boolean_e);
-	//EXPECT_EQ(get_enum_type<enum_ini_t>(), option_type::enum_e);
-	EXPECT_EQ(get_enum_type<float_ini_t>(), option_type::float_e);
-	EXPECT_EQ(get_enum_type<signed_ini_t>(), option_type::signed_e);
-	EXPECT_EQ(get_enum_type<unsigned_ini_t>(), option_type::unsigned_e);
-	EXPECT_EQ(get_enum_type<string_ini_t>(), option_type::string_e);
-	EXPECT_EQ(get_enum_type<const char *>(), option_type::invalid_e);
 }

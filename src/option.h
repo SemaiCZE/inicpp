@@ -121,18 +121,14 @@ namespace inicpp
 		 * Construct ini option with specified value of specified type.
 		 * @param name name of newly created option
 		 * @param value initial value
-		 * @param type non-editable option type
 		 */
-		option(const std::string &name, const std::string &value = "",
-			option_type type = option_type::string_e);
+		option(const std::string &name, const std::string &value = "");
 		/**
 		 * Construct ini option with specified value of specified list type.
 		 * @param name name of newly created option
 		 * @param value initial value
-		 * @param type non-editable option type
 		 */
-		option(const std::string &name, const std::vector<std::string> &values = {},
-			option_type type = option_type::string_e);
+		option(const std::string &name, const std::vector<std::string> &values = {});
 
 		/**
 		 * Gets this option name.
@@ -184,6 +180,12 @@ namespace inicpp
 		 * @return reference to this
 		 */
 		option &operator=(string_ini_t arg);
+		/**
+		 * Overloaded alias for set() function.
+		 * @param arg enum_t
+		 * @return reference to this
+		 */
+		option &operator=(enum_ini_t arg);
 
 		/**
 		 * Get single element value.
@@ -214,7 +216,7 @@ namespace inicpp
 			const std::vector<ValueType> &list)
 		{
 			values_.clear();
-			type_ = get_enum_type<ValueType>();
+			type_ = get_option_enum_type<ValueType>();
 			for (const auto &item : list) {
 				add_to_list(item);
 			}
@@ -250,7 +252,7 @@ namespace inicpp
 		 */
 		template<typename ValueType> void add_to_list(ValueType value)
 		{
-			if (get_enum_type<ValueType>() != type_) {
+			if (get_option_enum_type<ValueType>() != type_) {
 				throw bad_cast_exception("Cannot cast to requested type");
 			}
 			auto new_option_value = std::make_unique<option_value<ValueType>>(value);
@@ -267,7 +269,7 @@ namespace inicpp
 		template<typename ValueType> void add_to_list(ValueType value,
 			size_t position)
 		{
-			if (get_enum_type<ValueType>() != type_) {
+			if (get_option_enum_type<ValueType>() != type_) {
 				throw bad_cast_exception("Cannot cast to requested type");
 			}
 			if (position > values_.size()) {
@@ -284,7 +286,7 @@ namespace inicpp
 		 */
 		template<typename ValueType> void remove_from_list(ValueType value)
 		{
-			if (get_enum_type<ValueType>() != type_) {
+			if (get_option_enum_type<ValueType>() != type_) {
 				throw bad_cast_exception("Cannot cast to requested type");
 			}
 			for (auto it = values_.cbegin(); it != values_.cend(); ++it) {

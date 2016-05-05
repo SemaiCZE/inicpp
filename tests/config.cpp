@@ -50,7 +50,7 @@ TEST(config, adding_and_removing_options)
 	conf.add_option<string_ini_t>("sect", "opt_key", "value");
 	EXPECT_EQ(conf["sect"].size(), 1u);
 	EXPECT_EQ(conf["sect"][0].get_name(), "opt_key");
-	option opt("opt2", "12", option_type::unsigned_e);
+	option opt("opt2", "12");
 	conf.add_option("sect", opt);
 	EXPECT_EQ(conf["sect"].size(), 2u);
 	EXPECT_EQ(conf["sect"][1].get_name(), "opt2");

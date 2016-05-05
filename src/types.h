@@ -2,10 +2,29 @@
 #define INICPP_TYPES_H
 
 #include <type_traits>
+#include <string>
 
 
 namespace inicpp
 {
+	class internal_enum_type {
+	public:
+		internal_enum_type() : internal_enum_type("") {}
+		internal_enum_type(const std::string &value) : data_(value) {}
+		internal_enum_type &operator =(const internal_enum_type &other)
+		{
+			data_ = other.data_;
+			return *this;
+		}
+		operator std::string() const
+		{
+			return data_;
+		}
+
+	private:
+		std::string data_;
+	};
+
 	/**
 	 * Types which can be used in option and option_schema classes.
 	 * Only from and to this types casting is recommended.
@@ -26,7 +45,7 @@ namespace inicpp
 	typedef int64_t signed_ini_t;
 	typedef uint64_t unsigned_ini_t;
 	typedef double float_ini_t;
-	typedef std::string enum_ini_t;
+	typedef internal_enum_type enum_ini_t;
 	typedef std::string string_ini_t;
 
 	/**
@@ -55,7 +74,7 @@ namespace inicpp
 	 * @return enum representation of templated type
 	 */
 	template <typename ValueType>
-	option_type get_enum_type()
+	option_type get_option_enum_type()
 	{
 		if (std::is_same<ValueType, boolean_ini_t>::value) {
 			return option_type::boolean_e;
