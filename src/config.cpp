@@ -23,18 +23,11 @@ namespace inicpp
 
 	config &config::operator=(const config &source)
 	{
-		// in case of self assignment
-		if (this == &source) {
-			return *this;
+		if (this != &source) {
+			// make copy of input source config and swap it with this
+			config new_src(source);
+			std::swap(*this, new_src);
 		}
-
-		// make copy of input source config
-		config new_src(source);
-
-		// and then swap all elements with mines
-		std::swap(sections_, new_src.sections_);
-		std::swap(sections_map_, new_src.sections_map_);
-		std::swap(schema_, new_src.schema_);
 
 		return *this;
 	}
@@ -46,9 +39,9 @@ namespace inicpp
 
 	config &config::operator=(config &&source)
 	{
-		sections_ = source.sections_;
-		sections_map_ = source.sections_map_;
-		schema_ = source.schema_;
+		sections_ = std::move(source.sections_);
+		sections_map_ = std::move(source.sections_map_);
+		schema_ = std::move(source.schema_);
 		return *this;
 	}
 

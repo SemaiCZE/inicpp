@@ -42,10 +42,15 @@ TEST(parser, load_config)
 		"[section]\n"
 		"opt = 15";
 	schema validatin_schema;
-	section_schema_params sect_params {
-		"section", item_requirement::mandatory, "comment"
-	};
+
+	// Following is not possible in MS Visual C++ yet
+	//section_schema_params sect_params{ "section", item_requirement::mandatory, "comment" };
+	section_schema_params sect_params;
+	sect_params.name = "section";
+	sect_params.requirement = item_requirement::mandatory;
+	sect_params.comment = "comment";
 	section_schema sect_schema(sect_params);
+
 	option_schema_params<unsigned_ini_t> opt_params;
 	opt_params.name = "opt";
 	opt_params.requirement = item_requirement::mandatory;
@@ -76,7 +81,15 @@ TEST(parser, store_config)
 	my_config.add_section("section_name");
 	my_config.add_option("section_name", "opt", "value");
 	schema validatin_schema;
-	section_schema sect_schema({"section_name", item_requirement::mandatory, "comment"});
+
+	// Following is not possible in MS Visual C++ yet
+	//section_schema sect_schema({ "section_name", item_requirement::mandatory, "comment" });
+
+	section_schema_params sect_params;
+	sect_params.name = "section_name";
+	sect_params.requirement = item_requirement::mandatory;
+	sect_params.comment = "comment";
+	section_schema sect_schema(sect_params);
 
 	// Following will be possible in C++17
 	//option_schema_params<string_ini_t> opt { {"opt", item_requirement::mandatory,
