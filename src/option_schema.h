@@ -76,6 +76,36 @@ namespace inicpp
 			return std::move(new_schema_value);
 		}
 
+		/**
+		 * Run provided validator on all items in option.
+		 * @param opt
+		 */
+		void validate_option_items(option &opt) const;
+
+		template <typename ValueType>
+		void validate_typed_option_items(const std::vector<ValueType> &items) const
+		{
+			for (const auto &item : items) {
+				option_schema_params<ValueType> *ptr = dynamic_cast<option_schema_params<ValueType> *>(&*params_);
+				if (ptr != nullptr && !ptr->validator(item)) {
+					throw validation_exception("Validation failed");
+				}
+			}
+		}
+
+		void parse_option_items(option &opt) const;
+
+		template <typename ValueType>
+		std::vector<ValueType> parse_typed_option_items(const std::vector<std::string> &items,
+			std::function<ValueType(const std::string &)> parser) const
+		{
+			std::vector<ValueType> typed_items;
+			for (const auto &item : items) {
+				typed_items.push_back(parser(item));
+			}
+			return typed_items;
+		}
+
 	public:
 		/**
 		 * Deleted default constructor.
@@ -151,7 +181,7 @@ namespace inicpp
 		 * @param mode validation mode
 		 * @return true if option comply option_schema
 		 */
-		bool validate_option(const option &opt, schema_mode mode) const;
+		bool validate_option(option &opt) const;
 
 		/**
 		 * Classic stream operator for printing this instance to output stream.

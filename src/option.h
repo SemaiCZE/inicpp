@@ -146,6 +146,11 @@ namespace inicpp
 		const std::string &get_name() const;
 
 		/**
+		 * Gets current type of inner value.
+		 * @return current type
+		 */
+		option_type get_type() const;
+		/**
 		* Determines if option is list or not.
 		* @return true if option is list, false otherwise
 		*/
@@ -319,10 +324,9 @@ namespace inicpp
 		/**
 		 * Validate this option against given option_schema.
 		 * @param opt_schema validation schema
-		 * @param mode validation mode
 		 * @return true if option matches given option_schema, false otherwise
 		 */
-		bool validate(const option_schema &opt_schema, schema_mode mode);
+		bool validate(const option_schema &opt_schema);
 
 		/**
 		 * Equality operator.

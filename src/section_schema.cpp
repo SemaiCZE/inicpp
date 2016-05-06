@@ -1,4 +1,5 @@
 #include "section_schema.h"
+#include "string_utils.h"
 
 namespace inicpp
 {
@@ -146,18 +147,36 @@ namespace inicpp
 
 	bool section_schema::validate_section(const section &sect, schema_mode mode) const
 	{
+		/*
+		 * Here should be done:
+		 * - check if section has proper options (compare by names) - depends on mode
+		 * - for options with given schema call validate on that option
+		 * - for missing options from schema (relaxed mode) add string options with
+		 *   default value
+		 */
 		throw not_implemented_exception();
 	}
 
 	std::ostream &operator<<(std::ostream &os, const section_schema &sect_schema)
 	{
-		if (sect_schema.requirement_ == item_requirement::mandatory) {
-			os << "[" << sect_schema.name_ << "]" << std::endl;
-			
-			for (auto &opt : sect_schema.options_) {
-				os << *opt;
-			}
+		// write comment
+		auto comment_lines = string_utils::split(sect_schema.get_comment(), '\n');
+		for (auto &comment_line : comment_lines) {
+			os << ";" << comment_line << std::endl;
 		}
+
+		// optional/mandatory
+		std::string info_line = sect_schema.is_mandatory() ? "mandatory" : "optional";
+		os << ";<" << info_line << ">" << std::endl;
+
+		// write name
+		os << "[" << sect_schema.get_name() << "]" << std::endl;
+
+		// write all containing options
+		for (auto &opt : sect_schema.options_) {
+			os << *opt;
+		}
+
 		return os;
 	}
 }

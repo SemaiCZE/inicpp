@@ -110,8 +110,20 @@ TEST(option_schema, type_deduction)
 
 TEST(option_schema, validation)
 {
-	//TODO:
-	throw not_implemented_exception();
+	// single value
+	option signed_option("name", "-45");
+	option_schema_params<signed_ini_t> signed_params;
+	signed_params.name = "name";
+	signed_params.type = option_item::single;
+	signed_params.validator = [](signed_ini_t i) { return i < 5; };
+	option_schema signed_schema(signed_params);
+	EXPECT_NO_THROW(signed_schema.validate_option(signed_option));
+	EXPECT_EQ(signed_option.get<signed_ini_t>(), -45);
+	signed_option.set<string_ini_t>("63");
+	EXPECT_THROW(signed_schema.validate_option(signed_option), validation_exception);
+
+	// list value
+	// TODO:
 }
 
 TEST(option_schema, writing_to_ostream)

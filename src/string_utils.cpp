@@ -1,4 +1,5 @@
 #include "string_utils.h"
+#include "exception.h"
 
 namespace inicpp
 {
@@ -65,6 +66,15 @@ namespace inicpp
 				result.push_back(item);
 			}
 			return result;
+		}
+
+		signed_ini_t parse_signed_type(const std::string &value)
+		{
+			try {
+				return std::stoll(value);
+			} catch (std::exception &e) {
+				throw invalid_type_exception(e.what());
+			}
 		}
 	}
 }

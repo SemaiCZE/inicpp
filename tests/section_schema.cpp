@@ -93,6 +93,7 @@ TEST(section_schema, adding_and_removing_options)
 TEST(section_schema, validation)
 {
 	//TODO:
+	throw not_implemented_exception();
 }
 
 TEST(section_schema, writing_to_ostream)
@@ -104,12 +105,22 @@ TEST(section_schema, writing_to_ostream)
 	params.comment = "comment\nmultiline";
 	section_schema my_section(params);
 
+	option_schema_params<string_ini_t> opt_params;
+	opt_params.name = "opt_name";
+	opt_params.requirement = item_requirement::optional;
+	opt_params.type = option_item::list;
+	opt_params.default_value = "default,value";
+	option_schema my_option(opt_params);
+	my_section.add_option(my_option);
+
 	str << my_section;
 
 	std::string expected_output =
 		";comment\n"
 		";multiline\n"
-		"[name] ;optional\n"
-		"opt_name = default_value\n";
+		";<optional>\n"
+		"[name]\n"
+		";<optional, list>\n"
+		"opt_name = default,value\n";
 	EXPECT_EQ(str.str(), expected_output);
 }

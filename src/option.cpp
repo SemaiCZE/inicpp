@@ -82,6 +82,11 @@ namespace inicpp
 		return name_;
 	}
 
+	option_type option::get_type() const
+	{
+		return type_;
+	}
+
 	void option::remove_from_list_pos(size_t position)
 	{
 		if (position >= values_.size()) {
@@ -90,9 +95,9 @@ namespace inicpp
 		values_.erase(values_.begin() + position);
 	}
 
-	bool option::validate(const option_schema &opt_schema, schema_mode mode)
+	bool option::validate(const option_schema &opt_schema)
 	{
-		return opt_schema.validate_option(*this, mode);
+		return opt_schema.validate_option(*this);
 	}
 
 	bool option::operator==(const option &other) const

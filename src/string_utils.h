@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <vector>
 #include <sstream>
+#include "types.h"
 
 namespace inicpp
 {
@@ -20,6 +21,8 @@ namespace inicpp
 		bool ends_with(const std::string &str, const std::string &search_str);
 
 		std::vector<std::string> split(const std::string &str, char delim);
+
+		signed_ini_t parse_signed_type(const std::string &value);
 	}
 }
 

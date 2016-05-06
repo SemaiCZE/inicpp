@@ -47,8 +47,10 @@ namespace inicpp
 	
 	option_schema &option_schema::operator=(option_schema &&source)
 	{
-		type_ = source.type_;
-		params_ = std::move(source.params_);
+		if (this != &source) {
+			type_ = source.type_;
+			params_ = std::move(source.params_);
+		}
 		return *this;
 	}
 
@@ -82,9 +84,72 @@ namespace inicpp
 		return params_->comment;
 	}
 	
-	bool option_schema::validate_option(const option &opt, schema_mode mode) const
+	bool option_schema::validate_option(option &opt) const
 	{
-		throw not_implemented_exception();
+		if (params_->type == option_item::single && opt.is_list()) {
+			throw validation_exception("List given, single value expected");
+		} else if (params_->type == option_item::list && !opt.is_list()) {
+			throw validation_exception("Single value given, list expected");
+		}
+
+		// if option type doesn't match, parse it to proper one
+		if (opt.get_type() != type_) {
+			parse_option_items(opt);
+		}
+
+		// validate range using provided validator
+		validate_option_items(opt);
+
+		return true;
+	}
+
+	void option_schema::validate_option_items(option &opt) const
+	{
+		// load value and call validate function on it
+		switch (type_) {
+		case option_type::boolean_e:
+			break;
+		case option_type::enum_e:
+			break;
+		case option_type::float_e:
+			break;
+		case option_type::signed_e:
+			validate_typed_option_items<signed_ini_t>(opt.get_list<signed_ini_t>());
+			break;
+		case option_type::string_e:
+			break;
+		case option_type::unsigned_e:
+			break;
+		case option_type::invalid_e:
+			// never reached
+			throw invalid_type_exception("Invalid option type");
+			break;
+		}
+	}
+
+	void option_schema::parse_option_items(option &opt) const
+	{
+		switch (type_) {
+		case option_type::boolean_e:
+			break;
+		case option_type::enum_e:
+			break;
+		case option_type::float_e:
+			break;
+		case option_type::signed_e:
+			opt.set_list<signed_ini_t>(parse_typed_option_items<signed_ini_t>(
+				opt.get_list<string_ini_t>(), string_utils::parse_signed_type)
+			);
+			break;
+		case option_type::string_e:
+			break;
+		case option_type::unsigned_e:
+			break;
+		case option_type::invalid_e:
+			// never reached
+			throw invalid_type_exception("Invalid option type");
+			break;
+		}
 	}
 
 	std::ostream &operator<<(std::ostream &os, const option_schema &opt_schema)
