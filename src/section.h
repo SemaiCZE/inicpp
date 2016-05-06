@@ -26,10 +26,14 @@ namespace inicpp
 	class section
 	{
 	private:
+		typedef std::vector<std::shared_ptr<option>> options_vector;
+		typedef std::map<std::string, std::shared_ptr<option>> options_map;
+		typedef std::pair<std::string, std::shared_ptr<option>> options_map_pair;
+
 		/** List of options in this instance */
-		std::vector<std::shared_ptr<option>> options_;
+		options_vector options_;
 		/** Map of options for better searching */
-		std::map<std::string, std::shared_ptr<option>> options_map_;
+		options_map options_map_;
 		/** Name of this section */
 		std::string name_;
 		/** Corresponding section_schema if any */
@@ -37,10 +41,6 @@ namespace inicpp
 
 		friend class section_iterator<option>;
 		friend class section_iterator<const option>;
-
-		typedef std::vector<std::shared_ptr<option>> options_vector;
-		typedef std::map<std::string, std::shared_ptr<option>> options_map;
-		typedef std::pair<std::string, std::shared_ptr<option>> options_map_pair;
 
 	public:
 		/** type of iterator */

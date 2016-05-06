@@ -23,8 +23,14 @@ namespace inicpp
 	class schema
 	{
 	private:
+		typedef std::vector<std::shared_ptr<section_schema>> sect_schema_vector;
+		typedef std::map<std::string, std::shared_ptr<section_schema>> sect_schema_map;
+		typedef std::pair<std::string, std::shared_ptr<section_schema>> sect_schema_map_pair;
+
 		/** Container for section_schema objects */
-		std::vector<section_schema> sections_;
+		sect_schema_vector sections_;
+		/** Map of section_schema object for better searching by name */
+		sect_schema_map sections_map_;
 
 	public:
 		/**
@@ -82,6 +88,46 @@ namespace inicpp
 		template<typename ArgType>
 		void add_option(const std::string &section_name,
 			option_schema_params<ArgType> &arguments);
+
+		/**
+		 * Returns size of section schemas list
+		 * @return unsigned integer
+		 */
+		size_t size() const;
+		/**
+		 * Access section_schema on specified index.
+		 * @param index index of requested value
+		 * @return modifiable reference to stored section_schema
+		 * @throws not_found_exception if index is out of range
+		 */
+		section_schema &operator[](size_t index);
+		/**
+		 * Access constant reference on section_schema on specified index.
+		 * @param index index of requested value
+		 * @return constant reference to stored section_schema
+		 * @throws not_found_exception if index is out of range
+		 */
+		const section_schema &operator[](size_t index) const;
+		/**
+		 * Access section_schema with specified name.
+		 * @param section_name name of requested section_schema
+		 * @return modifiable reference to stored section_schema
+		 * @throws not_found_exception if section_schema with given name does not exist
+		 */
+		section_schema &operator[](const std::string &section_name);
+		/**
+		 * Access constant reference on section_schema with specified name.
+		 * @param section_name name of requested section_schema
+		 * @return constant reference to stored section_schema
+		 * @throws not_found_exception if section_schema with given name does not exist
+		 */
+		const section_schema &operator[](const std::string &section_name) const;
+		/**
+		 * Tries to find section_schema with specified name inside this config.
+		 * @parame section_name name which is searched
+		 * @return true if section_schema with this name is present, false otherwise
+		 */
+		bool contains(const std::string &section_name) const;
 
 		/**
 		 * Validate cfg against this schema in specified mode.

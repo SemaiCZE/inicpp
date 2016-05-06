@@ -27,19 +27,19 @@ namespace inicpp
 	class config
 	{
 	private:
+		typedef std::vector<std::shared_ptr<section>> sections_vector;
+		typedef std::map<std::string, std::shared_ptr<section>> sections_map;
+		typedef std::pair<std::string, std::shared_ptr<section>> sections_map_pair;
+
 		/** List of sections in this config instance */
-		std::vector<std::shared_ptr<section>> sections_;
+		sections_vector sections_;
 		/** Map of sections for better searching */
-		std::map<std::string, std::shared_ptr<section>> sections_map_;
+		sections_map sections_map_;
 		/** Corresponding schema if any */
 		std::shared_ptr<schema> schema_;
 
 		friend class config_iterator<section>;
 		friend class config_iterator<const section>;
-
-		typedef std::vector<std::shared_ptr<section>> sections_vector;
-		typedef std::map<std::string, std::shared_ptr<section>> sections_map;
-		typedef std::pair<std::string, std::shared_ptr<section>> sections_map_pair;
 
 	public:
 		/** type of iterator */

@@ -42,6 +42,36 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
+	size_t schema::size() const
+	{
+		return sections_.size();
+	}
+
+	section_schema &schema::operator[](size_t index)
+	{
+		throw not_implemented_exception();
+	}
+
+	const section_schema &schema::operator[](size_t index) const
+	{
+		throw not_implemented_exception();
+	}
+
+	section_schema &schema::operator[](const std::string &section_name)
+	{
+		throw not_implemented_exception();
+	}
+
+	const section_schema &schema::operator[](const std::string &section_name) const
+	{
+		throw not_implemented_exception();
+	}
+
+	bool schema::contains(const std::string &section_name) const
+	{
+		throw not_implemented_exception();
+	}
+
 	template<typename ArgType>
 	void schema::add_option(const std::string &section_name, option_schema_params<ArgType> &arguments)
 	{

@@ -52,6 +52,36 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
+	size_t section_schema::size() const
+	{
+		return options_.size();
+	}
+
+	option_schema &section_schema::operator[](size_t index)
+	{
+		throw not_implemented_exception();
+	}
+
+	const option_schema &section_schema::operator[](size_t index) const
+	{
+		throw not_implemented_exception();
+	}
+
+	option_schema &section_schema::operator[](const std::string &option_name)
+	{
+		throw not_implemented_exception();
+	}
+
+	const option_schema &section_schema::operator[](const std::string &option_name) const
+	{
+		throw not_implemented_exception();
+	}
+
+	bool section_schema::contains(const std::string &option_name) const
+	{
+		throw not_implemented_exception();
+	}
+
 	bool section_schema::validate_section(const section &sect, schema_mode mode) const
 	{
 		throw not_implemented_exception();

@@ -37,14 +37,21 @@ namespace inicpp
 	class section_schema
 	{
 	private:
+		typedef std::vector<std::shared_ptr<option_schema>> opt_schema_vector;
+		typedef std::map<std::string, std::shared_ptr<option_schema>> opt_schema_map;
+		typedef std::pair<std::string, std::shared_ptr<option_schema>> opt_schema_map_pair;
+
 		/** Section name */
 		std::string name_;
 		/** Determines if section is mandatory or not */
 		bool mandatory_;
 		/** Description of this section */
 		std::string comment_;
-		/** Options stored in this section. */
-		std::vector<option_schema> options_;
+
+		/** Options stored in this section */
+		opt_schema_vector options_;
+		/** Options stored in map for better searching */
+		opt_schema_map options_map_;
 
 	public:
 		/**
@@ -113,6 +120,46 @@ namespace inicpp
 		 * @throws not_found_exception if given option does not exist
 		 */
 		void remove_option(const std::string &name);
+
+		/**
+		 * Returns size of option schemas list
+		 * @return unsigned integer
+		 */
+		size_t size() const;
+		/**
+		 * Access option_schema on specified index.
+		 * @param index
+		 * @return modifiable reference to stored option_schema
+		 * @throws not_found_exception in case of out of range
+		 */
+		option_schema &operator[](size_t index);
+		/**
+		 * Access constant reference on option_schema specified index.
+		 * @param index
+		 * @return constant reference to stored option_schema
+		 * @throws not_found_exception in case of out of range
+		 */
+		const option_schema &operator[](size_t index) const;
+		/**
+		 * Access option_schema with specified name
+		 * @param option_name
+		 * @return modifiable reference to stored option_schema
+		 * @throws not_found_exception if option_schema with given name does not exist
+		 */
+		option_schema &operator[](const std::string &option_name);
+		/**
+		 * Access constant reference on option_schema with specified name
+		 * @param option_name
+		 * @return constant reference to stored option_schema
+		 * @throws not_found_exception if option_schema with given name does not exist
+		 */
+		const option_schema &operator[](const std::string &option_name) const;
+		/**
+		 * Tries to find option_schema with specified name inside this section.
+		 * @parame option_name name which is searched
+		 * @return true if option_schema with this name is present, false otherwise
+		 */
+		bool contains(const std::string &option_name) const;
 
 		/**
 		 * Validate given section againts this section_schema.
