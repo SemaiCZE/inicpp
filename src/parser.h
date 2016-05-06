@@ -29,6 +29,8 @@ namespace inicpp
 		static std::string unescape(const std::string &str);
 		static std::string delete_comment(const std::string &str);
 		static std::vector<std::string> parse_option_list(const std::string &str);
+		static void handle_links(const config &cfg, const section &last_section,
+			std::vector<std::string> &option_val_list, size_t line_number);
 
 		static config internal_load(std::istream &str);
 		static void internal_save(const config &cfg, const schema &schm, std::ostream &str);

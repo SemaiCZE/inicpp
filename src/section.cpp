@@ -89,12 +89,21 @@ namespace inicpp
 		}
 	}
 
-	size_t section::size()
+	size_t section::size() const
 	{
 		return options_.size();
 	}
 
 	option &section::operator[](size_t index)
+	{
+		if (index >= size()) {
+			throw not_found_exception(index);
+		}
+
+		return *options_[index];
+	}
+
+	const option &section::operator[](size_t index) const
 	{
 		if (index >= size()) {
 			throw not_found_exception(index);
@@ -112,6 +121,27 @@ namespace inicpp
 			throw not_found_exception(option_name);
 		}
 		return *result;
+	}
+
+	const option &section::operator[](const std::string &option_name) const
+	{
+		std::shared_ptr<option> result;
+		try {
+			result = options_map_.at(option_name);
+		} catch (std::out_of_range) {
+			throw not_found_exception(option_name);
+		}
+		return *result;
+	}
+
+	bool section::contains(const std::string &option_name) const
+	{
+		try {
+			options_map_.at(option_name);
+			return true;
+		} catch (std::out_of_range) {
+			return false;
+		}
 	}
 
 	bool section::validate(const section_schema &sect_schema, schema_mode mode)

@@ -63,6 +63,49 @@ namespace inicpp
 		return result;
 	}
 
+	void parser::handle_links(const config &cfg, const section &last_section,
+		std::vector<std::string> &option_val_list, size_t line_number)
+	{
+		using namespace string_utils;
+
+		for (auto &opt_value : option_val_list) {
+			if (starts_with(opt_value, "${") && ends_with(opt_value, "}")) {
+				std::string link = opt_value.substr(2, opt_value.length() - 3);
+				size_t delim = find_first_nonescaped(link, '#');
+				
+				// link always has to be in format "section#option"
+				// section and option cannot be empty
+				if (delim == std::string::npos || (delim + 1) == link.length()) {
+					throw parser_exception("Bad format of link on line " + line_number);
+				}
+
+				std::string sect_link = link.substr(0, delim);
+				std::string opt_link = link.substr(delim + 1);
+
+				if (sect_link.empty()) {
+					throw parser_exception("Section name in link cannot be empty on line " + line_number);
+				}
+
+				// find section with name specifid in link
+				const section *selected_section = nullptr;
+				if (last_section.get_name() == sect_link) {
+					selected_section = &last_section;
+				} else if (cfg.contains(sect_link)) {
+					selected_section = &cfg[sect_link];
+				} else {
+					throw parser_exception("Bad link on line " + line_number);
+				}
+
+				// from selected section take appropriate option and set its value to options list
+				if (selected_section->contains(opt_link)) {
+					opt_value = selected_section->operator[](opt_link).get<string_ini_t>();
+				} else {
+					throw parser_exception("Option name in link not found on line " + line_number);
+				}
+			}
+		}
+	}
+
 	config parser::internal_load(std::istream &str)
 	{
 		using namespace string_utils;
@@ -127,7 +170,7 @@ namespace inicpp
 					throw parser_exception("Option value cannot be empty");
 				}
 
-				// TODO: links
+				handle_links(cfg, *last_section, option_val_list, line_number);
 
 				// and finally create option and store it in current section
 				option opt(option_name, option_val_list);
@@ -146,9 +189,8 @@ namespace inicpp
 	void parser::internal_save(const config &cfg, const schema &schm, std::ostream &str)
 	{
 		for (auto &sect : cfg) {
-			for (auto &opt : sect) {
-				// TODO
-			}
+			str << sect;
+			// TODO:
 		}
 	}
 

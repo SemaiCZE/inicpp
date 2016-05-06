@@ -127,6 +127,15 @@ namespace inicpp
 		return *sections_[index];
 	}
 
+	const section &config::operator[](size_t index) const
+	{
+		if (index >= size()) {
+			throw not_found_exception(index);
+		}
+
+		return *sections_[index];
+	}
+
 	section &config::operator[](const std::string &section_name)
 	{
 		std::shared_ptr<section> result;
@@ -136,6 +145,27 @@ namespace inicpp
 			throw not_found_exception(section_name);
 		}
 		return *result;
+	}
+
+	const section &config::operator[](const std::string &section_name) const
+	{
+		std::shared_ptr<section> result;
+		try {
+			result = sections_map_.at(section_name);
+		} catch (std::out_of_range) {
+			throw not_found_exception(section_name);
+		}
+		return *result;
+	}
+
+	bool config::contains(const std::string &section_name) const
+	{
+		try {
+			sections_map_.at(section_name);
+			return true;
+		} catch (std::out_of_range) {
+			return false;
+		}
 	}
 
 	bool config::validate(const schema &schm, schema_mode mode)

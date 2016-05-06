@@ -137,12 +137,32 @@ namespace inicpp
 		 */
 		section &operator[](size_t index);
 		/**
+		 * Access constant reference on section on specified index.
+		 * @param index index of requested value
+		 * @return constant reference to stored section
+		 * @throws not_found_exception if index is out of range
+		 */
+		const section &operator[](size_t index) const;
+		/**
 		 * Access section with specified name.
 		 * @param section_name name of requested section
 		 * @return modifiable reference to stored section
 		 * @throws not_found_exception if section with given name does not exist
 		 */
 		section &operator[](const std::string &section_name);
+		/**
+		 * Access constant reference on section with specified name.
+		 * @param section_name name of requested section
+		 * @return constant reference to stored section
+		 * @throws not_found_exception if section with given name does not exist
+		 */
+		const section &operator[](const std::string &section_name) const;
+		/**
+		 * Tries to find section with specified name inside this config.
+		 * @parame section_name name which is searched
+		 * @return true if section with this name is present, false otherwise
+		 */
+		bool contains(const std::string &section_name) const;
 
 		/**
 		 * Validates this config agains given schema.

@@ -112,7 +112,7 @@ namespace inicpp
 		 * Returns size of options list
 		 * @return unsigned integer
 		 */
-		size_t size();
+		size_t size() const;
 		/**
 		 * Access option on specified index.
 		 * @param index
@@ -121,12 +121,32 @@ namespace inicpp
 		 */
 		option &operator[](size_t index);
 		/**
+		 * Access constant reference on option specified index.
+		 * @param index
+		 * @return constant reference to stored option
+		 * @throws not_found_exception in case of out of range
+		 */
+		const option &operator[](size_t index) const;
+		/**
 		 * Access option with specified name
 		 * @param option_name
 		 * @return modifiable reference to stored option
 		 * @throws not_found_exception if option with given name does not exist
 		 */
 		option &operator[](const std::string &option_name);
+		/**
+		 * Access constant reference on option with specified name
+		 * @param option_name
+		 * @return constant reference to stored option
+		 * @throws not_found_exception if option with given name does not exist
+		 */
+		const option &operator[](const std::string &option_name) const;
+		/**
+		 * Tries to find option with specified name inside this section.
+		 * @parame option_name name which is searched
+		 * @return true if option with this name is present, false otherwise
+		 */
+		bool contains(const std::string &option_name) const;
 
 		/**
 		 * Validates this section agains given section_schema.
