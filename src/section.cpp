@@ -35,10 +35,7 @@ namespace inicpp
 
 	section::section(section &&source)
 	{
-		options_ = std::move(source.options_);
-		options_map_ = std::move(source.options_map_);
-		name_ = std::move(source.name_);
-		section_schema_ = std::move(source.section_schema_);
+		operator=(std::move(source));
 	}
 
 	section &section::operator=(section &&source)

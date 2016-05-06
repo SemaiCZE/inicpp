@@ -38,9 +38,7 @@ namespace inicpp
 
 	config::config(config &&source)
 	{
-		sections_ = std::move(source.sections_);
-		sections_map_ = std::move(source.sections_map_);
-		schema_ = std::move(source.schema_);
+		operator=(std::move(source));
 	}
 
 	config &config::operator=(config &&source)

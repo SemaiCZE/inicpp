@@ -4,7 +4,6 @@ namespace inicpp
 {
 	schema::schema()
 	{
-		throw not_implemented_exception();
 	}
 
 	schema::schema(const schema &source)
@@ -69,7 +68,12 @@ namespace inicpp
 
 	bool schema::contains(const std::string &section_name) const
 	{
-		throw not_implemented_exception();
+		try {
+			sections_map_.at(section_name);
+			return true;
+		} catch (std::out_of_range) {
+			return false;
+		}
 	}
 
 	template<typename ArgType>

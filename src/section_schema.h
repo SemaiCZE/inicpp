@@ -44,7 +44,7 @@ namespace inicpp
 		/** Section name */
 		std::string name_;
 		/** Determines if section is mandatory or not */
-		bool mandatory_;
+		item_requirement requirement_;
 		/** Description of this section */
 		std::string comment_;
 
@@ -104,15 +104,16 @@ namespace inicpp
 		 */
 		void add_option(const option_schema &opt);
 		/**
-		 * Creates option_schema from given arguments
-		 * and add it to options list.
+		 * Creates option_schema from given arguments and add it to options list.
+		 * Function add_option(const option_schema &opt) is called after option_schema creation.
 		 * @param arguments creation paramaters
 		 * @throws ambiguity_exception if option_schema with given name exists
 		 */
 		template<typename ArgType>
 		void add_option(const option_schema_params<ArgType> &arguments)
 		{
-			throw not_implemented_exception();
+			option_schema opt(arguments);
+			add_option(opt);
 		}
 		/**
 		 * Remove containing option schema of given name.
