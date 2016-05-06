@@ -54,9 +54,9 @@ TEST(exceptions, validation)
 	EXPECT_EQ(ex.what(), "message"s);
 }
 
-TEST(exceptions, invalid_config)
+TEST(exceptions, invalid_type)
 {
-	invalid_config_exception ex("message");
+	invalid_type_exception ex("message");
 	EXPECT_EQ(ex.what(), "message"s);
 }
 

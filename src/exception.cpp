@@ -45,7 +45,7 @@ namespace inicpp
 	{
 	}
 
-	invalid_config_exception::invalid_config_exception(const std::string &message)
+	invalid_type_exception::invalid_type_exception(const std::string &message)
 		: inicpp::exception(message)
 	{
 	}

@@ -127,14 +127,14 @@ namespace inicpp
 	/**
 	 * Thrown in case of bad format of input ini configuration.
 	 */
-	class invalid_config_exception : public exception
+	class invalid_type_exception : public exception
 	{
 	public:
 		/**
 		 * Default generic constructor.
 		 * @param message
 		 */
-		invalid_config_exception(const std::string &message);
+		invalid_type_exception(const std::string &message);
 	};
 
 

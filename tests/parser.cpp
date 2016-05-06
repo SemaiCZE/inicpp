@@ -20,7 +20,7 @@ TEST(parser, load_config)
 		"[section]\n"
 		"opt = val\n"
 		"opt2 = val2, val3, val4\n"
-		"; other comment"
+		"; other comment\n"
 		"[section2#a] ;with comment\n"
 		"link = ${section#opt}";
 	auto loaded_config = parser::load(str_config);
@@ -35,7 +35,7 @@ TEST(parser, load_config)
 	EXPECT_EQ(loaded_config[0][1].get_name(), "opt2");
 	EXPECT_EQ(loaded_config[0][0].get<string_ini_t>(), "val");
 	std::vector<std::string> expected_list {"val2", "val3", "val4"};
-	EXPECT_EQ(loaded_config[0][0].get_list<string_ini_t>(), expected_list);
+	EXPECT_EQ(loaded_config[0][1].get_list<string_ini_t>(), expected_list);
 	EXPECT_EQ(loaded_config[1][0].get<string_ini_t>(), "val");
 
 	str_config = ""
@@ -119,7 +119,7 @@ TEST(parser, store_config)
 	std::string expected_result = ""
 		";comment\n"
 		"[section_name] ;mandatory\n"
-		";opt comment"
+		";opt comment\n"
 		"opt = value ;mandatory, default \"default value\"\n"
 		";unsignd comment\n"
 		"unsigned = 42 ;optional, default \"42\"\n";

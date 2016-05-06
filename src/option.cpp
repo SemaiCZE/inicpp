@@ -35,7 +35,7 @@ namespace inicpp
 					break;
 				case option_type::invalid_e:
 					// never reached
-					throw invalid_config_exception("Invalid option type");
+					throw invalid_type_exception("Invalid option type");
 					break;
 				}
 			}
@@ -137,7 +137,7 @@ namespace inicpp
 					}
 					break;
 				default:
-					throw invalid_config_exception("Invalid option type");
+					throw invalid_type_exception("Invalid option type");
 					break;
 				}
 			}
@@ -289,7 +289,7 @@ namespace inicpp
 			break;
 		case option_type::invalid_e:
 			// never reached
-			throw invalid_config_exception("Invalid option type");
+			throw invalid_type_exception("Invalid option type");
 			break;
 		}
 		os << std::endl;
