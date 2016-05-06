@@ -37,9 +37,9 @@ namespace inicpp
 	class section_schema
 	{
 	private:
-		typedef std::vector<std::shared_ptr<option_schema>> opt_schema_vector;
-		typedef std::map<std::string, std::shared_ptr<option_schema>> opt_schema_map;
-		typedef std::pair<std::string, std::shared_ptr<option_schema>> opt_schema_map_pair;
+		using opt_schema_vector = std::vector<std::shared_ptr<option_schema>>;
+		using opt_schema_map = std::map<std::string, std::shared_ptr<option_schema>>;
+		using opt_schema_map_pair = std::pair<std::string, std::shared_ptr<option_schema>>;
 
 		/** Section name */
 		std::string name_;

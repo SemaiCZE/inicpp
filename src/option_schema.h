@@ -16,8 +16,10 @@ namespace inicpp
 	 * Base struct which sums up all common information needed
 	 * for option_schema creation.
 	 */
-	struct option_schema_params_base
+	class option_schema_params_base
 	{
+	public:
+		virtual ~option_schema_params_base() {}
 		/** Name of option_schema */
 		std::string name;
 		/** Determines if this option is mandatory or not */
@@ -36,8 +38,10 @@ namespace inicpp
 	 * and holds in addition to parent functor for value validation.
 	 */
 	template<typename ArgType>
-	struct option_schema_params : public option_schema_params_base
+	class option_schema_params : public option_schema_params_base
 	{
+	public:
+		virtual ~option_schema_params() {}
 		/**
 		 * Validating function - takes one argument of @a ArgType
 		 * and returns bool if valid or not
@@ -61,7 +65,16 @@ namespace inicpp
 		/** Assumed type of option */
 		option_type type_;
 		/** Internal properties of the option */
-		std::shared_ptr<option_schema_params_base> params_;
+		std::unique_ptr<option_schema_params_base> params_;
+
+		template <typename ValueType>
+		std::unique_ptr<option_schema_params_base> copy_schema(const std::unique_ptr<option_schema_params_base> &opt)
+		{
+			option_schema_params<ValueType> *ptr = dynamic_cast<option_schema_params<ValueType> *>(&*opt);
+			// call copy constructor of option_schema_params<ValueType>
+			auto new_schema_value = std::make_unique<option_schema_params<ValueType>>(*ptr);
+			return std::move(new_schema_value);
+		}
 
 	public:
 		/**
@@ -88,11 +101,17 @@ namespace inicpp
 		/**
 		 * Construct option_schema from given parameters.
 		 * @param arguments creation arguments
+		 * @throws invalid_type_exception if given type is not valid
 		 */
 		template<typename ArgType>
 		option_schema(const option_schema_params<ArgType> &arguments)
 		{
-			throw not_implemented_exception();
+			type_ = get_option_enum_type<ArgType>();
+			if (type_ == option_type::invalid_e) {
+				throw invalid_type_exception("Invalid schema type");
+			}
+
+			params_ = std::make_unique<option_schema_params<ArgType>>(arguments);
 		}
 
 		/**

@@ -1,25 +1,55 @@
 #include "option_schema.h"
+#include "string_utils.h"
 
 namespace inicpp
 {
 	option_schema::option_schema(const option_schema &source)
 	{
-		throw not_implemented_exception();
+		this->operator =(source);
 	}
 
 	option_schema &option_schema::operator=(const option_schema &source)
 	{
-		throw not_implemented_exception();
+		type_ = source.type_;
+
+		switch (type_) {
+		case option_type::boolean_e:
+			params_ = copy_schema<boolean_ini_t>(source.params_);
+			break;
+		case option_type::enum_e:
+			params_ = copy_schema<enum_ini_t>(source.params_);
+			break;
+		case option_type::float_e:
+			params_ = copy_schema<float_ini_t>(source.params_);
+			break;
+		case option_type::signed_e:
+			params_ = copy_schema<signed_ini_t>(source.params_);
+			break;
+		case option_type::string_e:
+			params_ = copy_schema<string_ini_t>(source.params_);
+			break;
+		case option_type::unsigned_e:
+			params_ = copy_schema<unsigned_ini_t>(source.params_);
+			break;
+		case option_type::invalid_e:
+			// never reached
+			throw invalid_type_exception("Invalid option type");
+			break;
+		}
+
+		return *this;
 	}
 	
 	option_schema::option_schema(option_schema &&source)
 	{
-		throw not_implemented_exception();
+		this->operator =(std::move(source));
 	}
 	
 	option_schema &option_schema::operator=(option_schema &&source)
 	{
-		throw not_implemented_exception();
+		type_ = source.type_;
+		params_ = std::move(source.params_);
+		return *this;
 	}
 
 	const std::string &option_schema::get_name() const
@@ -59,6 +89,21 @@ namespace inicpp
 
 	std::ostream &operator<<(std::ostream &os, const option_schema &opt_schema)
 	{
-		throw not_implemented_exception();
+		// write comment
+		auto comment_lines = string_utils::split(opt_schema.get_comment(), '\n');
+		for (auto &comment_line : comment_lines) {
+			os << ";" << comment_line << std::endl;
+		}
+
+		// optional/mandatory and single/list
+		std::string info_line = opt_schema.is_mandatory() ? "mandatory" : "optional";
+		info_line += ", ";
+		info_line += opt_schema.is_list() ? "list" : "single";
+		os << ";<" << info_line << ">" << std::endl;
+
+		// write name and default value
+		os << opt_schema.get_name() << " = " << opt_schema.get_default_value() << std::endl;
+
+		return os;
 	}
 }

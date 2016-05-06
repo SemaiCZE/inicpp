@@ -26,9 +26,9 @@ namespace inicpp
 	class section
 	{
 	private:
-		typedef std::vector<std::shared_ptr<option>> options_vector;
-		typedef std::map<std::string, std::shared_ptr<option>> options_map;
-		typedef std::pair<std::string, std::shared_ptr<option>> options_map_pair;
+		using options_vector = std::vector<std::shared_ptr<option>>;
+		using options_map = std::map<std::string, std::shared_ptr<option>>;
+		using options_map_pair = std::pair<std::string, std::shared_ptr<option>>;
 
 		/** List of options in this instance */
 		options_vector options_;
@@ -44,9 +44,9 @@ namespace inicpp
 
 	public:
 		/** type of iterator */
-		typedef section_iterator<option> iterator;
+		using iterator = section_iterator<option>;
 		/** type of const iterator */
-		typedef section_iterator<const option> const_iterator;
+		using const_iterator = section_iterator<const option>;
 
 		/**
 		 * Default constructor is deleted.

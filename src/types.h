@@ -43,13 +43,14 @@ namespace inicpp
 		string_e,
 		invalid_e
 	};
-	
-	typedef bool boolean_ini_t;
-	typedef int64_t signed_ini_t;
-	typedef uint64_t unsigned_ini_t;
-	typedef double float_ini_t;
-	typedef internal_enum_type enum_ini_t;
-	typedef std::string string_ini_t;
+
+	// modern C++11 way of typedef
+	using boolean_ini_t = bool;
+	using signed_ini_t = int64_t;
+	using unsigned_ini_t = uint64_t;
+	using float_ini_t = double;
+	using enum_ini_t = internal_enum_type;
+	using string_ini_t = std::string;
 
 	/**
 	 * Enumeration type used in schema specification which distinguishes

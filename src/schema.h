@@ -23,9 +23,9 @@ namespace inicpp
 	class schema
 	{
 	private:
-		typedef std::vector<std::shared_ptr<section_schema>> sect_schema_vector;
-		typedef std::map<std::string, std::shared_ptr<section_schema>> sect_schema_map;
-		typedef std::pair<std::string, std::shared_ptr<section_schema>> sect_schema_map_pair;
+		using sect_schema_vector = std::vector<std::shared_ptr<section_schema>>;
+		using sect_schema_map = std::map<std::string, std::shared_ptr<section_schema>>;
+		using sect_schema_map_pair = std::pair<std::string, std::shared_ptr<section_schema>>;
 
 		/** Container for section_schema objects */
 		sect_schema_vector sections_;

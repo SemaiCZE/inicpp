@@ -27,9 +27,9 @@ namespace inicpp
 	class config
 	{
 	private:
-		typedef std::vector<std::shared_ptr<section>> sections_vector;
-		typedef std::map<std::string, std::shared_ptr<section>> sections_map;
-		typedef std::pair<std::string, std::shared_ptr<section>> sections_map_pair;
+		using sections_vector = std::vector<std::shared_ptr<section>>;
+		using sections_map = std::map<std::string, std::shared_ptr<section>>;
+		using sections_map_pair = std::pair<std::string, std::shared_ptr<section>>;
 
 		/** List of sections in this config instance */
 		sections_vector sections_;
@@ -43,9 +43,9 @@ namespace inicpp
 
 	public:
 		/** type of iterator */
-		typedef config_iterator<section> iterator;
+		using iterator = config_iterator<section>;
 		/** type of const iterator */
-		typedef config_iterator<const section> const_iterator;
+		using const_iterator = config_iterator<const section>;
 
 		/**
 		 * Default constructor.

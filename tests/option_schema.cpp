@@ -34,11 +34,13 @@ TEST(option_schema, options_schema_params)
 
 TEST(option_schema, creation_and_copying)
 {
-	option_schema_params<int> params;
+	option_schema_params<signed_ini_t> params;
 	params.name = "name";
-	option_schema_params<char> other_params;
+	option_schema_params<unsigned_ini_t> other_params;
+	option_schema_params<const char *> invalid_params;
 
 	option_schema my_option(params);
+	EXPECT_THROW(option_schema invalid_option(invalid_params), invalid_type_exception);
 
 	// copy constructor
 	option_schema copied(my_option);
@@ -101,12 +103,15 @@ TEST(option_schema, type_deduction)
 	option_schema float_option(float_params);
 	EXPECT_EQ(float_option.get_type(), option_type::float_e);
 
-	// TODO: enum
+	option_schema_params<enum_ini_t> enum_params;
+	option_schema enum_option(enum_params);
+	EXPECT_EQ(enum_option.get_type(), option_type::enum_e);
 }
 
 TEST(option_schema, validation)
 {
 	//TODO:
+	throw not_implemented_exception();
 }
 
 TEST(option_schema, writing_to_ostream)
@@ -126,6 +131,7 @@ TEST(option_schema, writing_to_ostream)
 	std::string expected_output =
 		";comment\n"
 		";multiline\n"
-		"name = default_value ;optional\n";
+		";<optional, list>\n"
+		"name = default_value\n";
 	EXPECT_EQ(str.str(), expected_output);
 }

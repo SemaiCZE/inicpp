@@ -29,7 +29,7 @@ namespace inicpp
 		std::string result = str;
 		bool escaped = false;
 
-		for (auto &it = result.begin(); it != result.end(); ++it) {
+		for (auto it = result.begin(); it != result.end(); ++it) {
 			if (escaped) {
 				// escaped character, it should remain in string
 				escaped = false;
