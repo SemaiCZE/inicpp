@@ -84,7 +84,7 @@ namespace inicpp
 		return params_->comment;
 	}
 	
-	bool option_schema::validate_option(option &opt) const
+	void option_schema::validate_option(option &opt) const
 	{
 		if (params_->type == option_item::single && opt.is_list()) {
 			throw validation_exception("List given, single value expected");
@@ -99,8 +99,6 @@ namespace inicpp
 
 		// validate range using provided validator
 		validate_option_items(opt);
-
-		return true;
 	}
 
 	void option_schema::validate_option_items(option &opt) const
@@ -108,17 +106,22 @@ namespace inicpp
 		// load value and call validate function on it
 		switch (type_) {
 		case option_type::boolean_e:
+			validate_typed_option_items<boolean_ini_t>(opt.get_list<boolean_ini_t>());
 			break;
 		case option_type::enum_e:
+			validate_typed_option_items<enum_ini_t>(opt.get_list<enum_ini_t>());
 			break;
 		case option_type::float_e:
+			validate_typed_option_items<float_ini_t>(opt.get_list<float_ini_t>());
 			break;
 		case option_type::signed_e:
 			validate_typed_option_items<signed_ini_t>(opt.get_list<signed_ini_t>());
 			break;
 		case option_type::string_e:
+			validate_typed_option_items<string_ini_t>(opt.get_list<string_ini_t>());
 			break;
 		case option_type::unsigned_e:
+			validate_typed_option_items<unsigned_ini_t>(opt.get_list<unsigned_ini_t>());
 			break;
 		case option_type::invalid_e:
 			// never reached
@@ -131,10 +134,19 @@ namespace inicpp
 	{
 		switch (type_) {
 		case option_type::boolean_e:
+			opt.set_list<boolean_ini_t>(parse_typed_option_items<boolean_ini_t>(
+				opt.get_list<string_ini_t>(), string_utils::parse_boolean_type)
+			);
 			break;
 		case option_type::enum_e:
+			opt.set_list<enum_ini_t>(parse_typed_option_items<enum_ini_t>(
+				opt.get_list<string_ini_t>(), string_utils::parse_enum_type)
+			);
 			break;
 		case option_type::float_e:
+			opt.set_list<float_ini_t>(parse_typed_option_items<float_ini_t>(
+				opt.get_list<string_ini_t>(), string_utils::parse_float_type)
+			);
 			break;
 		case option_type::signed_e:
 			opt.set_list<signed_ini_t>(parse_typed_option_items<signed_ini_t>(
@@ -142,8 +154,12 @@ namespace inicpp
 			);
 			break;
 		case option_type::string_e:
+			// string doesn't need to be parsed
 			break;
 		case option_type::unsigned_e:
+			opt.set_list<unsigned_ini_t>(parse_typed_option_items<unsigned_ini_t>(
+				opt.get_list<string_ini_t>(), string_utils::parse_unsigned_type)
+			);
 			break;
 		case option_type::invalid_e:
 			// never reached

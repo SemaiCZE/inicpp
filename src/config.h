@@ -168,9 +168,9 @@ namespace inicpp
 		 * Validates this config agains given schema.
 		 * @param schm specifies how this config should look like
 		 * @param mode validation mode
-		 * @return true if this config comply given schema
+		 * @throws validation_exception if error occured
 		 */
-		bool validate(const schema &schm, schema_mode mode);
+		void validate(const schema &schm, schema_mode mode);
 
 		/**
 		 * Equality operator.

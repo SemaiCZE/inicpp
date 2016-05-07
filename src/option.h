@@ -324,9 +324,9 @@ namespace inicpp
 		/**
 		 * Validate this option against given option_schema.
 		 * @param opt_schema validation schema
-		 * @return true if option matches given option_schema, false otherwise
+		 * @throws validation_exception if error occured
 		 */
-		bool validate(const option_schema &opt_schema);
+		void validate(const option_schema &opt_schema);
 
 		/**
 		 * Equality operator.

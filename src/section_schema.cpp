@@ -146,7 +146,7 @@ namespace inicpp
 		}
 	}
 
-	bool section_schema::validate_section(section &sect, schema_mode mode) const
+	void section_schema::validate_section(section &sect, schema_mode mode) const
 	{
 		/*
 		 * Here should be done:
@@ -162,17 +162,13 @@ namespace inicpp
 
 			if (contains) {
 				// even if option is not mandatory, we execute validation of option (both modes)
-				if (!opt->validate_option(sect[opt->get_name()])) {
-					return false;
-				}
+				opt->validate_option(sect[opt->get_name()]);
 			} else if (opt->is_mandatory()) {
 				// mandatory option is not present in given section (both modes)
-				return false;
-			} else if (mode == schema_mode::strict && !opt->is_mandatory()) {
+				throw validation_exception("Mandatory option '" + opt->get_name() +
+					"' is missing in section '" + sect.get_name() + "'");
+			} else {
 				// option is not mandatory and not in given section
-				// TODO: what about this? option which is not mandatory and is not present in given section
-			} else if (mode == schema_mode::relaxed && !opt->is_mandatory()) {
-				// if mode is relaxed, option not present and not mandatory
 				//   => add option with default value
 				sect.add_option(opt->get_name(), opt->get_default_value());
 			}
@@ -189,11 +185,9 @@ namespace inicpp
 
 			// we have strict mode and option which is not in section_schema
 			if (mode == schema_mode::strict) {
-				return false;
+				throw validation_exception("Option '" + opt.get_name() + "' not specified in schema");
 			}
 		}
-
-		return true;
 	}
 
 	std::ostream &operator<<(std::ostream &os, const section_schema &sect_schema)

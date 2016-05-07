@@ -166,9 +166,9 @@ namespace inicpp
 		}
 	}
 
-	bool config::validate(const schema &schm, schema_mode mode)
+	void config::validate(const schema &schm, schema_mode mode)
 	{
-		return schm.validate_config(*this, mode);
+		schm.validate_config(*this, mode);
 	}
 
 	bool config::operator ==(const config &other) const

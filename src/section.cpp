@@ -141,9 +141,9 @@ namespace inicpp
 		}
 	}
 
-	bool section::validate(const section_schema &sect_schema, schema_mode mode)
+	void section::validate(const section_schema &sect_schema, schema_mode mode)
 	{
-		return sect_schema.validate_section(*this, mode);
+		sect_schema.validate_section(*this, mode);
 	}
 
 	bool section::operator==(const section &other) const

@@ -152,9 +152,9 @@ namespace inicpp
 		 * Validates this section agains given section_schema.
 		 * @param sect_schema rules how this section should look like
 		 * @param mode validation mode
-		 * @return true if this section comply given section_schema
+		 * @throws validation_exception if error occured
 		 */
-		bool validate(const section_schema &sect_schema, schema_mode mode);
+		void validate(const section_schema &sect_schema, schema_mode mode);
 
 		/**
 		 * Equality operator.

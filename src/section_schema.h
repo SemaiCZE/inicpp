@@ -166,9 +166,9 @@ namespace inicpp
 		 * Validate given section againts this section_schema.
 		 * @param sect validated section
 		 * @param mode validation mode
-		 * @return true if section is successfully validated
+		 * @throws validation_exception if schema cannot be validated
 		 */
-		bool validate_section(section &sect, schema_mode mode) const;
+		void validate_section(section &sect, schema_mode mode) const;
 
 		/**
 		 * Classic stream operator for printing this instance to output stream.

@@ -123,7 +123,17 @@ TEST(option_schema, validation)
 	EXPECT_THROW(signed_schema.validate_option(signed_option), validation_exception);
 
 	// list value
-	// TODO:
+	option float_option("name", "");
+	std::vector<string_ini_t> string_values {"4.5", "-6.3", "0.0"};
+	float_option.set_list(string_values);
+	option_schema_params<float_ini_t> float_params;
+	float_params.name = "name";
+	float_params.type = option_item::list;
+	float_params.validator = [](float_ini_t i) { return i < 5.2 && i > -81.1; };
+	option_schema float_schema(float_params);
+	EXPECT_NO_THROW(float_schema.validate_option(float_option));
+	std::vector<float_ini_t> float_values {4.5, -6.3, 0.0};
+	EXPECT_EQ(float_option.get_list<float_ini_t>(), float_values);
 }
 
 TEST(option_schema, writing_to_ostream)

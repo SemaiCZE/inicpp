@@ -179,9 +179,9 @@ namespace inicpp
 		 * Validate given option against this option_schema.
 		 * @param opt validated option
 		 * @param mode validation mode
-		 * @return true if option comply option_schema
+		 * @throws validation_exception if error occured
 		 */
-		bool validate_option(option &opt) const;
+		void validate_option(option &opt) const;
 
 		/**
 		 * Classic stream operator for printing this instance to output stream.

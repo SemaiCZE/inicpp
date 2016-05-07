@@ -76,5 +76,41 @@ namespace inicpp
 				throw invalid_type_exception(e.what());
 			}
 		}
+
+		unsigned_ini_t parse_unsigned_type(const std::string &value)
+		{
+			try {
+				return std::stoull(value);
+			} catch (std::exception &e) {
+				throw invalid_type_exception(e.what());
+			}
+		}
+
+		float_ini_t parse_float_type(const std::string &value)
+		{
+			try {
+				return std::stod(value);
+			} catch (std::exception &e) {
+				throw invalid_type_exception(e.what());
+			}
+		}
+
+		enum_ini_t parse_enum_type(const std::string &value)
+		{
+			return enum_ini_t(value);
+		}
+
+		boolean_ini_t parse_boolean_type(const std::string &value)
+		{
+			if (value == "0" || value == "f" || value == "n" ||
+				value == "off" || value == "no" || value == "disabled") {
+				return false;
+			} else if (value == "1" || value == "t" || value == "y" ||
+				value == "on" || value == "yes" || value == "enabled") {
+				return true;
+			} else {
+				throw invalid_type_exception("String '" + value + "' is not valid boolean type.");
+			}
+		}
 	}
 }
