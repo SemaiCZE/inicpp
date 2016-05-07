@@ -87,7 +87,7 @@ namespace inicpp
 		{
 			for (const auto &item : items) {
 				option_schema_params<ValueType> *ptr = dynamic_cast<option_schema_params<ValueType> *>(&*params_);
-				if (ptr != nullptr && !ptr->validator(item)) {
+				if (ptr != nullptr && ptr->validator != nullptr && !ptr->validator(item)) {
 					throw validation_exception("Validation failed");
 				}
 			}

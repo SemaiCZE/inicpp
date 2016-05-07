@@ -58,7 +58,7 @@ TEST(parser, load_config)
 	sect_schema.add_option(opt_params);
 	validatin_schema.add_section(sect_schema);
 
-	config my_config = parser::load(str_config, validatin_schema, schema_mode::strict);
+	config my_config;
 	EXPECT_NO_THROW(my_config = parser::load(str_config, validatin_schema, schema_mode::strict));
 	EXPECT_EQ(my_config["section"]["opt"].get<unsigned_ini_t>(), 15u);
 
