@@ -121,6 +121,7 @@ namespace inicpp
 	option_schema &section_schema::operator[](const std::string &option_name)
 	{
 		// its not pretty but the code is not copy pasted
+		// TODO: solve if it will be used or not
 		return const_cast<option_schema &>(static_cast<const section_schema *>(this)->operator[](option_name));
 	}
 
@@ -145,7 +146,7 @@ namespace inicpp
 		}
 	}
 
-	bool section_schema::validate_section(const section &sect, schema_mode mode) const
+	bool section_schema::validate_section(section &sect, schema_mode mode) const
 	{
 		/*
 		 * Here should be done:
@@ -154,7 +155,45 @@ namespace inicpp
 		 * - for missing options from schema (relaxed mode) add string options with
 		 *   default value
 		 */
-		throw not_implemented_exception();
+
+		// firstly go through option schemas
+		for (auto &opt : options_) {
+			bool contains = sect.contains(opt->get_name());
+
+			if (contains) {
+				// even if option is not mandatory, we execute validation of option (both modes)
+				if (!opt->validate_option(sect[opt->get_name()])) {
+					return false;
+				}
+			} else if (opt->is_mandatory()) {
+				// mandatory option is not present in given section (both modes)
+				return false;
+			} else if (mode == schema_mode::strict && !opt->is_mandatory()) {
+				// option is not mandatory and not in given section
+				// TODO: what about this? option which is not mandatory and is not present in given section
+			} else if (mode == schema_mode::relaxed && !opt->is_mandatory()) {
+				// if mode is relaxed, option not present and not mandatory
+				//   => add option with default value
+				sect.add_option(opt->get_name(), opt->get_default_value());
+			}
+		}
+
+		// secondly go through options
+		for (auto &opt : sect) {
+			bool contains = this->contains(opt.get_name());
+
+			// if section_schema contains option everything is fine, we handled this above
+			if (contains) {
+				continue;
+			}
+
+			// we have strict mode and option which is not in section_schema
+			if (mode == schema_mode::strict) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	std::ostream &operator<<(std::ostream &os, const section_schema &sect_schema)

@@ -8,12 +8,26 @@ namespace inicpp
 
 	schema::schema(const schema &source)
 	{
-		throw not_implemented_exception();
+		// we have to do deep copies of section schemas
+		sections_.reserve(source.sections_.size());
+		for (auto &sect : source.sections_) {
+			sections_.push_back(std::make_shared<section_schema>(*sect));
+		}
+
+		// we already have constructed section schemas... now push them into map
+		for (auto &sect : sections_) {
+			sections_map_.insert(sect_schema_map_pair(sect->get_name(), sect));
+		}
 	}
 
-	schema& schema::operator=(const schema &source)
+	schema &schema::operator=(const schema &source)
 	{
-		throw not_implemented_exception();
+		if (this != &source) {
+			schema new_src(source);
+			std::swap(*this, new_src);
+		}
+
+		return *this;
 	}
 
 	schema::schema(schema &&source)
@@ -21,7 +35,7 @@ namespace inicpp
 		throw not_implemented_exception();
 	}
 
-	schema& schema::operator=(schema &&source)
+	schema &schema::operator=(schema &&source)
 	{
 		throw not_implemented_exception();
 	}
@@ -89,6 +103,10 @@ namespace inicpp
 
 	std::ostream &operator<<(std::ostream &os, const schema &schm)
 	{
-		throw not_implemented_exception();
+		for (auto &sect : schm.sections_) {
+			os << *sect;
+		}
+
+		return os;
 	}
 }
