@@ -105,15 +105,20 @@ namespace inicpp
 		void add_option(const option_schema &opt);
 		/**
 		 * Creates option_schema from given arguments and add it to options list.
-		 * Function add_option(const option_schema &opt) is called after option_schema creation.
 		 * @param arguments creation paramaters
 		 * @throws ambiguity_exception if option_schema with given name exists
 		 */
 		template<typename ArgType>
 		void add_option(const option_schema_params<ArgType> &arguments)
 		{
-			option_schema opt(arguments);
-			add_option(opt);
+			auto add_it = options_map_.find(arguments.name);
+			if (add_it == options_map_.end()) {
+				std::shared_ptr<option_schema> add = std::make_shared<option_schema>(arguments);
+				options_.push_back(add);
+				options_map_.insert(opt_schema_map_pair(add->get_name(), add));
+			} else {
+				throw ambiguity_exception(arguments.name);
+			}
 		}
 		/**
 		 * Remove containing option schema of given name.

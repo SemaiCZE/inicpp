@@ -97,8 +97,6 @@ namespace inicpp
 		void add_option(const std::string &section_name, const option &opt);
 		/**
 		 * Creates and add option to specified section.
-		 * Function add_option(const std::string &section_name, const option &opt)
-		 *   is used after option creation.
 		 * @param section_name should exist in this config
 		 * @param option_name name of newly created option
 		 * @param value value which will be stored in new option
@@ -108,9 +106,14 @@ namespace inicpp
 		void add_option(const std::string &section_name,
 			const std::string &option_name, ValueType value)
 		{
-			option opt(option_name);
-			opt.set<ValueType>(value);
-			add_option(section_name, opt);
+			auto sect_it = sections_map_.find(section_name);
+			if (sect_it != sections_map_.end()) {
+				option opt(option_name);
+				opt.set<ValueType>(value);
+				sect_it->second->add_option(opt);
+			} else {
+				throw not_found_exception(section_name);
+			}
 		}
 
 		/**

@@ -87,7 +87,16 @@ namespace inicpp
 		 */
 		template<typename ArgType>
 		void add_option(const std::string &section_name,
-			option_schema_params<ArgType> &arguments);
+			option_schema_params<ArgType> &arguments)
+		{
+			auto sect_it = sections_map_.find(section_name);
+			if (sect_it != sections_map_.end()) {
+				option_schema opt_schema(arguments);
+				sect_it->second->add_option(opt_schema);
+			} else {
+				throw not_found_exception(section_name);
+			}
+		}
 
 		/**
 		 * Returns size of section schemas list
@@ -133,10 +142,9 @@ namespace inicpp
 		 * Validate cfg against this schema in specified mode.
 		 * @param cfg configuration which will be validated
 		 * @param mode validation mode
-		 * @return true if config conforms requirements of this schema,
-		 * false otherwise
+		 * @throws validation_exception if schema cannot be validated
 		 */
-		bool validate_config(config &cfg, schema_mode mode) const;
+		void validate_config(config &cfg, schema_mode mode) const;
 
 		/**
 		 * Classic stream operator for printing this instance to output stream.

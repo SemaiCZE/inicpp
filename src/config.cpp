@@ -118,7 +118,7 @@ namespace inicpp
 
 	section &config::operator[](size_t index)
 	{
-		if (index >= size()) {
+		if (index >= sections_.size()) {
 			throw not_found_exception(index);
 		}
 		
@@ -127,7 +127,7 @@ namespace inicpp
 
 	const section &config::operator[](size_t index) const
 	{
-		if (index >= size()) {
+		if (index >= sections_.size()) {
 			throw not_found_exception(index);
 		}
 

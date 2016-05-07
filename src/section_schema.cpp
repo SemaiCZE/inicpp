@@ -30,7 +30,7 @@ namespace inicpp
 
 	section_schema::section_schema(section_schema &&source)
 	{
-		operator=(std::move(source));
+		*this = std::move(source);
 	}
 
 	section_schema &section_schema::operator=(section_schema &&source)

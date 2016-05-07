@@ -83,7 +83,6 @@ namespace inicpp
 
 		/**
 		 * Creates and add option to this section.
-		 * Function add_option(const option &opt) is used after option creation.
 		 * @param option_name name of newly created option class
 		 * @param value value which will be stored in option
 		 * @throws ambiguity_exception if option with specified name exists
@@ -91,9 +90,15 @@ namespace inicpp
 		template<typename ValueType> void add_option(
 			const std::string &option_name, ValueType value)
 		{
-			option opt(option_name);
-			opt.set<ValueType>(value);
-			add_option(opt);
+			auto add_it = options_map_.find(option_name);
+			if (add_it == options_map_.end()) {
+				std::shared_ptr<option> opt = std::make_shared<option>(option_name);
+				opt->set<ValueType>(value);
+				options_.push_back(opt);
+				options_map_.insert(options_map_pair(opt->get_name(), opt));
+			} else {
+				throw ambiguity_exception(option_name);
+			}
 		}
 		/**
 		 * Add given option instance to options container.
