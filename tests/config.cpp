@@ -73,11 +73,6 @@ TEST(config, iterators)
 	EXPECT_EQ(++cit, conf.cend());
 }
 
-TEST(config, validation)
-{
-	// TODO:
-}
-
 TEST(config, stream_output)
 {
 	config conf;

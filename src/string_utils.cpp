@@ -68,39 +68,39 @@ namespace inicpp
 			return result;
 		}
 
-		signed_ini_t parse_signed_type(const std::string &value)
+		signed_ini_t parse_signed_type(const std::string &value, const std::string &option_name)
 		{
 			try {
 				return std::stoll(value);
 			} catch (std::exception &e) {
-				throw invalid_type_exception(e.what());
+				throw invalid_type_exception("Option '" + option_name + "' parsing failed: " + e.what());
 			}
 		}
 
-		unsigned_ini_t parse_unsigned_type(const std::string &value)
+		unsigned_ini_t parse_unsigned_type(const std::string &value, const std::string &option_name)
 		{
 			try {
 				return std::stoull(value);
 			} catch (std::exception &e) {
-				throw invalid_type_exception(e.what());
+				throw invalid_type_exception("Option '" + option_name + "' parsing failed: " + e.what());
 			}
 		}
 
-		float_ini_t parse_float_type(const std::string &value)
+		float_ini_t parse_float_type(const std::string &value, const std::string &option_name)
 		{
 			try {
 				return std::stod(value);
 			} catch (std::exception &e) {
-				throw invalid_type_exception(e.what());
+				throw invalid_type_exception("Option '" + option_name + "' parsing failed: " + e.what());
 			}
 		}
 
-		enum_ini_t parse_enum_type(const std::string &value)
+		enum_ini_t parse_enum_type(const std::string &value, const std::string &option_name)
 		{
 			return enum_ini_t(value);
 		}
 
-		boolean_ini_t parse_boolean_type(const std::string &value)
+		boolean_ini_t parse_boolean_type(const std::string &value, const std::string &option_name)
 		{
 			if (value == "0" || value == "f" || value == "n" ||
 				value == "off" || value == "no" || value == "disabled") {
@@ -109,7 +109,8 @@ namespace inicpp
 				value == "on" || value == "yes" || value == "enabled") {
 				return true;
 			} else {
-				throw invalid_type_exception("String '" + value + "' is not valid boolean type.");
+				throw invalid_type_exception("Option '" + option_name + "' parsing failed: String '" +
+					value + "' is not valid boolean type.");
 			}
 		}
 	}

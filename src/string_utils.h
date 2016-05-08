@@ -22,11 +22,11 @@ namespace inicpp
 
 		std::vector<std::string> split(const std::string &str, char delim);
 
-		signed_ini_t parse_signed_type(const std::string &value);
-		unsigned_ini_t parse_unsigned_type(const std::string &value);
-		float_ini_t parse_float_type(const std::string &value);
-		enum_ini_t parse_enum_type(const std::string &value);
-		boolean_ini_t parse_boolean_type(const std::string &value);
+		signed_ini_t parse_signed_type(const std::string &value, const std::string &option_name);
+		unsigned_ini_t parse_unsigned_type(const std::string &value, const std::string &option_name);
+		float_ini_t parse_float_type(const std::string &value, const std::string &option_name);
+		enum_ini_t parse_enum_type(const std::string &value, const std::string &option_name);
+		boolean_ini_t parse_boolean_type(const std::string &value, const std::string &option_name);
 	}
 }
 

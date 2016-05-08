@@ -83,12 +83,12 @@ namespace inicpp
 		void validate_option_items(option &opt) const;
 
 		template <typename ValueType>
-		void validate_typed_option_items(const std::vector<ValueType> &items) const
+		void validate_typed_option_items(const std::vector<ValueType> &items, const std::string &option_name) const
 		{
 			for (const auto &item : items) {
 				option_schema_params<ValueType> *ptr = dynamic_cast<option_schema_params<ValueType> *>(&*params_);
 				if (ptr != nullptr && ptr->validator != nullptr && !ptr->validator(item)) {
-					throw validation_exception("Validation failed");
+					throw validation_exception("Option '" + option_name + "' - validation failed");
 				}
 			}
 		}
@@ -97,11 +97,12 @@ namespace inicpp
 
 		template <typename ValueType>
 		std::vector<ValueType> parse_typed_option_items(const std::vector<std::string> &items,
-			std::function<ValueType(const std::string &)> parser) const
+			std::function<ValueType(const std::string &, const std::string &)> parser,
+			const std::string &option_name) const
 		{
 			std::vector<ValueType> typed_items;
 			for (const auto &item : items) {
-				typed_items.push_back(parser(item));
+				typed_items.push_back(parser(item, option_name));
 			}
 			return typed_items;
 		}

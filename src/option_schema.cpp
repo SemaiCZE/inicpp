@@ -87,9 +87,9 @@ namespace inicpp
 	void option_schema::validate_option(option &opt) const
 	{
 		if (params_->type == option_item::single && opt.is_list()) {
-			throw validation_exception("List given, single value expected");
+			throw validation_exception("Option '" + opt.get_name() + "' - list given, single value expected");
 		} else if (params_->type == option_item::list && !opt.is_list()) {
-			throw validation_exception("Single value given, list expected");
+			throw validation_exception("Option '" + opt.get_name() + "' - single value given, list expected");
 		}
 
 		// if option type doesn't match, parse it to proper one
@@ -106,26 +106,26 @@ namespace inicpp
 		// load value and call validate function on it
 		switch (type_) {
 		case option_type::boolean_e:
-			validate_typed_option_items<boolean_ini_t>(opt.get_list<boolean_ini_t>());
+			validate_typed_option_items<boolean_ini_t>(opt.get_list<boolean_ini_t>(), opt.get_name());
 			break;
 		case option_type::enum_e:
-			validate_typed_option_items<enum_ini_t>(opt.get_list<enum_ini_t>());
+			validate_typed_option_items<enum_ini_t>(opt.get_list<enum_ini_t>(), opt.get_name());
 			break;
 		case option_type::float_e:
-			validate_typed_option_items<float_ini_t>(opt.get_list<float_ini_t>());
+			validate_typed_option_items<float_ini_t>(opt.get_list<float_ini_t>(), opt.get_name());
 			break;
 		case option_type::signed_e:
-			validate_typed_option_items<signed_ini_t>(opt.get_list<signed_ini_t>());
+			validate_typed_option_items<signed_ini_t>(opt.get_list<signed_ini_t>(), opt.get_name());
 			break;
 		case option_type::string_e:
-			validate_typed_option_items<string_ini_t>(opt.get_list<string_ini_t>());
+			validate_typed_option_items<string_ini_t>(opt.get_list<string_ini_t>(), opt.get_name());
 			break;
 		case option_type::unsigned_e:
-			validate_typed_option_items<unsigned_ini_t>(opt.get_list<unsigned_ini_t>());
+			validate_typed_option_items<unsigned_ini_t>(opt.get_list<unsigned_ini_t>(), opt.get_name());
 			break;
 		case option_type::invalid_e:
 			// never reached
-			throw invalid_type_exception("Invalid option type");
+			throw invalid_type_exception("Option '" + opt.get_name() + "' - invalid option type");
 			break;
 		}
 	}
@@ -135,22 +135,22 @@ namespace inicpp
 		switch (type_) {
 		case option_type::boolean_e:
 			opt.set_list<boolean_ini_t>(parse_typed_option_items<boolean_ini_t>(
-				opt.get_list<string_ini_t>(), string_utils::parse_boolean_type)
+				opt.get_list<string_ini_t>(), string_utils::parse_boolean_type, opt.get_name())
 			);
 			break;
 		case option_type::enum_e:
 			opt.set_list<enum_ini_t>(parse_typed_option_items<enum_ini_t>(
-				opt.get_list<string_ini_t>(), string_utils::parse_enum_type)
+				opt.get_list<string_ini_t>(), string_utils::parse_enum_type, opt.get_name())
 			);
 			break;
 		case option_type::float_e:
 			opt.set_list<float_ini_t>(parse_typed_option_items<float_ini_t>(
-				opt.get_list<string_ini_t>(), string_utils::parse_float_type)
+				opt.get_list<string_ini_t>(), string_utils::parse_float_type, opt.get_name())
 			);
 			break;
 		case option_type::signed_e:
 			opt.set_list<signed_ini_t>(parse_typed_option_items<signed_ini_t>(
-				opt.get_list<string_ini_t>(), string_utils::parse_signed_type)
+				opt.get_list<string_ini_t>(), string_utils::parse_signed_type, opt.get_name())
 			);
 			break;
 		case option_type::string_e:
@@ -158,12 +158,12 @@ namespace inicpp
 			break;
 		case option_type::unsigned_e:
 			opt.set_list<unsigned_ini_t>(parse_typed_option_items<unsigned_ini_t>(
-				opt.get_list<string_ini_t>(), string_utils::parse_unsigned_type)
+				opt.get_list<string_ini_t>(), string_utils::parse_unsigned_type, opt.get_name())
 			);
 			break;
 		case option_type::invalid_e:
 			// never reached
-			throw invalid_type_exception("Invalid option type");
+			throw invalid_type_exception("Option '" + opt.get_name() + "' - invalid option type");
 			break;
 		}
 	}
