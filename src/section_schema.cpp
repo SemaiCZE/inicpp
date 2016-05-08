@@ -171,6 +171,8 @@ namespace inicpp
 				// option is not mandatory and not in given section
 				//   => add option with default value
 				sect.add_option(opt->get_name(), opt->get_default_value());
+				// validate added option, so type of the value could be changed to nonstring type
+				opt->validate_option(sect[opt->get_name()]);
 			}
 		}
 

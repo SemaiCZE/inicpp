@@ -101,7 +101,7 @@ TEST(section_schema, validation)
 	opt1_params.name = "name";
 	opt1_params.requirement = item_requirement::optional;
 	opt1_params.type = option_item::single;
-	opt1_params.default_value = "default_value";
+	opt1_params.default_value = "42";
 	option_schema my_option1(opt1_params);
 
 	option_schema_params<unsigned_ini_t> opt2_params;
@@ -129,8 +129,8 @@ TEST(section_schema, validation)
 	// test if options are validated
 	EXPECT_EQ(sect["name"].get<signed_ini_t>(), -85);
 
-	// test if default values are added from schema
-	EXPECT_EQ(sect["opt_2_name"].get<string_ini_t>(), "567");
+	// test if default values are added from schema and validated (type changed)
+	EXPECT_EQ(sect["opt_2_name"].get<unsigned_ini_t>(), 567u);
 
 	// test if exception is thrown with strict mode on unknown option
 	EXPECT_THROW(my_section.validate_section(sect, schema_mode::strict), validation_exception);
