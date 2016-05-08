@@ -52,9 +52,23 @@ namespace inicpp
 	{
 		std::string searched = str;
 		std::vector<std::string> result;
+		char delim = ',';
 
-		size_t pos;
-		while ((pos = find_first_nonescaped(searched, ',')) != std::string::npos) {
+		size_t pos = find_first_nonescaped(searched, ',');
+		size_t pos_colon = find_first_nonescaped(searched, ':');
+		if (pos == std::string::npos) {
+			// if no escaped strokes are present in given string,
+			//   try to use colon
+			delim = ':';
+		}
+
+		while (true) {
+			pos = find_first_nonescaped(searched, delim);
+			if (pos == std::string::npos) {
+				// no delimiter found
+				break;
+			}
+
 			result.push_back(unescape(string_utils::trim(searched.substr(0, pos))));
 			searched = searched.substr(pos + 1);
 		}
