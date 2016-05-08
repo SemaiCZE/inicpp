@@ -204,7 +204,22 @@ namespace inicpp
 	{
 		for (auto &sect : cfg) {
 			str << sect;
-			// TODO:
+
+			if (!schm.contains(sect.get_name())) {
+				continue;
+			}
+
+			// schema contains section with specified name
+			auto &sect_schema = schm[sect.get_name()];
+			for (size_t i = 0; i < sect_schema.size(); ++i) {
+				auto &opt_schema = sect_schema[i];
+				if (sect.contains(opt_schema.get_name())) {
+					// already written to output stream
+					continue;
+				}
+
+				str << opt_schema;
+			}
 		}
 	}
 

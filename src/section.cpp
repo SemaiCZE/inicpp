@@ -15,11 +15,6 @@ namespace inicpp
 		for (auto &opt : options_) {
 			options_map_.insert(options_map_pair(opt->get_name(), opt));
 		}
-
-		// deep copy section_schema if any available
-		if (source.section_schema_ != nullptr) {
-			section_schema_ = std::make_shared<section_schema>(*source.section_schema_);
-		}
 	}
 
 	section &section::operator=(const section &source)
@@ -44,7 +39,6 @@ namespace inicpp
 			options_ = std::move(source.options_);
 			options_map_ = std::move(source.options_map_);
 			name_ = std::move(source.name_);
-			section_schema_ = std::move(source.section_schema_);
 		}
 		return *this;
 	}

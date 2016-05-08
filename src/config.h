@@ -35,8 +35,6 @@ namespace inicpp
 		sections_vector sections_;
 		/** Map of sections for better searching */
 		sections_map sections_map_;
-		/** Corresponding schema if any */
-		std::shared_ptr<schema> schema_;
 
 		friend class config_iterator<section>;
 		friend class config_iterator<const section>;

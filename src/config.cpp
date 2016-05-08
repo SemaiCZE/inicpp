@@ -18,11 +18,6 @@ namespace inicpp
 		for (auto &sect : sections_) {
 			sections_map_.insert(sections_map_pair(sect->get_name(), sect));
 		}
-
-		// now deep copy schema if any available
-		if (source.schema_ != nullptr) {
-			schema_ = std::make_shared<schema>(*source.schema_);
-		}
 	}
 
 	config &config::operator=(const config &source)
@@ -46,7 +41,6 @@ namespace inicpp
 		if (this != &source) {
 			sections_ = std::move(source.sections_);
 			sections_map_ = std::move(source.sections_map_);
-			schema_ = std::move(source.schema_);
 		}
 		return *this;
 	}

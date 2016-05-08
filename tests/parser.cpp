@@ -118,16 +118,10 @@ TEST(parser, store_config)
 	std::ostringstream str;
 	EXPECT_NO_THROW(parser::save(my_config, validatin_schema, str));
 	std::string expected_result = ""
-		";comment\n"
-		";<mandatory>\n"
 		"[section_name]\n"
-		";opt comment\n"
-		";<mandatory, single>\n"
-		";<default value: \"default value\"\n"
 		"opt = value\n"
 		";unsigned comment\n"
 		";<optional, single>\n"
-		";<default value: \"42\"\n"
 		"unsigned = 42\n";
 	EXPECT_EQ(str.str(), expected_result);
 }

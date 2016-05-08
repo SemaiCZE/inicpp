@@ -36,8 +36,6 @@ namespace inicpp
 		options_map options_map_;
 		/** Name of this section */
 		std::string name_;
-		/** Corresponding section_schema if any */
-		std::shared_ptr<section_schema> section_schema_;
 
 		friend class section_iterator<option>;
 		friend class section_iterator<const option>;
