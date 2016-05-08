@@ -119,10 +119,15 @@ TEST(parser, store_config)
 	EXPECT_NO_THROW(parser::save(my_config, validatin_schema, str));
 	std::string expected_result = ""
 		";comment\n"
-		"[section_name] ;mandatory\n"
+		";<mandatory>\n"
+		"[section_name]\n"
 		";opt comment\n"
-		"opt = value ;mandatory, default \"default value\"\n"
-		";unsignd comment\n"
-		"unsigned = 42 ;optional, default \"42\"\n";
+		";<mandatory, single>\n"
+		";<default value: \"default value\"\n"
+		"opt = value\n"
+		";unsigned comment\n"
+		";<optional, single>\n"
+		";<default value: \"42\"\n"
+		"unsigned = 42\n";
 	EXPECT_EQ(str.str(), expected_result);
 }

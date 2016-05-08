@@ -92,8 +92,48 @@ TEST(section_schema, adding_and_removing_options)
 
 TEST(section_schema, validation)
 {
-	//TODO:
-	throw not_implemented_exception();
+	// prepare section schema
+	section_schema_params params;
+	params.name = "section";
+	section_schema my_section(params);
+
+	option_schema_params<signed_ini_t> opt1_params;
+	opt1_params.name = "name";
+	opt1_params.requirement = item_requirement::optional;
+	opt1_params.type = option_item::single;
+	opt1_params.default_value = "default_value";
+	option_schema my_option1(opt1_params);
+
+	option_schema_params<unsigned_ini_t> opt2_params;
+	opt2_params.name = "opt_2_name";
+	opt2_params.requirement = item_requirement::optional;
+	opt2_params.type = option_item::single;
+	opt2_params.default_value = "567";
+	option_schema my_option2(opt2_params);
+
+	my_section.add_option(my_option1);
+	my_section.add_option(my_option2);
+
+	// prepare configuration section
+	section sect("section");
+
+	option opt1("name", "-85");
+	option opt2("some_name", "some_value");
+
+	sect.add_option(opt1);
+	sect.add_option(opt2);
+
+	// perform validation
+	EXPECT_NO_THROW(my_section.validate_section(sect, schema_mode::relaxed));
+
+	// test if options are validated
+	EXPECT_EQ(sect["name"].get<signed_ini_t>(), -85);
+
+	// test if default values are added from schema
+	EXPECT_EQ(sect["opt_2_name"].get<string_ini_t>(), "567");
+
+	// test if exception is thrown with strict mode on unknown option
+	EXPECT_THROW(my_section.validate_section(sect, schema_mode::strict), validation_exception);
 }
 
 TEST(section_schema, writing_to_ostream)
