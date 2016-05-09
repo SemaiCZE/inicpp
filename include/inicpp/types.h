@@ -7,24 +7,48 @@
 
 namespace inicpp
 {
+	/**
+	 * Inicpp enumeration type.
+	 */
 	class internal_enum_type {
 	public:
+		/** Default constructor */
 		internal_enum_type() : internal_enum_type("") {}
+		/** Constructor with initial value */
 		internal_enum_type(const std::string &value) : data_(value) {}
+		/** Copy constructor */
+		internal_enum_type(const internal_enum_type &other)
+		{
+			this->operator =(other);
+		}
+		/** Assignment operator */
 		internal_enum_type &operator =(const internal_enum_type &other)
 		{
 			data_ = other.data_;
 			return *this;
 		}
+		/** Conversion operator to std::string type */
 		operator std::string() const
 		{
 			return data_;
 		}
-		bool operator ==(const internal_enum_type &other) {
+		/** Equality operator */
+		bool operator ==(const internal_enum_type &other)
+		{
 			return data_ == other.data_;
 		}
-
+		/** Inequality operator */
+		bool operator !=(const internal_enum_type &other)
+		{
+			return !(*this == other);
+		}
+		/** Comparation less operator */
+		bool operator <(const internal_enum_type &other)
+		{
+			return data_ < other.data_;
+		}
 	private:
+		/** Value of instance */
 		std::string data_;
 	};
 
