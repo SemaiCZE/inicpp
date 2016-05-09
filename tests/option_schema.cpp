@@ -154,6 +154,7 @@ TEST(option_schema, writing_to_ostream)
 		";comment\n"
 		";multiline\n"
 		";<optional, list>\n"
+		";<default value: \"default_value\">\n"
 		"name = default_value\n";
 	EXPECT_EQ(str.str(), expected_output);
 }

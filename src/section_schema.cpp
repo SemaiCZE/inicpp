@@ -192,20 +192,34 @@ namespace inicpp
 		}
 	}
 
-	std::ostream &operator<<(std::ostream &os, const section_schema &sect_schema)
+	std::ostream &section_schema::write_additional_info(std::ostream &os) const
 	{
 		// write comment
-		auto comment_lines = string_utils::split(sect_schema.get_comment(), '\n');
+		auto comment_lines = string_utils::split(get_comment(), '\n');
 		for (auto &comment_line : comment_lines) {
 			os << ";" << comment_line << std::endl;
 		}
 
 		// optional/mandatory
-		std::string info_line = sect_schema.is_mandatory() ? "mandatory" : "optional";
+		std::string info_line = is_mandatory() ? "mandatory" : "optional";
 		os << ";<" << info_line << ">" << std::endl;
 
+		return os;
+	}
+
+	std::ostream &section_schema::write_section_name(std::ostream &os) const
+	{
+		os << "[" << get_name() << "]" << std::endl;
+		return os;
+	}
+
+	std::ostream &operator<<(std::ostream &os, const section_schema &sect_schema)
+	{
+		// write additional information about given section
+		sect_schema.write_additional_info(os);
+
 		// write name
-		os << "[" << sect_schema.get_name() << "]" << std::endl;
+		sect_schema.write_section_name(os);
 
 		// write all containing options
 		for (auto &opt : sect_schema.options_) {

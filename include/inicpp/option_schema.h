@@ -185,6 +185,13 @@ namespace inicpp
 		void validate_option(option &opt) const;
 
 		/**
+		 * To given output stream writes additional information about option.
+		 * Written info is in ini comment format.
+		 * @param os output stream
+		 * @return reference to output stream for better chaining
+		 */
+		std::ostream &write_additional_info(std::ostream &os) const;
+		/**
 		 * Classic stream operator for printing this instance to output stream.
 		 * @param os output stream
 		 * @return reference to output stream which allows chaining

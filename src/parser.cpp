@@ -55,7 +55,6 @@ namespace inicpp
 		char delim = ',';
 
 		size_t pos = find_first_nonescaped(searched, ',');
-		size_t pos_colon = find_first_nonescaped(searched, ':');
 		if (pos == std::string::npos) {
 			// if no escaped strokes are present in given string,
 			//   try to use colon
@@ -90,14 +89,14 @@ namespace inicpp
 				// link always has to be in format "section#option"
 				// section and option cannot be empty
 				if (delim == std::string::npos || (delim + 1) == link.length()) {
-					throw parser_exception("Bad format of link on line " + line_number);
+					throw parser_exception("Bad format of link on line " + std::to_string(line_number));
 				}
 
 				std::string sect_link = link.substr(0, delim);
 				std::string opt_link = link.substr(delim + 1);
 
 				if (sect_link.empty()) {
-					throw parser_exception("Section name in link cannot be empty on line " + line_number);
+					throw parser_exception("Section name in link cannot be empty on line " + std::to_string(line_number));
 				}
 
 				// find section with name specifid in link
@@ -107,16 +106,24 @@ namespace inicpp
 				} else if (cfg.contains(sect_link)) {
 					selected_section = &cfg[sect_link];
 				} else {
-					throw parser_exception("Bad link on line " + line_number);
+					throw parser_exception("Bad link on line " + std::to_string(line_number));
 				}
 
 				// from selected section take appropriate option and set its value to options list
 				if (selected_section->contains(opt_link)) {
 					opt_value = selected_section->operator[](opt_link).get<string_ini_t>();
 				} else {
-					throw parser_exception("Option name in link not found on line " + line_number);
+					throw parser_exception("Option name in link not found on line " + std::to_string(line_number));
 				}
 			}
+		}
+	}
+
+	void parser::validate_identifier(const std::string &str, size_t line_number)
+	{
+		std::regex reg_expr("^[a-zA-Z.$:][-a-zA-Z0-9_~.:$ ]*$");
+		if (!std::regex_match(str, reg_expr)) {
+			throw parser_exception("Identifier contains forbidden characters on line " + std::to_string(line_number));
 		}
 	}
 
@@ -142,7 +149,7 @@ namespace inicpp
 				if (ends_with(line, "]")) {
 					// empty section name cannot be present
 					if (line.length() == 2) {
-						throw parser_exception("Section name cannot be empty");
+						throw parser_exception("Section name cannot be empty on line " + std::to_string(line_number));
 					}
 
 					// if there is cached section, save it
@@ -150,38 +157,43 @@ namespace inicpp
 						cfg.add_section(*last_section);
 					}
 
+					// extract name and validate it and finally create section object
 					std::string sect_name = unescape(line.substr(1, line.length() - 2));
+					validate_identifier(sect_name, line_number);
 					last_section = std::make_shared<section>(sect_name);
 				} else {
-					throw parser_exception("Section not ended on line " + line_number);
+					throw parser_exception("Section not ended on line " + std::to_string(line_number));
 				}
 			} else { // option
 				size_t opt_delim = find_first_nonescaped(line, '=');
 				if (opt_delim == std::string::npos) {
-					throw parser_exception("Unknown element option expected on line " + line_number);
+					throw parser_exception("Unknown element option expected on line " + std::to_string(line_number));
 				}
 
 				// if there is no opened section, option has no parent section
 				if (last_section == nullptr) {
-					throw parser_exception("Option not in section on line " + line_number);
+					throw parser_exception("Option not in section on line " + std::to_string(line_number));
 				}
 
 				// equals character was right at the end of line, should not be
 				if ((opt_delim + 1) == line.length()) {
-					throw parser_exception("Option value cannot be empty");
+					throw parser_exception("Option value cannot be empty on line " + std::to_string(line_number));
 				}
 
 				// retrieve option name and value from line
 				std::string option_name = unescape(trim(line.substr(0, opt_delim)));
 				std::string option_val = trim(line.substr(opt_delim + 1));
 				
+				// validate option name
+				validate_identifier(option_name, line_number);
+
 				if (option_name.empty()) {
-					throw parser_exception("Option name cannot be empty");
+					throw parser_exception("Option name cannot be empty on line " + std::to_string(line_number));
 				}
 
 				auto option_val_list = parse_option_list(option_val);
 				if (option_val_list.empty()) {
-					throw parser_exception("Option value cannot be empty");
+					throw parser_exception("Option value cannot be empty on line " + std::to_string(line_number));
 				}
 
 				handle_links(cfg, *last_section, option_val_list, line_number);
@@ -203,14 +215,32 @@ namespace inicpp
 	void parser::internal_save(const config &cfg, const schema &schm, std::ostream &str)
 	{
 		for (auto &sect : cfg) {
-			str << sect;
-
-			if (!schm.contains(sect.get_name())) {
+			bool contains = schm.contains(sect.get_name());
+			if (!contains) {
+				// write section which is not in schema
+				// if this happens we can safely write all section and its option to output
+				// we do not have to go through them and write their additional info
+				str << sect;
 				continue;
 			}
 
-			// schema contains section with specified name
+			// if schema contains section from config, write additional info and name first
 			auto &sect_schema = schm[sect.get_name()];
+			sect_schema.write_additional_info(str);
+			sect_schema.write_section_name(str);
+
+			// go through options and write them to output with info from option_schema
+			for (auto &opt : sect) {
+				if (sect_schema.contains(opt.get_name())) {
+					// if option is in section_schema, then write additional info
+					sect_schema[opt.get_name()].write_additional_info(str);
+				}
+
+				// write option name and value to output
+				str << opt;
+			}
+
+			// get through option_schema in appropriate section_schema
 			for (size_t i = 0; i < sect_schema.size(); ++i) {
 				auto &opt_schema = sect_schema[i];
 				if (sect.contains(opt_schema.get_name())) {
@@ -218,6 +248,8 @@ namespace inicpp
 					continue;
 				}
 
+				// option with this name does not exist in config,
+				//   so write its option_schema interpretation
 				str << opt_schema;
 			}
 		}
