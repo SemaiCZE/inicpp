@@ -2,6 +2,7 @@
 #include <gmock/gmock.h>
 
 #include "../src/string_utils.h"
+#include "exception.h"
 
 using namespace inicpp;
 using namespace string_utils;
@@ -185,4 +186,49 @@ TEST(string_utils, split)
 	expected[7] = "delims";
 	expected[8] = "";
 	ASSERT_EQ(expected, split(str, ' '));
+}
+
+TEST(string_utils, parse_unsigned_number)
+{
+	EXPECT_EQ(string_utils::parse_unsigned_type("0b111", ""), 7u);
+	EXPECT_EQ(string_utils::parse_unsigned_type("0x3C", ""), 60u);
+	EXPECT_EQ(string_utils::parse_unsigned_type("5", ""), 5u);
+	EXPECT_THROW(string_utils::parse_unsigned_type("random", ""), invalid_type_exception);
+}
+
+TEST(string_utils, parse_signed_number)
+{
+	EXPECT_EQ(string_utils::parse_signed_type(
+		"0b1111000011110000111100001111000011110000111100001111000011110000", ""), -1085102592571150096);
+	EXPECT_EQ(string_utils::parse_signed_type("0b111", ""), 7);
+	EXPECT_EQ(string_utils::parse_signed_type("0x3C", ""), 60);
+	EXPECT_EQ(string_utils::parse_signed_type("-5", ""), -5);
+	EXPECT_THROW(string_utils::parse_signed_type("random", ""), invalid_type_exception);
+}
+
+TEST(string_utils, parse_float_type)
+{
+	EXPECT_NEAR(string_utils::parse_float_type("3.14", ""), 3.14, 0.00001);
+	EXPECT_NEAR(string_utils::parse_float_type("+4.1234565E+45", ""), 4.12346e+45, 1e+40);
+	EXPECT_NEAR(string_utils::parse_float_type("-1.1245864E-6", ""), -1.1245864E-6, 1e-10);
+	EXPECT_THROW(string_utils::parse_float_type("random", ""), invalid_type_exception);
+}
+
+TEST(string_utils, parse_boolean_type)
+{
+	EXPECT_TRUE(string_utils::parse_boolean_type("1", ""));
+	EXPECT_TRUE(string_utils::parse_boolean_type("t", ""));
+	EXPECT_TRUE(string_utils::parse_boolean_type("y", ""));
+	EXPECT_TRUE(string_utils::parse_boolean_type("on", ""));
+	EXPECT_TRUE(string_utils::parse_boolean_type("yes", ""));
+	EXPECT_TRUE(string_utils::parse_boolean_type("enabled", ""));
+
+	EXPECT_FALSE(string_utils::parse_boolean_type("0", ""));
+	EXPECT_FALSE(string_utils::parse_boolean_type("f", ""));
+	EXPECT_FALSE(string_utils::parse_boolean_type("n", ""));
+	EXPECT_FALSE(string_utils::parse_boolean_type("off", ""));
+	EXPECT_FALSE(string_utils::parse_boolean_type("no", ""));
+	EXPECT_FALSE(string_utils::parse_boolean_type("disabled", ""));
+
+	EXPECT_THROW(string_utils::parse_boolean_type("random", ""), invalid_type_exception);
 }

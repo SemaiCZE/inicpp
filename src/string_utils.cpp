@@ -1,5 +1,7 @@
 #include "string_utils.h"
 #include "exception.h"
+#include <string>
+#include <algorithm>
 
 namespace inicpp
 {
@@ -71,7 +73,14 @@ namespace inicpp
 		signed_ini_t parse_signed_type(const std::string &value, const std::string &option_name)
 		{
 			try {
-				return std::stoll(value);
+				std::string binary_prefix = "0b";
+				if (std::equal(binary_prefix.begin(), binary_prefix.end(), value.begin())) {
+					// this is binary number
+					return std::stoull(value.substr(2), 0, 2);
+				} else {
+					// decimal and hexadecimal number can handle stoll itself
+					return std::stoll(value, 0, 0);
+				}
 			} catch (std::exception &e) {
 				throw invalid_type_exception("Option '" + option_name + "' parsing failed: " + e.what());
 			}
@@ -80,7 +89,14 @@ namespace inicpp
 		unsigned_ini_t parse_unsigned_type(const std::string &value, const std::string &option_name)
 		{
 			try {
-				return std::stoull(value);
+				std::string binary_prefix = "0b";
+				if (std::equal(binary_prefix.begin(), binary_prefix.end(), value.begin())) {
+					// this is binary number
+					return std::stoull(value.substr(2), 0, 2);
+				} else {
+					// decimal and hexadecimal number can handle stoull itself
+					return std::stoull(value, 0, 0);
+				}
 			} catch (std::exception &e) {
 				throw invalid_type_exception("Option '" + option_name + "' parsing failed: " + e.what());
 			}
