@@ -161,6 +161,7 @@ TEST(section_schema, writing_to_ostream)
 		";<optional>\n"
 		"[name]\n"
 		";<optional, list>\n"
+		";<default value: \"default,value\">\n"
 		"opt_name = default,value\n";
 	EXPECT_EQ(str.str(), expected_output);
 }

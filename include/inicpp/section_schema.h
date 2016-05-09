@@ -176,6 +176,20 @@ namespace inicpp
 		void validate_section(section &sect, schema_mode mode) const;
 
 		/**
+		 * To given output stream writes additional information about section.
+		 * Written info is in ini comment format.
+		 * @param os output stream
+		 * @return reference to output stream for better chaining
+		 */
+		std::ostream &write_additional_info(std::ostream &os) const;
+		/**
+		 * To given output stream writes name of this section.
+		 * Written name is in ini format.
+		 * @param os output stream
+		 * @return reference to output stream for better chaining
+		 */
+		std::ostream &write_section_name(std::ostream &os) const;
+		/**
 		 * Classic stream operator for printing this instance to output stream.
 		 * @param os output stream
 		 * @return reference to output stream which allows chaining

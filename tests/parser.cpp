@@ -21,12 +21,12 @@ TEST(parser, load_config)
 		"opt = val\n"
 		"opt2 = val2, val3, val4\n"
 		"; other comment\n"
-		"[section2#a] ;with comment\n"
+		"[section2::a] ;with comment\n"
 		"link = ${section#opt}";
 	auto loaded_config = parser::load(str_config);
 	EXPECT_EQ(loaded_config.size(), 2u);
 	EXPECT_EQ(loaded_config[0].get_name(), "section");
-	EXPECT_EQ(loaded_config[1].get_name(), "section2#a");
+	EXPECT_EQ(loaded_config[1].get_name(), "section2::a");
 	EXPECT_EQ(loaded_config[0].size(), 2u);
 	EXPECT_EQ(loaded_config[1].size(), 1u);
 	EXPECT_FALSE(loaded_config[0][0].is_list());
@@ -118,10 +118,16 @@ TEST(parser, store_config)
 	std::ostringstream str;
 	EXPECT_NO_THROW(parser::save(my_config, validatin_schema, str));
 	std::string expected_result = ""
+		";comment\n"
+		";<mandatory>\n"
 		"[section_name]\n"
+		";opt comment\n"
+		";<mandatory, single>\n"
+		";<default value: \"default value\">\n"
 		"opt = value\n"
 		";unsigned comment\n"
 		";<optional, single>\n"
+		";<default value: \"42\">\n"
 		"unsigned = 42\n";
 	EXPECT_EQ(str.str(), expected_result);
 }

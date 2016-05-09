@@ -168,19 +168,30 @@ namespace inicpp
 		}
 	}
 
-	std::ostream &operator<<(std::ostream &os, const option_schema &opt_schema)
+	std::ostream &option_schema::write_additional_info(std::ostream &os) const
 	{
 		// write comment
-		auto comment_lines = string_utils::split(opt_schema.get_comment(), '\n');
+		auto comment_lines = string_utils::split(get_comment(), '\n');
 		for (auto &comment_line : comment_lines) {
 			os << ";" << comment_line << std::endl;
 		}
 
 		// optional/mandatory and single/list
-		std::string info_line = opt_schema.is_mandatory() ? "mandatory" : "optional";
+		std::string info_line = is_mandatory() ? "mandatory" : "optional";
 		info_line += ", ";
-		info_line += opt_schema.is_list() ? "list" : "single";
+		info_line += is_list() ? "list" : "single";
 		os << ";<" << info_line << ">" << std::endl;
+
+		// default value given at construction
+		os << ";<default value: \"" << get_default_value() << "\">" << std::endl;
+
+		return os;
+	}
+
+	std::ostream &operator<<(std::ostream &os, const option_schema &opt_schema)
+	{
+		// write additional information about given option
+		opt_schema.write_additional_info(os);
 
 		// write name and default value
 		os << opt_schema.get_name() << " = " << opt_schema.get_default_value() << std::endl;
