@@ -2,8 +2,8 @@
 #include <gmock/gmock.h>
 
 #include <vector>
-#include "../src/config.h"
-#include "../src/section.h"
+#include "config.h"
+#include "section.h"
 
 using namespace inicpp;
 

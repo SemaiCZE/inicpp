@@ -1,9 +1,9 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include "../src/config.h"
-#include "../src/section.h"
-#include "../src/option.h"
+#include "config.h"
+#include "section.h"
+#include "option.h"
 
 using namespace inicpp;
 

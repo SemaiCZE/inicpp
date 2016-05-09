@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include "../src/section.h"
+#include "section.h"
 
 using namespace inicpp;
 

@@ -2,28 +2,33 @@ cmake_minimum_required(VERSION 2.8)
 project(inicpp)
 
 set(SRC_DIR src)
+set(INCLUDE_DIR include/inicpp)
 
 set(SOURCE_FILES
-	${SRC_DIR}/config.h
+	${INCLUDE_DIR}/config.h
 	${SRC_DIR}/config.cpp
-	${SRC_DIR}/exception.h
+	${INCLUDE_DIR}/exception.h
 	${SRC_DIR}/exception.cpp
-	${SRC_DIR}/option.h
+	${INCLUDE_DIR}/option.h
 	${SRC_DIR}/option.cpp
-	${SRC_DIR}/option_schema.h
+	${INCLUDE_DIR}/option_schema.h
 	${SRC_DIR}/option_schema.cpp
-	${SRC_DIR}/parser.h
+	${INCLUDE_DIR}/parser.h
 	${SRC_DIR}/parser.cpp
-	${SRC_DIR}/schema.h
+	${INCLUDE_DIR}/schema.h
 	${SRC_DIR}/schema.cpp
-	${SRC_DIR}/section.h
+	${INCLUDE_DIR}/section.h
 	${SRC_DIR}/section.cpp
-	${SRC_DIR}/section_schema.h
+	${INCLUDE_DIR}/section_schema.h
 	${SRC_DIR}/section_schema.cpp
-	${SRC_DIR}/types.h
+	${INCLUDE_DIR}/types.h
 	${SRC_DIR}/string_utils.h
 	${SRC_DIR}/string_utils.cpp
+	${INCLUDE_DIR}/inicpp.h
 )
+
+# Find header files in include directory
+include_directories(${INCLUDE_DIR})
 
 # Set options to disable build of shared and static library
 option(BUILD_SHARED "Specifies if shared library is build." ON)

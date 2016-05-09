@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include "../src/parser.h"
+#include "parser.h"
 
 using namespace inicpp;
 

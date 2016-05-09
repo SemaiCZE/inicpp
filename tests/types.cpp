@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include "../src/types.h"
+#include "types.h"
 
 
 using namespace inicpp;

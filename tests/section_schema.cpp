@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include "../src/section_schema.h"
+#include "section_schema.h"
 
 using namespace inicpp;
 

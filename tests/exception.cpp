@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include "../src/exception.h"
+#include "exception.h"
 
 // import literals
 // we use string operator "" s() - the 's' suffix

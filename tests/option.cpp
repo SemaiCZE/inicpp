@@ -2,8 +2,8 @@
 #include <gmock/gmock.h>
 
 #include <vector>
-#include "../src/option.h"
-#include "../src/types.h"
+#include "option.h"
+#include "types.h"
 
 using namespace std::literals;
 using namespace inicpp;

@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include "../src/option_schema.h"
+#include "option_schema.h"
 
 using namespace inicpp;
 
