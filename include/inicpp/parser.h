@@ -9,7 +9,7 @@
 #include "exception.h"
 #include "config.h"
 #include "schema.h"
-#include "../../src/string_utils.h"
+#include "string_utils.h"
 
 namespace inicpp
 {

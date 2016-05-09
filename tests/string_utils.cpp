@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include "../src/string_utils.h"
+#include "string_utils.h"
 #include "exception.h"
 
 using namespace inicpp;

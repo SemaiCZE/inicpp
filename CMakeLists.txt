@@ -22,7 +22,7 @@ set(SOURCE_FILES
 	${INCLUDE_DIR}/section_schema.h
 	${SRC_DIR}/section_schema.cpp
 	${INCLUDE_DIR}/types.h
-	${SRC_DIR}/string_utils.h
+	${INCLUDE_DIR}/string_utils.h
 	${SRC_DIR}/string_utils.cpp
 	${INCLUDE_DIR}/inicpp.h
 )
