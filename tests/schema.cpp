@@ -93,8 +93,8 @@ TEST(schema, validate_config)
 	schm.add_section(sect1_params);
 
 	section_schema_params sect2_params;
-	sect1_params.name = "default";
-	sect1_params.requirement = item_requirement::optional;
+	sect2_params.name = "default";
+	sect2_params.requirement = item_requirement::optional;
 	schm.add_section(sect2_params);
 
 	option_schema_params<signed_ini_t> opt1_params;
