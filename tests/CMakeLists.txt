@@ -29,6 +29,7 @@ add_executable(${TESTS_NAME}
 	section_schema.cpp
 	string_utils.cpp
 	types.cpp
+	schema.cpp
 )
 
 # Link with Google libraries

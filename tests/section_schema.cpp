@@ -99,7 +99,7 @@ TEST(section_schema, validation)
 
 	option_schema_params<signed_ini_t> opt1_params;
 	opt1_params.name = "name";
-	opt1_params.requirement = item_requirement::optional;
+	opt1_params.requirement = item_requirement::mandatory;
 	opt1_params.type = option_item::single;
 	opt1_params.default_value = "42";
 	option_schema my_option1(opt1_params);
