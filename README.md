@@ -53,100 +53,153 @@ _**To be done...**_
 
 ## Examples
 
+Some examples are located in `examples` directory. Compiling them requires additional steps after standard library compilation, for example on Linux (note that you must be in `build` directory):
+
+```{.sh}
+$ make -f examples/Makefile
+```
+
+Compiled examples can be run as follows:
+
+```{.sh}
+$ ./examples/schema_validation/inicpp_schema
+$ ./examples/basic/inicpp_basic
+```
+
+Expected outputs are also provided with examples sources.
+
+
 ### Basic usage without schema
 
+Slightly modified version of basic example.
+
 ```{.cpp}
-using namespace inicpp;
+std::cout << "Load and parse config from string" << std::endl;
+config example_conf = parser::load(get_config());
 
-// Load config file from file
-config example_conf = parser::load_file("conf.ini");
-
-// Iterate through sections
+std::cout << "Iterate through whole config and print it" << std::endl;
 for(auto &sect : example_conf) {
-	std::cout << "Section: " << sect.get_name() << std::endl;
+	std::cout << "  Section: '" << sect.get_name() << "'" << std::endl;
 	// Iterate through options in a section
 	for(auto &opt : sect) {
-		std::cout << "Option: " << opt.get_name() << " with value "
-			<< opt.get<string_t>() << std::endl;
+		std::cout << "    Option: '" << opt.get_name() << "' with value(s): ";
+		if (!opt.is_list()) {
+			std::cout << "'" << opt.get<string_ini_t>() << "'";
+		} else {
+			for (auto &list_item : opt.get_list<string_ini_t>())
+				std::cout << "'" << list_item << "' ";
+		}
 	}
 }
 
-// Get known item from known section
+std::cout << "Get number as signed_ini_t type" << std::endl;
 try {
-	signed_t port = config["github"]["port"].get<signed_t>();
+	signed_ini_t number = example_conf["Numbers"]["num"].get<signed_ini_t>();
+	std::cout << "  " << number << std::endl;
 } catch (bad_cast_exception) {
-	// item cannot be casted to signed_t type
+	std::cout << "  Item 'num' in 'Numbers' section cannot be casted to signed_ini_t type" << std::endl;
 }
+
+std::cout << "Change some values - could be properly typed" << std::endl;
 // Make reference to the section
-section &github_sect = config["github"];
-// Get a string always work
-string_t port_str = github_sect["port"].get<string_t>();
-
+section &number_sect = example_conf["Numbers"];
 // Change some values
-github_sect["port"].set<signed_t>(42222);
+number_sect["num"].set<signed_ini_t>(42222);
+signed_ini_t new_num = number_sect["num"].get<signed_ini_t>();
+std::cout << "  Option 'num' in 'Numbers' section is '" << new_num << "'" << std::endl;
 // Following two lines are equivalent
-github_sect["address"].set<string_t>("www.github.com");
-github_sect["address"] = "www.github.com";
+number_sect["num_oct"].set<string_ini_t>("0756");
+number_sect["num_oct"] = "0756"s;
+std::cout << "  set method and assingment operator on option are equivalent" << std::endl;
 
-// Change sigle value to list by inserting an item
-option &addr_opt = github_sect["address"];
-addr_opt.add_to_list<string_t>("https://github.io");
-assert(addr_opt.is_list()); // now it's a list
+std::cout << "Change single value to list and vice versa" << std::endl;
+option &num_opt = number_sect["num"];
+num_opt.add_to_list<signed_ini_t>(99);
+if (num_opt.is_list()) {
+	std::cout << "  'num' option in 'Numbers' section is list" << std::endl;
+} else {
+	std::cout << "  'num' option in 'Numbers' section is single value" << std::endl;
+}
 // Remove item from the list (specifying position)
-addr_opt.remove_from_list(0); // remove first item
-assert(!addr_opt.is_list());
+num_opt.remove_from_list_pos(0); // remove first item
+std::cout << "  first item from 'num' option list removed" << std::endl;
+if (num_opt.is_list()) {
+	std::cout << "  'num' option in 'Numbers' section is list" << std::endl;
+} else {
+	std::cout << "  'num' option in 'Numbers' section is single value" << std::endl;
+}
+std::cout << "  'num' option value is '" << num_opt.get<signed_ini_t>() << "'" << std::endl;
 
-// Save changes
-std::ofstream ofs("conf_new.ini");
-ofs << config;
+std::cout << "Save changes to ostream and print the result" << std::endl;
+std::ostringstream ofs;
+ofs << example_conf;
+std::cout << ofs.str();
 ```
 
 Without schema all items are treated as string type, but runtime conversion could be done to one of supported types if possible.
 
 ### Schema validation support
 
-Schema validation can bring you ability to make sure, that a config file contain what you expect with type safety. In addition, this implies better performance on heavy reading of validated configuration.
+Schema validation can bring you ability to make sure, that a config file contain what you expect with type safety. In addition, this implies better performance on heavy reading of validated configuration. Slightly modified version of schema validation example.
 
 ```{.cpp}
-using namespace inicpp;
+std::cout << "Create config schema" << std::endl;
+schema schm;
 
-// First prepare the schema:
-schema conf_schm;
+// add section 'Section 1'
+section_schema_params section_1_params;
+section_1_params.name = "Section 1";
+section_1_params.comment = "comment";
+section_1_params.requirement = item_requirement::optional;
+schm.add_section(section_1_params);
 
-// Add first section
-conf_schm.add_section("github"); // default is mandatory
-// Add option named "port" into "github" section. The option is mandatory
-// and it's type is unsigned. Default value makes no sense for mandatory
-// options. This option has no validating function, so all values are valid.
-conf_schm.add_option("github", option_schema_params<unsigned_t> {"port", true});
-// Mandatory string option "address" with default value "www.github.com" (one value, not list).
-// Option is valid, if given string is greater than "aaa" (using lambda of functor class
-// you can specify whatever you want!
-option_schema_params<string_t> args = {"address", false, false,
-	"www.github.com", [](const string_t &str){ return str > "aaa"; }};
-conf_schm.add_option("github", args); // template argument is deduced
+// add options to 'Section 1'
+option_schema_params<signed_ini_t> option_1_params;
+option_1_params.name = "Option 1";
+option_1_params.type = option_item::single;
+option_1_params.requirement = item_requirement::mandatory;
+option_1_params.validator = [](signed_ini_t i){ return i < 0; }; // valid values are only negative ones
+option_1_params.comment = "Important option\nshould be negative";
+option_1_params.default_value = "-1";
+schm.add_option("Section 1", option_1_params);
 
-// Alternatively, create the classes first and add them to schema
-option_schema_params<boolean_t> autoconnect_params = {"autoconnect", false, false, "off"};
-option_schema autoconnect_option(autoconnect_params);
-section_schema connect_section("connect", false); // optional section
-connect_section.add_option(autoconnect_option);
-conf_schm.add_section(connect_section);
+option_schema_params<float_ini_t> option_4_params;
+option_4_params.name = "float1";
+option_4_params.type = option_item::single;
+option_4_params.requirement = item_requirement::mandatory;
+schm.add_option("Section 1", option_4_params);
 
-// Then load file with validation (from stream conf_istream, just to show a different way)
+
+std::cout << "Load and validate config in relaxed mode" << std::endl;
+config conf = parser::load(get_config(), schm, schema_mode::relaxed);
+
+std::cout << "Check, if options are properly typed" << std::endl;
+std::cout << "  'Option 1' is signed_ini_t type with value '" <<
+	conf["Section 1"]["Option 1"].get<signed_ini_t>() << "'" << std::endl;
 try {
-	config example_conf = parser::load(conf_istream, conf_schm, schema_mode::strict);
-} catch (invalid_config_exception) {
-	// config is not valid
+	conf["Section 1"]["Option 1"].get<enum_ini_t>();
+} catch (bad_cast_exception) {
+	std::cout << "  'Option 1' is not enum_ini_t type" << std::endl;
+}
+std::cout << "  'float1' option has value '" << conf["Section 1"]["float1"].get<float_ini_t>() <<
+	std::endl;
+std::cout << "  'unknown_option' was left as string with value '" <<
+	conf["Section 1"]["unknown_option"].get<string_ini_t>() << std::endl;
+
+std::cout << "Validation with strict mode fails due to 'unknown_option'" << std::endl;
+try {
+	parser::load(get_config(), schm, schema_mode::strict);
+} catch (validation_exception) {
+	std::cout << "  Strict mode validation failed" << std::endl;
 }
 
-// Or you can validate already loaded config!
-config example_conf = parser::load_file("conf.ini");
-if(example_conf.validate(conf_schm, schema_mode::relaxed)) {
-	// now the config is valid and all values are internaly
-	// stored as their correct type
-}
+std::cout << "Write default configuration from schema to stream" << std::endl;
+std::ostringstream str;
+str << schm;
+std::cout << str.str();
 
-// Default configuration (schema) can be written to a file using output stream or parser save method
-parser::save(conf_schm, "default_conf.ini");
+std::cout << "Write current configuration with comments from schema to stream" << std::endl;
+str.str("");
+parser::save(conf, schm, str);
+std::cout << str.str();
 ```

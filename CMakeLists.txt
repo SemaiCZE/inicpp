@@ -56,3 +56,5 @@ add_subdirectory(vendor/googletest EXCLUDE_FROM_ALL)
 # Add our very own unit tests (not compile by default)
 add_subdirectory(tests EXCLUDE_FROM_ALL)
 
+# Add examples programs
+add_subdirectory(examples EXCLUDE_FROM_ALL)

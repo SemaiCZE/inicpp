@@ -1,0 +1,66 @@
+Create config schema
+--------------------
+done...
+
+Load and validate config in relaxed mode
+----------------------------------------
+done...
+
+Check, if options are properly typed
+------------------------------------
+  'Option 1' is signed_ini_t type with value '-1285'
+  'Option 1' is not enum_ini_t type
+  'Option 2' is a list of unsigned_ini_t with 3 values
+  'Option 3' was added with default value '-42' and correct type
+  'float1' option has value '4.12346e+45
+  'unknown_option' was left as string with value 'haha
+done...
+
+Validation with strict mode fails due to 'unknown_option'
+---------------------------------------------------------
+  Strict mode validation failed
+done...
+
+Write default configuration from schema to stream
+-------------------------------------------------
+;comment
+;<optional>
+[Section 1]
+;Important option
+;should be negative
+;<mandatory, single>
+;<default value: "-1">
+Option 1 = -1
+;<mandatory, list>
+;<default value: "">
+Option 2 = 
+;<optional, single>
+;<default value: "-42">
+Option 3 = -42
+;<mandatory, single>
+;<default value: "">
+float1 = 
+done...
+
+Write current configuration with comments from schema to stream
+---------------------------------------------------------------
+;comment
+;<optional>
+[Section 1]
+;Important option
+;should be negative
+;<mandatory, single>
+;<default value: "-1">
+Option 1 = -1285
+;<mandatory, list>
+;<default value: "">
+Option 2 = 5,25,856
+;<mandatory, single>
+;<default value: "">
+float1 = 4.12346e+45
+unknown_option = haha
+;<optional, single>
+;<default value: "-42">
+Option 3 = -42
+done...
+

@@ -1,0 +1,73 @@
+Load and parse config from string
+---------------------------------
+done...
+
+Iterate through whole config and print it
+-----------------------------------------
+  Section: 'Section 1'
+    Option: 'Option 1' with value(s): 'value 1'
+    Option: 'oPtion 1' with value(s): ' value 2  '
+  Section: '$Section::subsection'
+    Option: 'Option 2' with value(s): 'value 1' 'value 2' 'value 3' 
+    Option: 'Option 3' with value(s): 'value 1' 'value 1' 
+    Option: 'Option 4' with value(s): 'v1' 'value 1' 'v2' 
+    Option: 'Option 5' with value(s): 'v1' 'v2:v3' 
+  Section: 'Numbers'
+    Option: 'num' with value(s): '-1285'
+    Option: 'num_bin' with value(s): '0b01101001'
+    Option: 'num_hex' with value(s): '0x12ae' '0xAc2B' 
+    Option: 'num_oct' with value(s): '01754'
+    Option: 'float1' with value(s): '-124.45667356'
+    Option: 'float2' with value(s): '+4.1234565E+45'
+    Option: 'float3' with value(s): '412.34565e45'
+    Option: 'float4' with value(s): '-1.1245864E-6'
+  Section: 'Other'
+    Option: 'bool1' with value(s): '1'
+    Option: 'bool2' with value(s): 'on'
+    Option: 'bool3' with value(s): 'f'
+done...
+
+Get number as signed_ini_t type
+-------------------------------
+  Item 'num' in 'Numbers' section cannot be casted to signed_ini_t type
+done...
+
+Change some values - could be properly typed
+--------------------------------------------
+  Option 'num' in 'Numbers' section is '42222'
+  set method and assingment operator on option are equivalent
+done...
+
+Change single value to list and vice versa
+------------------------------------------
+  'num' option in 'Numbers' section is list
+  first item from 'num' option list removed
+  'num' option in 'Numbers' section is single value
+  'num' option value is '99'
+done...
+
+Save changes to ostream and print the result
+--------------------------------------------
+[Section 1]
+Option 1 = value 1
+oPtion 1 = \ value 2\ \ \
+[$Section::subsection]
+Option 2 = value 1,value 2,value 3
+Option 3 = value 1,value 1
+Option 4 = v1,value 1,v2
+Option 5 = v1,v2:v3
+[Numbers]
+num = 99
+num_bin = 0b01101001
+num_hex = 0x12ae,0xAc2B
+num_oct = 0756
+float1 = -124.45667356
+float2 = +4.1234565E+45
+float3 = 412.34565e45
+float4 = -1.1245864E-6
+[Other]
+bool1 = 1
+bool2 = on
+bool3 = f
+done...
+
