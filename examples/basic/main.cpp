@@ -72,7 +72,8 @@ int main(void)
 	std::cout << "-------------------------------" << std::endl;
 	try {
 		signed_ini_t number = example_conf["Numbers"]["num"].get<signed_ini_t>();
-		std::cout << "  " << number << std::endl;
+		std::cout << "  Item 'num' in 'Numbers' section casted to signed_ini_t type has value '" <<
+			number << "'" << std::endl;
 	} catch (bad_cast_exception) {
 		std::cout << "  Item 'num' in 'Numbers' section cannot be casted to signed_ini_t type" << std::endl;
 	}
@@ -91,6 +92,18 @@ int main(void)
 	number_sect["num_oct"].set<string_ini_t>("0756");
 	number_sect["num_oct"] = "0756"s;
 	std::cout << "  set method and assingment operator on option are equivalent" << std::endl;
+	std::cout << "done..." << std::endl << std::endl;
+
+
+	std::cout << "Typed value can be casted to string" << std::endl;
+	std::cout << "-----------------------------------" << std::endl;
+	try {
+		string_ini_t str_number = example_conf["Numbers"]["num"].get<string_ini_t>();
+		std::cout << "  Item 'num' in 'Numbers' section is signed_ini_t type, but string '" <<
+			str_number << "' can be retrieved" << std::endl;
+	} catch (bad_cast_exception) {
+		std::cout << "  Item 'num' in 'Numbers' section cannot be casted to string_ini_t type" << std::endl;
+	}
 	std::cout << "done..." << std::endl << std::endl;
 
 

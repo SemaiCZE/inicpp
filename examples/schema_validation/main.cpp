@@ -75,11 +75,8 @@ int main(void)
 	std::cout << "------------------------------------" << std::endl;
 	std::cout << "  'Option 1' is signed_ini_t type with value '" <<
 		conf["Section 1"]["Option 1"].get<signed_ini_t>() << "'" << std::endl;
-	try {
-		conf["Section 1"]["Option 1"].get<enum_ini_t>();
-	} catch (bad_cast_exception) {
-		std::cout << "  'Option 1' is not enum_ini_t type" << std::endl;
-	}
+	// 'Option 1' is not enum_ini_t type, it's compile time error
+	//conf["Section 1"]["Option 1"].get<enum_ini_t>();
 	std::cout << "  'Option 2' is a list of unsigned_ini_t with " <<
 		conf["Section 1"]["Option 2"].get_list<unsigned_ini_t>().size() <<
 		" values" << std::endl;
@@ -88,7 +85,7 @@ int main(void)
 	std::cout << "  'float1' option has value '" << conf["Section 1"]["float1"].get<float_ini_t>() <<
 		std::endl;
 	std::cout << "  'unknown_option' was left as string with value '" <<
-		conf["Section 1"]["unknown_option"].get<string_ini_t>() << std::endl;
+		conf["Section 1"]["unknown_option"].get<string_ini_t>() << "'" << std::endl;
 	std::cout << "done..." << std::endl << std::endl;
 
 

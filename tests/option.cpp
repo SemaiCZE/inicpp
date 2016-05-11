@@ -166,7 +166,7 @@ TEST(option, writing_to_stream)
 	str.str("");
 	my_option.set<float_ini_t>(52.4);
 	str << my_option;
-	EXPECT_EQ(str.str(), "name = 52.4\n"); // TODO: not sure about this format
+	EXPECT_EQ(str.str(), "name = 52.4\n");
 
 	// boolean
 	str.str("");

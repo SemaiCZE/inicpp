@@ -3,6 +3,7 @@
 
 #include <type_traits>
 #include <string>
+#include <stdexcept>
 
 
 namespace inicpp
@@ -31,6 +32,15 @@ namespace inicpp
 		operator std::string() const
 		{
 			return data_;
+		}
+		/**
+		 * Conversion operator to double type - allways throws, implemented
+		 * because of some template usage.
+		 * @throws allways std::runtime_error exception
+		 */
+		operator double() const
+		{
+			throw std::runtime_error("Enum type cannot be converted to double");
 		}
 		/** Equality operator */
 		bool operator ==(const internal_enum_type &other)

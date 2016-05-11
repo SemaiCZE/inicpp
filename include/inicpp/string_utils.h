@@ -63,10 +63,45 @@ namespace inicpp
 		 */
 		std::vector<std::string> split(const std::string &str, char delim);
 
+		/**
+		 * Parse string to signed value.
+		 * @param value Value to be parsed
+		 * @param option_name Option name from this value - will be in exception text if thrown
+		 * @return parsed value with correct type
+		 * @throws invalid_type_exception if string cannot be parsed
+		 */
 		signed_ini_t parse_signed_type(const std::string &value, const std::string &option_name);
+		/**
+		 * Parse string to unsigned value.
+		 * @param value Value to be parsed
+		 * @param option_name Option name from this value - will be in exception text if thrown
+		 * @return parsed value with correct type
+		 * @throws invalid_type_exception if string cannot be parsed
+		 */
 		unsigned_ini_t parse_unsigned_type(const std::string &value, const std::string &option_name);
+		/**
+		 * Parse string to float value.
+		 * @param value Value to be parsed
+		 * @param option_name Option name from this value - will be in exception text if thrown
+		 * @return parsed value with correct type
+		 * @throws invalid_type_exception if string cannot be parsed
+		 */
 		float_ini_t parse_float_type(const std::string &value, const std::string &option_name);
+		/**
+		 * Parse string to enum value.
+		 * @param value Value to be parsed
+		 * @param option_name Option name from this value - will be in exception text if thrown
+		 * @return parsed value with correct type
+		 * @throws invalid_type_exception if string cannot be parsed
+		 */
 		enum_ini_t parse_enum_type(const std::string &value, const std::string &option_name);
+		/**
+		 * Parse string to boolean value.
+		 * @param value Value to be parsed
+		 * @param option_name Option name from this value - will be in exception text if thrown
+		 * @return parsed value with correct type
+		 * @throws invalid_type_exception if string cannot be parsed
+		 */
 		boolean_ini_t parse_boolean_type(const std::string &value, const std::string &option_name);
 	}
 }

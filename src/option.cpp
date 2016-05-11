@@ -2,6 +2,20 @@
 
 namespace inicpp
 {
+	namespace inistd {
+		std::string to_string(const enum_ini_t &value)
+		{
+			return static_cast<std::string>(value);
+		}
+	};
+
+	template <>
+	string_ini_t parse_string<string_ini_t>(const std::string &value, const std::string &)
+	{
+		return value;
+	}
+
+
 	option::option(const option &source)
 	{
 		this->operator =(source);
