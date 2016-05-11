@@ -159,6 +159,8 @@ namespace inicpp
 
 		/**
 		 * Set single element value.
+		 * If option cointaned list of values,
+		 *   than its transformed to single value.
 		 * @param value newly assigned option value
 		 */
 		template<typename ValueType> void set(ValueType value)
@@ -210,6 +212,7 @@ namespace inicpp
 
 		/**
 		 * Get single element value.
+		 * If option value is list, than return first element of array.
 		 * @return templated copy by value
 		 * @throws bad_cast_exception if internal type cannot be casted
 		 * @throws not_found_exception if there is no value
@@ -229,6 +232,8 @@ namespace inicpp
 
 		/**
 		 * Set internal list of values to given one.
+		 * If option contained single value than its transformed to list
+		 *   with given values.
 		 * @param list reference to list of new values
 		 * @throws bad_cast_exception if ValueType cannot be casted
 		 * to internal type
@@ -245,6 +250,8 @@ namespace inicpp
 		
 		/**
 		 * Get list of internal values. Returning list is newly created.
+		 * If option contains single value than its returned list
+		 *   with one element.
 		 * @return new list of all stored values
 		 * @throws bad_cast_exception if internal type cannot be casted
 		 * @throws not_found_exception if there is no value
@@ -268,6 +275,7 @@ namespace inicpp
 
 		/**
 		 * Adds element to internal value list.
+		 * If option was single value than its transformed to list.
 		 * @param value pushed value
 		 * @throws bad_cast_exception if ValueType cannot be casted
 		 */
@@ -282,6 +290,7 @@ namespace inicpp
 
 		/**
 		 * Add element to list on specified position.
+		 * If option was single value than its transformed to list.
 		 * @param value added value
 		 * @param position position in internal list
 		 * @throws bad_cast_exception if ValueType cannot be casted
