@@ -27,6 +27,12 @@ namespace inicpp
 		 * @return std::string::npos if not found
 		 */
 		static size_t find_first_nonescaped(const std::string &str, char ch);
+		/**
+		 * Finds last escaped character given as parameter
+		 * Escaping character is '\'
+		 * @return std::string::npos if not found
+		 */
+		static size_t find_last_escaped(const std::string &str, char ch);
 		static std::string unescape(const std::string &str);
 		static std::string delete_comment(const std::string &str);
 		static std::vector<std::string> parse_option_list(const std::string &str);

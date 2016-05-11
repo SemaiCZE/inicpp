@@ -7,6 +7,18 @@ namespace inicpp
 {
 	namespace string_utils
 	{
+		std::string left_trim(const std::string &str)
+		{
+			auto front = std::find_if(str.begin(), str.end(), [](int c) { return !std::isspace(c); });
+			return std::string(front, str.end());
+		}
+
+		std::string right_trim(const std::string &str)
+		{
+			auto back = std::find_if(str.rbegin(), str.rend(), [](int c) { return !std::isspace(c); }).base();
+			return std::string(str.begin(), back);
+		}
+
 		std::string trim(const std::string &str)
 		{
 			auto front = std::find_if(str.begin(), str.end(), [](int c) { return !std::isspace(c); });

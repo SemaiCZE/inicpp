@@ -24,12 +24,34 @@ namespace inicpp
 		return result;
 	}
 
+	size_t parser::find_last_escaped(const std::string &str, char ch) {
+		size_t result = std::string::npos;
+		bool escaped = false;
+
+		for (size_t i = 0; i < str.length(); ++i) {
+			if (escaped) {
+				// escaped character, do not do anything
+				escaped = false;
+
+				if (str[i] == ch) {
+					result = i;
+				}
+			} else if (str[i] == '\\') {
+				// next character will be escaped
+				escaped = true;
+			}
+		}
+
+		return result;
+	}
+
 	std::string parser::unescape(const std::string &str)
 	{
 		std::string result = str;
 		bool escaped = false;
 
-		for (auto it = result.begin(); it != result.end(); ++it) {
+		auto it = result.begin();
+		while (it != result.end()) {
 			if (escaped) {
 				// escaped character, it should remain in string
 				escaped = false;
@@ -37,7 +59,11 @@ namespace inicpp
 				// next character will be escaped, so delete escaping character
 				escaped = true;
 				it = result.erase(it);
+				continue;
 			}
+
+			// we have while cycle so we have to do this manually
+			++it;
 		}
 
 		return result;
@@ -50,6 +76,8 @@ namespace inicpp
 
 	std::vector<std::string> parser::parse_option_list(const std::string &str)
 	{
+		using namespace string_utils;
+
 		std::string searched = str;
 		std::vector<std::string> result;
 		char delim = ',';
@@ -63,15 +91,31 @@ namespace inicpp
 
 		while (true) {
 			pos = find_first_nonescaped(searched, delim);
+
+			// extract option value and process it
+			std::string value = searched.substr(0, pos);
+			value = left_trim(value);
+			// check if last escaped character is whitespace
+			size_t whitespace_pos = find_last_escaped(value, ' ');
+			value = right_trim(value);
+			if (whitespace_pos != std::string::npos) {
+				// last character is escaped whitespace
+				if (value.size() == whitespace_pos) {
+					value.push_back(' ');
+				}
+			}
+			// finally unescape
+			value = unescape(value);
+
+			// save extracted and processed option value and cut searched string
+			result.push_back(value);
+
 			if (pos == std::string::npos) {
 				// no delimiter found
 				break;
 			}
-
-			result.push_back(unescape(string_utils::trim(searched.substr(0, pos))));
 			searched = searched.substr(pos + 1);
 		}
-		result.push_back(unescape(string_utils::trim(searched)));
 
 		return result;
 	}
@@ -141,11 +185,12 @@ namespace inicpp
 
 			// if there was comment delete it
 			line = delete_comment(line);
-			line = trim(line);
+			line = left_trim(line);
 
 			if (line.empty()) { // empty line
 				continue;
 			} else if (starts_with(line, "[")) { // start of section
+				line = right_trim(line);
 				if (ends_with(line, "]")) {
 					// empty section name cannot be present
 					if (line.length() == 2) {
@@ -182,7 +227,7 @@ namespace inicpp
 
 				// retrieve option name and value from line
 				std::string option_name = unescape(trim(line.substr(0, opt_delim)));
-				std::string option_val = trim(line.substr(opt_delim + 1));
+				std::string option_val = line.substr(opt_delim + 1);
 				
 				// validate option name
 				validate_identifier(option_name, line_number);

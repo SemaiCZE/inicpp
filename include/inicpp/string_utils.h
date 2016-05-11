@@ -17,6 +17,18 @@ namespace inicpp
 	namespace string_utils
 	{
 		/**
+		 * Trim whitespaces from start of given string.
+		 * @param str processed string
+		 * @return newly created instance of string
+		 */
+		std::string left_trim(const std::string &str);
+		/**
+		 * Trim whitespaces from end of given string.
+		 * @param str processed string
+		 * @return newly created instance of string
+		 */
+		std::string right_trim(const std::string &str);
+		/**
 		 * Trim whitespaces from start and end of given string.
 		 * @param str processed string
 		 * @return newly created instance of string
