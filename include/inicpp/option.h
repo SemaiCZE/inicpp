@@ -4,11 +4,13 @@
 #include <vector>
 #include <memory>
 #include <iostream>
+#include <cctype>
 
 #include "dll.h"
 #include "exception.h"
 #include "types.h"
 #include "option_schema.h"
+
 
 namespace inicpp
 {

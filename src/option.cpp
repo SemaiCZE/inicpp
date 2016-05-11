@@ -218,6 +218,19 @@ namespace inicpp
 
 	// ----- Write functions -----
 
+
+	std::string escape_option_value(const std::string &str) {
+		std::string result(str);
+		if (str.length() > 0 && std::isspace(result[0])) {
+				result.insert(result.begin(), '\\');
+		}
+		if (str.length() > 1 && std::isspace(result[result.length() - 1])) {
+			result.insert(result.end() - 1, '\\');
+		}
+
+		return result;
+	}
+
 	void write_boolean_option(std::vector<boolean_ini_t> values, std::ostream &os)
 	{
 		if (values[0]) {
@@ -236,9 +249,9 @@ namespace inicpp
 	}
 	void write_enum_option(std::vector<enum_ini_t> values, std::ostream &os)
 	{
-		os << static_cast<std::string>(values[0]);
+		os << escape_option_value(static_cast<std::string>(values[0]));
 		for (auto it = values.begin() + 1; it != values.end(); ++it) {
-			os << "," << static_cast<std::string>(*it);
+			os << "," << escape_option_value(static_cast<std::string>(*it));
 		}
 	}
 	void write_float_option(std::vector<float_ini_t> values, std::ostream &os)
@@ -264,9 +277,9 @@ namespace inicpp
 	}
 	void write_string_option(std::vector<string_ini_t> values, std::ostream &os)
 	{
-		os << values[0];
+		os << escape_option_value(values[0]);
 		for (auto it = values.begin() + 1; it != values.end(); ++it) {
-			os << "," << *it;
+			os << "," << escape_option_value(*it);
 		}
 	}
 
