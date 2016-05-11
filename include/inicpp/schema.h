@@ -4,6 +4,7 @@
 #include <vector>
 #include <iostream>
 
+#include "dll.h"
 #include "exception.h"
 #include "section_schema.h"
 #include "option_schema.h"
@@ -20,7 +21,7 @@ namespace inicpp
 	 * Object of config class is validated against this one.
 	 * Can contain schemes of sections and in them schemes for options.
 	 */
-	class schema
+	class INICPP_API schema
 	{
 	private:
 		using sect_schema_vector = std::vector<std::shared_ptr<section_schema>>;
@@ -151,10 +152,10 @@ namespace inicpp
 		 * @param os output stream
 		 * @return reference to output stream which allows chaining
 		 */
-		friend std::ostream &operator<<(std::ostream &os, const schema &schm);
+		INICPP_API friend std::ostream &operator<<(std::ostream &os, const schema &schm);
 	};
 
-	std::ostream &operator<<(std::ostream &os, const schema &schm);
+	INICPP_API std::ostream &operator<<(std::ostream &os, const schema &schm);
 }
 
 #endif

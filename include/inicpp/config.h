@@ -5,6 +5,7 @@
 #include <iostream>
 #include <map>
 
+#include "dll.h"
 #include "exception.h"
 #include "section.h"
 #include "option.h"
@@ -24,7 +25,7 @@ namespace inicpp
 	 * Contains list of sections in logical map structure.
 	 * Can be constructed directly from string or stream.
 	 */
-	class config
+	class INICPP_API config
 	{
 	private:
 		using sections_vector = std::vector<std::shared_ptr<section>>;
@@ -222,10 +223,10 @@ namespace inicpp
 		 * @param os output stream
 		 * @return reference to output stream which allows chaining
 		 */
-		friend std::ostream &operator<<(std::ostream &os, const config &conf);
+		INICPP_API friend std::ostream &operator<<(std::ostream &os, const config &conf);
 	};
 
-	std::ostream &operator<<(std::ostream &os, const config &conf);
+	INICPP_API std::ostream &operator<<(std::ostream &os, const config &conf);
 
 
 	/**

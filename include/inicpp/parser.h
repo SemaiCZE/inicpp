@@ -7,6 +7,7 @@
 #include <string>
 #include <regex>
 
+#include "dll.h"
 #include "exception.h"
 #include "config.h"
 #include "schema.h"
@@ -18,7 +19,7 @@ namespace inicpp
 	 * Parser is not constructable class which contains methods
 	 * which can be used to load or store ini configuration.
 	 */
-	class parser
+	class INICPP_API parser
 	{
 	private:
 		/**

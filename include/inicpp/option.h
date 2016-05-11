@@ -5,6 +5,7 @@
 #include <memory>
 #include <iostream>
 
+#include "dll.h"
 #include "exception.h"
 #include "types.h"
 #include "option_schema.h"
@@ -75,7 +76,7 @@ namespace inicpp
 	 * Can store one element or list of elements.
 	 * Stored elements should have only supported types from option_type enum.
 	 */
-	class option
+	class INICPP_API option
 	{
 	private:
 		/** Name of this ini option */
@@ -351,10 +352,10 @@ namespace inicpp
 		 * @param os output stream
 		 * @return reference to output stream which allows chaining
 		 */
-		friend std::ostream &operator<<(std::ostream &os, const option &opt);
+		INICPP_API friend std::ostream &operator<<(std::ostream &os, const option &opt);
 	};
 
-	std::ostream &operator<<(std::ostream &os, const option &opt);
+	INICPP_API std::ostream &operator<<(std::ostream &os, const option &opt);
 }
 
 #endif

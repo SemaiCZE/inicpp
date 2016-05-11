@@ -8,7 +8,6 @@ set(SOURCE_FILES
 	${INCLUDE_DIR}/config.h
 	${SRC_DIR}/config.cpp
 	${INCLUDE_DIR}/exception.h
-	${SRC_DIR}/exception.cpp
 	${INCLUDE_DIR}/option.h
 	${SRC_DIR}/option.cpp
 	${INCLUDE_DIR}/option_schema.h
@@ -25,6 +24,7 @@ set(SOURCE_FILES
 	${INCLUDE_DIR}/string_utils.h
 	${SRC_DIR}/string_utils.cpp
 	${INCLUDE_DIR}/inicpp.h
+	${INCLUDE_DIR}/dll.h
 )
 
 # Find header files in include directory
@@ -58,3 +58,20 @@ add_subdirectory(tests EXCLUDE_FROM_ALL)
 
 # Add examples programs
 add_subdirectory(examples EXCLUDE_FROM_ALL)
+
+# MS Visual C++ specialities
+if(MSVC)
+	# set lower warning level
+	set_target_properties(inicpp PROPERTIES
+		COMPILE_FLAGS "/W0"
+	)
+	set_target_properties(inicpp_static PROPERTIES
+		COMPILE_FLAGS "/W0"
+	)
+
+	# set different preprocessor macros
+	if(BUILD_SHARED)
+		# set preprocessor macro for windows exporting of symbols
+		set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_DEFINITIONS "INICPP_DLL;INICPP_EXPORT")
+	endif()
+endif()

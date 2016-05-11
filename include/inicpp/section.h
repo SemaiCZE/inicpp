@@ -7,6 +7,7 @@
 #include <map>
 #include <algorithm>
 
+#include "dll.h"
 #include "exception.h"
 #include "option.h"
 #include "section_schema.h"
@@ -23,7 +24,7 @@ namespace inicpp
 	 * Represents section from ini format. Can contain multiple options.
 	 * Always should be in config container class.
 	 */
-	class section
+	class INICPP_API section
 	{
 	private:
 		using options_vector = std::vector<std::shared_ptr<option>>;
@@ -208,10 +209,10 @@ namespace inicpp
 		 * @param os output stream
 		 * @return reference to output stream which allows chaining
 		 */
-		friend std::ostream &operator<<(std::ostream &os, const section &sect);
+		INICPP_API friend std::ostream &operator<<(std::ostream &os, const section &sect);
 	};
 	
-	std::ostream &operator<<(std::ostream &os, const section &sect);
+	INICPP_API std::ostream &operator<<(std::ostream &os, const section &sect);
 
 	/**
 	 * Templated section iterator.

@@ -4,6 +4,7 @@
 #include <vector>
 #include <iostream>
 
+#include "dll.h"
 #include "exception.h"
 #include "option_schema.h"
 #include "section.h"
@@ -34,7 +35,7 @@ namespace inicpp
 	 * In section_schema are defined rules which ini section should fulfil.
 	 * Section can be validated against section_schema objects.
 	 */
-	class section_schema
+	class INICPP_API section_schema
 	{
 	private:
 		using opt_schema_vector = std::vector<std::shared_ptr<option_schema>>;
@@ -194,10 +195,10 @@ namespace inicpp
 		 * @param os output stream
 		 * @return reference to output stream which allows chaining
 		 */
-		friend std::ostream &operator<<(std::ostream &os, const section_schema &sect_schema);
+		INICPP_API friend std::ostream &operator<<(std::ostream &os, const section_schema &sect_schema);
 	};
 
-	std::ostream &operator<<(std::ostream &os, const section_schema &sect_schema);
+	INICPP_API std::ostream &operator<<(std::ostream &os, const section_schema &sect_schema);
 }
 
 #endif

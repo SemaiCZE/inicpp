@@ -6,6 +6,7 @@
 #include <iostream>
 #include <functional>
 
+#include "dll.h"
 #include "exception.h"
 #include "option.h"
 #include "types.h"
@@ -59,7 +60,7 @@ namespace inicpp
 	 * including its name, type and if option is list or not.
 	 * Options can be validated against option_schema objects.
 	 */
-	class option_schema
+	class INICPP_API option_schema
 	{
 	private:
 		/** Assumed type of option */
@@ -196,10 +197,10 @@ namespace inicpp
 		 * @param os output stream
 		 * @return reference to output stream which allows chaining
 		 */
-		friend std::ostream &operator<<(std::ostream &os, const option_schema &opt_schema);
+		INICPP_API friend std::ostream &operator<<(std::ostream &os, const option_schema &opt_schema);
 	};
 
-	std::ostream &operator<<(std::ostream &os, const option_schema &opt_schema);
+	INICPP_API std::ostream &operator<<(std::ostream &os, const option_schema &opt_schema);
 }
 
 #endif

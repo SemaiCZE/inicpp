@@ -10,7 +10,6 @@ include_directories(${LIBS_DIR}/googletest/googlemock/include)
 
 add_executable(${TESTS_NAME}
 	${SRC_DIR}/config.cpp
-	${SRC_DIR}/exception.cpp
 	${SRC_DIR}/option.cpp
 	${SRC_DIR}/option_schema.cpp
 	${SRC_DIR}/parser.cpp
