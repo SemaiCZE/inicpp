@@ -61,14 +61,6 @@ add_subdirectory(examples EXCLUDE_FROM_ALL)
 
 # MS Visual C++ specialities
 if(MSVC)
-	# set lower warning level
-	set_target_properties(inicpp PROPERTIES
-		COMPILE_FLAGS "/W0"
-	)
-	set_target_properties(inicpp_static PROPERTIES
-		COMPILE_FLAGS "/W0"
-	)
-
 	# set different preprocessor macros
 	if(BUILD_SHARED)
 		# set preprocessor macro for windows exporting of symbols
