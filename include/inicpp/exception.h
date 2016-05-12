@@ -1,10 +1,10 @@
 #ifndef INICPP_EXCEPTION_H
 #define INICPP_EXCEPTION_H
 
-#include <vector>
-#include <string>
-#include <iostream>
 #include <exception>
+#include <iostream>
+#include <string>
+#include <vector>
 
 
 namespace inicpp
@@ -17,23 +17,28 @@ namespace inicpp
 	protected:
 		/** Description of exception */
 		std::string what_;
+
 	public:
 		/**
 		 * Default constructor.
 		 */
 		exception() : what_("Generic inicpp exception")
-		{}
+		{
+		}
 		/**
 		 * Constructor in which cause can be specified.
 		 * @param what exception description
 		 */
 		exception(const std::string &what) : what_(what)
-		{}
-		
+		{
+		}
+
 		/**
 		 * Desctuctor.
 		 */
-		virtual ~exception() {}
+		virtual ~exception()
+		{
+		}
 
 		/**
 		 * Return description of this exception instance.
@@ -57,7 +62,8 @@ namespace inicpp
 		* @param message exception cause
 		*/
 		parser_exception(const std::string &message) : inicpp::exception(message)
-		{}
+		{
+		}
 	};
 
 
@@ -72,7 +78,8 @@ namespace inicpp
 		 * @param message exception cause
 		 */
 		bad_cast_exception(const std::string &message) : inicpp::exception(message)
-		{}
+		{
+		}
 		/**
 		 * Constructor in which casted elements can be specified.
 		 * @param from type from which conversion was invoked
@@ -80,7 +87,8 @@ namespace inicpp
 		*/
 		bad_cast_exception(const std::string &from, const std::string &to)
 			: inicpp::exception("Bad conversion from: " + from + " to: " + to)
-		{}
+		{
+		}
 	};
 
 
@@ -96,16 +104,18 @@ namespace inicpp
 		 * Element on specified index was not found.
 		 * @param index
 		 */
-		not_found_exception(size_t index) 
+		not_found_exception(size_t index)
 			: inicpp::exception("Element on index: " + std::to_string(index) + " was not found")
-		{}
+		{
+		}
 		/**
 		 * Element with specified name was not found.
-		 * @param element_name 
+		 * @param element_name
 		 */
 		not_found_exception(const std::string &element_name)
 			: inicpp::exception("Element: " + element_name + " not found in container")
-		{}
+		{
+		}
 	};
 
 
@@ -122,7 +132,8 @@ namespace inicpp
 		 */
 		ambiguity_exception(const std::string &element_name)
 			: inicpp::exception("Ambiguous element with name: " + element_name)
-		{}
+		{
+		}
 	};
 
 
@@ -136,9 +147,9 @@ namespace inicpp
 		 * Default generic constructor.
 		 * @param message
 		 */
-		validation_exception(const std::string &message)
-			: inicpp::exception(message)
-		{}
+		validation_exception(const std::string &message) : inicpp::exception(message)
+		{
+		}
 	};
 
 
@@ -152,9 +163,9 @@ namespace inicpp
 		 * Default generic constructor.
 		 * @param message
 		 */
-		invalid_type_exception(const std::string &message)
-			: inicpp::exception(message)
-		{}
+		invalid_type_exception(const std::string &message) : inicpp::exception(message)
+		{
+		}
 	};
 
 
@@ -168,7 +179,8 @@ namespace inicpp
 		 * Generic constructor.
 		 */
 		not_implemented_exception() : inicpp::exception("Not implemented")
-		{}
+		{
+		}
 	};
 }
 

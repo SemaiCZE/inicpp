@@ -9,11 +9,10 @@ done...
 Check, if options are properly typed
 ------------------------------------
   'Option 1' is signed_ini_t type with value '-1285'
-  'Option 1' is not enum_ini_t type
   'Option 2' is a list of unsigned_ini_t with 3 values
   'Option 3' was added with default value '-42' and correct type
   'float1' option has value '4.12346e+45
-  'unknown_option' was left as string with value 'haha
+  'unknown_option' was left as string with value 'haha'
 done...
 
 Validation with strict mode fails due to 'unknown_option'

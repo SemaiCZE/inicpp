@@ -1,5 +1,5 @@
-#include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include <gtest/gtest.h>
 
 #include "section_schema.h"
 
@@ -76,13 +76,13 @@ TEST(section_schema, adding_and_removing_options)
 	opt_params.type = option_item::list;
 	opt_params.default_value = "default_value";
 	opt_params.comment = "comment";
-	opt_params.validator = [](signed_ini_t i){ return true; };
+	opt_params.validator = [](signed_ini_t i) { return true; };
 	option_schema my_option(opt_params);
 
 	EXPECT_NO_THROW(my_section.add_option(my_option));
 	EXPECT_THROW(my_section.add_option(my_option), ambiguity_exception);
 
-	opt_params.name ="other";
+	opt_params.name = "other";
 	EXPECT_NO_THROW(my_section.add_option(opt_params));
 
 	EXPECT_THROW(my_section.remove_option("unknown name"), not_found_exception);
@@ -155,13 +155,12 @@ TEST(section_schema, writing_to_ostream)
 
 	str << my_section;
 
-	std::string expected_output =
-		";comment\n"
-		";multiline\n"
-		";<optional>\n"
-		"[name]\n"
-		";<optional, list>\n"
-		";<default value: \"default,value\">\n"
-		"opt_name = default,value\n";
+	std::string expected_output = ";comment\n"
+								  ";multiline\n"
+								  ";<optional>\n"
+								  "[name]\n"
+								  ";<optional, list>\n"
+								  ";<default value: \"default,value\">\n"
+								  "opt_name = default,value\n";
 	EXPECT_EQ(str.str(), expected_output);
 }

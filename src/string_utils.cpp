@@ -1,7 +1,7 @@
 #include "string_utils.h"
 #include "exception.h"
-#include <string>
 #include <algorithm>
+#include <string>
 
 namespace inicpp
 {
@@ -82,13 +82,46 @@ namespace inicpp
 			return result;
 		}
 
-		signed_ini_t parse_signed_type(const std::string &value, const std::string &option_name)
+
+		template <> string_ini_t parse_string<string_ini_t>(const std::string &value, const std::string &)
+		{
+			return value;
+		}
+		template <> boolean_ini_t parse_string<boolean_ini_t>(const std::string &value, const std::string &option_name)
+		{
+			if (value == "0" || value == "f" || value == "n" || value == "off" || value == "no" ||
+				value == "disabled") {
+				return false;
+			} else if (value == "1" || value == "t" || value == "y" || value == "on" || value == "yes" ||
+				value == "enabled") {
+				return true;
+			} else {
+				throw invalid_type_exception(
+					"Option '" + option_name + "' parsing failed: String '" + value + "' is not valid boolean type.");
+			}
+		}
+
+		template <> enum_ini_t parse_string<enum_ini_t>(const std::string &value, const std::string &)
+		{
+			return enum_ini_t(value);
+		}
+
+		template <> float_ini_t parse_string<float_ini_t>(const std::string &value, const std::string &option_name)
+		{
+			try {
+				return std::stod(value);
+			} catch (std::exception &e) {
+				throw invalid_type_exception("Option '" + option_name + "' parsing failed: " + e.what());
+			}
+		}
+
+		template <> signed_ini_t parse_string<signed_ini_t>(const std::string &value, const std::string &option_name)
 		{
 			try {
 				std::string binary_prefix = "0b";
 				if (std::equal(binary_prefix.begin(), binary_prefix.end(), value.begin())) {
 					// this is binary number
-					return std::stoull(value.substr(2), 0, 2);
+					return std::stoll(value.substr(2), 0, 2);
 				} else {
 					// decimal and hexadecimal number can handle stoll itself
 					return std::stoll(value, 0, 0);
@@ -98,7 +131,8 @@ namespace inicpp
 			}
 		}
 
-		unsigned_ini_t parse_unsigned_type(const std::string &value, const std::string &option_name)
+		template <>
+		unsigned_ini_t parse_string<unsigned_ini_t>(const std::string &value, const std::string &option_name)
 		{
 			try {
 				std::string binary_prefix = "0b";
@@ -113,33 +147,13 @@ namespace inicpp
 				throw invalid_type_exception("Option '" + option_name + "' parsing failed: " + e.what());
 			}
 		}
+	}
 
-		float_ini_t parse_float_type(const std::string &value, const std::string &option_name)
+	namespace inistd
+	{
+		std::string to_string(const enum_ini_t &value)
 		{
-			try {
-				return std::stod(value);
-			} catch (std::exception &e) {
-				throw invalid_type_exception("Option '" + option_name + "' parsing failed: " + e.what());
-			}
-		}
-
-		enum_ini_t parse_enum_type(const std::string &value, const std::string &option_name)
-		{
-			return enum_ini_t(value);
-		}
-
-		boolean_ini_t parse_boolean_type(const std::string &value, const std::string &option_name)
-		{
-			if (value == "0" || value == "f" || value == "n" ||
-				value == "off" || value == "no" || value == "disabled") {
-				return false;
-			} else if (value == "1" || value == "t" || value == "y" ||
-				value == "on" || value == "yes" || value == "enabled") {
-				return true;
-			} else {
-				throw invalid_type_exception("Option '" + option_name + "' parsing failed: String '" +
-					value + "' is not valid boolean type.");
-			}
+			return static_cast<std::string>(value);
 		}
 	}
 }

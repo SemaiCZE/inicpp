@@ -6,7 +6,7 @@ Iterate through whole config and print it
 -----------------------------------------
   Section: 'Section 1'
     Option: 'Option 1' with value(s): 'value 1'
-    Option: 'oPtion 1' with value(s): ' value 2  '
+    Option: 'oPtion 1' with value(s): ' value 2   '
   Section: '$Section::subsection'
     Option: 'Option 2' with value(s): 'value 1' 'value 2' 'value 3' 
     Option: 'Option 3' with value(s): 'value 1' 'value 1' 
@@ -29,13 +29,18 @@ done...
 
 Get number as signed_ini_t type
 -------------------------------
-  Item 'num' in 'Numbers' section cannot be casted to signed_ini_t type
+  Item 'num' in 'Numbers' section casted to signed_ini_t type has value '-1285'
 done...
 
 Change some values - could be properly typed
 --------------------------------------------
   Option 'num' in 'Numbers' section is '42222'
   set method and assingment operator on option are equivalent
+done...
+
+Typed value can be casted to string
+-----------------------------------
+  Item 'num' in 'Numbers' section is signed_ini_t type, but string '42222' can be retrieved
 done...
 
 Change single value to list and vice versa
@@ -50,7 +55,7 @@ Save changes to ostream and print the result
 --------------------------------------------
 [Section 1]
 Option 1 = value 1
-oPtion 1 = \ value 2\ \ \
+oPtion 1 =  value 2   
 [$Section::subsection]
 Option 2 = value 1,value 2,value 3
 Option 3 = value 1,value 1

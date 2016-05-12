@@ -153,8 +153,7 @@ namespace inicpp
 				sect->validate_section(cfg[sect->get_name()], mode);
 			} else if (sect->is_mandatory()) {
 				// mandatory section is not present in given config (both modes)
-				throw validation_exception("Mandatory section '" + sect->get_name() +
-					"' is missing in config");
+				throw validation_exception("Mandatory section '" + sect->get_name() + "' is missing in config");
 			} else {
 				// section is not mandatory and not in given config
 				//   => add section to config and all its options with default values

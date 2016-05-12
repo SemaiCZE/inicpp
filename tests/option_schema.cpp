@@ -1,5 +1,5 @@
-#include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include <gtest/gtest.h>
 
 #include "option_schema.h"
 
@@ -22,7 +22,7 @@ TEST(option_schema, options_schema_params)
 	params.type = option_item::list;
 	params.default_value = "default_value";
 	params.comment = "comment";
-	params.validator = [](signed_ini_t i){ return true; };
+	params.validator = [](signed_ini_t i) { return true; };
 
 	EXPECT_EQ(params.name, "name");
 	EXPECT_EQ(params.requirement, item_requirement::optional);
@@ -69,7 +69,7 @@ TEST(option_schema, querying_properties)
 	params.type = option_item::list;
 	params.default_value = "default_value";
 	params.comment = "comment";
-	params.validator = [](signed_ini_t i){ return true; };
+	params.validator = [](signed_ini_t i) { return true; };
 
 	option_schema my_option(params);
 
@@ -116,23 +116,30 @@ TEST(option_schema, validation)
 	signed_params.name = "name";
 	signed_params.type = option_item::single;
 	signed_params.validator = [](signed_ini_t i) { return i < 5; };
+
 	option_schema signed_schema(signed_params);
 	EXPECT_NO_THROW(signed_schema.validate_option(signed_option));
 	EXPECT_EQ(signed_option.get<signed_ini_t>(), -45);
+
+	signed_params.validator = [](signed_ini_t i) { return i > 0; };
+	option_schema validator_fail_schema(signed_params);
+	EXPECT_THROW(validator_fail_schema.validate_option(signed_option), validation_exception);
+
 	signed_option.set<string_ini_t>("63");
 	EXPECT_THROW(signed_schema.validate_option(signed_option), validation_exception);
 
 	// list value
 	option float_option("name", "");
-	std::vector<string_ini_t> string_values {"4.5", "-6.3", "0.0"};
+	std::vector<string_ini_t> string_values{"4.5", "-6.3", "0.0"};
 	float_option.set_list(string_values);
 	option_schema_params<float_ini_t> float_params;
 	float_params.name = "name";
 	float_params.type = option_item::list;
 	float_params.validator = [](float_ini_t i) { return i < 5.2 && i > -81.1; };
+
 	option_schema float_schema(float_params);
 	EXPECT_NO_THROW(float_schema.validate_option(float_option));
-	std::vector<float_ini_t> float_values {4.5, -6.3, 0.0};
+	std::vector<float_ini_t> float_values{4.5, -6.3, 0.0};
 	EXPECT_EQ(float_option.get_list<float_ini_t>(), float_values);
 }
 
@@ -145,16 +152,15 @@ TEST(option_schema, writing_to_ostream)
 	params.type = option_item::list;
 	params.default_value = "default_value";
 	params.comment = "comment\nmultiline";
-	params.validator = [](signed_ini_t i){ return true; };
+	params.validator = [](signed_ini_t i) { return true; };
 	option_schema my_option(params);
 
 	str << my_option;
 
-	std::string expected_output =
-		";comment\n"
-		";multiline\n"
-		";<optional, list>\n"
-		";<default value: \"default_value\">\n"
-		"name = default_value\n";
+	std::string expected_output = ";comment\n"
+								  ";multiline\n"
+								  ";<optional, list>\n"
+								  ";<default value: \"default_value\">\n"
+								  "name = default_value\n";
 	EXPECT_EQ(str.str(), expected_output);
 }

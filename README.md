@@ -176,11 +176,6 @@ config conf = parser::load(get_config(), schm, schema_mode::relaxed);
 std::cout << "Check, if options are properly typed" << std::endl;
 std::cout << "  'Option 1' is signed_ini_t type with value '" <<
 	conf["Section 1"]["Option 1"].get<signed_ini_t>() << "'" << std::endl;
-try {
-	conf["Section 1"]["Option 1"].get<enum_ini_t>();
-} catch (bad_cast_exception) {
-	std::cout << "  'Option 1' is not enum_ini_t type" << std::endl;
-}
 std::cout << "  'float1' option has value '" << conf["Section 1"]["float1"].get<float_ini_t>() <<
 	std::endl;
 std::cout << "  'unknown_option' was left as string with value '" <<
@@ -203,3 +198,13 @@ str.str("");
 parser::save(conf, schm, str);
 std::cout << str.str();
 ```
+
+## Contribution
+
+This project is open for all contributions, but please respect some rules:
+
+- write clean code
+- use modern C++ features when possible
+- write tests - no need to have 100% coverage, but some tests should be present
+- format code using our style in provided `.clang-format` file - `cmake` target `format` on unix handle this
+

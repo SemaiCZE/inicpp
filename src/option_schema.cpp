@@ -5,7 +5,7 @@ namespace inicpp
 {
 	option_schema::option_schema(const option_schema &source)
 	{
-		this->operator =(source);
+		this->operator=(source);
 	}
 
 	option_schema &option_schema::operator=(const option_schema &source)
@@ -13,24 +13,12 @@ namespace inicpp
 		type_ = source.type_;
 
 		switch (type_) {
-		case option_type::boolean_e:
-			params_ = copy_schema<boolean_ini_t>(source.params_);
-			break;
-		case option_type::enum_e:
-			params_ = copy_schema<enum_ini_t>(source.params_);
-			break;
-		case option_type::float_e:
-			params_ = copy_schema<float_ini_t>(source.params_);
-			break;
-		case option_type::signed_e:
-			params_ = copy_schema<signed_ini_t>(source.params_);
-			break;
-		case option_type::string_e:
-			params_ = copy_schema<string_ini_t>(source.params_);
-			break;
-		case option_type::unsigned_e:
-			params_ = copy_schema<unsigned_ini_t>(source.params_);
-			break;
+		case option_type::boolean_e: params_ = copy_schema<boolean_ini_t>(source.params_); break;
+		case option_type::enum_e: params_ = copy_schema<enum_ini_t>(source.params_); break;
+		case option_type::float_e: params_ = copy_schema<float_ini_t>(source.params_); break;
+		case option_type::signed_e: params_ = copy_schema<signed_ini_t>(source.params_); break;
+		case option_type::string_e: params_ = copy_schema<string_ini_t>(source.params_); break;
+		case option_type::unsigned_e: params_ = copy_schema<unsigned_ini_t>(source.params_); break;
 		case option_type::invalid_e:
 			// never reached
 			throw invalid_type_exception("Invalid option type");
@@ -39,12 +27,12 @@ namespace inicpp
 
 		return *this;
 	}
-	
+
 	option_schema::option_schema(option_schema &&source)
 	{
-		this->operator =(std::move(source));
+		this->operator=(std::move(source));
 	}
-	
+
 	option_schema &option_schema::operator=(option_schema &&source)
 	{
 		if (this != &source) {
@@ -83,7 +71,7 @@ namespace inicpp
 	{
 		return params_->comment;
 	}
-	
+
 	void option_schema::validate_option(option &opt) const
 	{
 		if (params_->type == option_item::single && opt.is_list()) {
@@ -135,31 +123,26 @@ namespace inicpp
 		switch (type_) {
 		case option_type::boolean_e:
 			opt.set_list<boolean_ini_t>(parse_typed_option_items<boolean_ini_t>(
-				opt.get_list<string_ini_t>(), string_utils::parse_boolean_type, opt.get_name())
-			);
+				opt.get_list<string_ini_t>(), string_utils::parse_string<boolean_ini_t>, opt.get_name()));
 			break;
 		case option_type::enum_e:
 			opt.set_list<enum_ini_t>(parse_typed_option_items<enum_ini_t>(
-				opt.get_list<string_ini_t>(), string_utils::parse_enum_type, opt.get_name())
-			);
+				opt.get_list<string_ini_t>(), string_utils::parse_string<enum_ini_t>, opt.get_name()));
 			break;
 		case option_type::float_e:
 			opt.set_list<float_ini_t>(parse_typed_option_items<float_ini_t>(
-				opt.get_list<string_ini_t>(), string_utils::parse_float_type, opt.get_name())
-			);
+				opt.get_list<string_ini_t>(), string_utils::parse_string<float_ini_t>, opt.get_name()));
 			break;
 		case option_type::signed_e:
 			opt.set_list<signed_ini_t>(parse_typed_option_items<signed_ini_t>(
-				opt.get_list<string_ini_t>(), string_utils::parse_signed_type, opt.get_name())
-			);
+				opt.get_list<string_ini_t>(), string_utils::parse_string<signed_ini_t>, opt.get_name()));
 			break;
 		case option_type::string_e:
 			// string doesn't need to be parsed
 			break;
 		case option_type::unsigned_e:
 			opt.set_list<unsigned_ini_t>(parse_typed_option_items<unsigned_ini_t>(
-				opt.get_list<string_ini_t>(), string_utils::parse_unsigned_type, opt.get_name())
-			);
+				opt.get_list<string_ini_t>(), string_utils::parse_string<unsigned_ini_t>, opt.get_name()));
 			break;
 		case option_type::invalid_e:
 			// never reached

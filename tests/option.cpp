@@ -1,9 +1,9 @@
-#include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include <gtest/gtest.h>
 
-#include <vector>
 #include "option.h"
 #include "types.h"
+#include <vector>
 
 using namespace std::literals;
 using namespace inicpp;
@@ -29,7 +29,7 @@ TEST(option, simple_option_class)
 	EXPECT_FALSE(string_option.is_list());
 	EXPECT_EQ(string_option.get<string_ini_t>(), "simple value");
 	EXPECT_THROW(string_option.get<float_ini_t>(), bad_cast_exception);
-	EXPECT_EQ(string_option.get_list<string_ini_t>(), std::vector<string_ini_t> {"simple value"});
+	EXPECT_EQ(string_option.get_list<string_ini_t>(), std::vector<string_ini_t>{"simple value"});
 }
 
 /**
@@ -86,19 +86,19 @@ TEST(option, setting_values)
 	EXPECT_EQ(my_option.get<double_t>(), 5.2f);
 	my_option.set<boolean_ini_t>(true);
 	EXPECT_TRUE(my_option.get<boolean_ini_t>());
-	//struct custom_type { int a, b; } instance {4, 5};
-	//EXPECT_THROW(my_option.set<custom_type>(instance), bad_cast_exception);
+	// struct custom_type { int a, b; } instance {4, 5};
+	// EXPECT_THROW(my_option.set<custom_type>(instance), bad_cast_exception);
 
 	// assignmet operators
 	my_option = "string"s;
 	EXPECT_EQ(my_option.get<string_ini_t>(), "string");
 	my_option = false;
 	EXPECT_FALSE(my_option.get<boolean_ini_t>());
-	my_option = (signed_ini_t)-56;
+	my_option = (signed_ini_t) -56;
 	EXPECT_EQ(my_option.get<signed_ini_t>(), -56);
-	my_option = (unsigned_ini_t)789u;
+	my_option = (unsigned_ini_t) 789u;
 	EXPECT_EQ(my_option.get<unsigned_ini_t>(), 789u);
-	my_option = (float_ini_t)25.6;
+	my_option = (float_ini_t) 25.6;
 	EXPECT_EQ(my_option.get<float_ini_t>(), 25.6);
 
 	// vector types
@@ -166,7 +166,7 @@ TEST(option, writing_to_stream)
 	str.str("");
 	my_option.set<float_ini_t>(52.4);
 	str << my_option;
-	EXPECT_EQ(str.str(), "name = 52.4\n"); // TODO: not sure about this format
+	EXPECT_EQ(str.str(), "name = 52.4\n");
 
 	// boolean
 	str.str("");

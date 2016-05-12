@@ -1,11 +1,11 @@
 #ifndef INICPP_SECTION_H
 #define INICPP_SECTION_H
 
-#include <vector>
+#include <algorithm>
 #include <iostream>
 #include <iterator>
 #include <map>
-#include <algorithm>
+#include <vector>
 
 #include "dll.h"
 #include "exception.h"
@@ -17,8 +17,8 @@ namespace inicpp
 	/** Forward declaration, stated because of ring dependencies */
 	class section_schema;
 	/** Forward declaration of iterator used in section class */
-	template<typename Element> class section_iterator;
-	
+	template <typename Element> class section_iterator;
+
 
 	/**
 	 * Represents section from ini format. Can contain multiple options.
@@ -58,7 +58,7 @@ namespace inicpp
 		/**
 		 * Copy assignment.
 		 */
-		section& operator=(const section &source);
+		section &operator=(const section &source);
 		/**
 		 * Move constructor.
 		 */
@@ -66,14 +66,14 @@ namespace inicpp
 		/**
 		 * Move assignment.
 		 */
-		section& operator=(section &&source);
+		section &operator=(section &&source);
 
 		/**
 		 * Construct instance of section class with given name.
 		 * @param name name of newly created section class
 		 */
 		section(const std::string &name);
-		
+
 		/**
 		 * Getter for name of this section.
 		 * @return name
@@ -86,8 +86,7 @@ namespace inicpp
 		 * @param value value which will be stored in option
 		 * @throws ambiguity_exception if option with specified name exists
 		 */
-		template<typename ValueType> void add_option(
-			const std::string &option_name, ValueType value)
+		template <typename ValueType> void add_option(const std::string &option_name, ValueType value)
 		{
 			auto add_it = options_map_.find(option_name);
 			if (add_it == options_map_.end()) {
@@ -211,7 +210,7 @@ namespace inicpp
 		 */
 		INICPP_API friend std::ostream &operator<<(std::ostream &os, const section &sect);
 	};
-	
+
 	INICPP_API std::ostream &operator<<(std::ostream &os, const section &sect);
 
 	/**
@@ -219,11 +218,9 @@ namespace inicpp
 	 * Templates provide const and non-const iterator in one implementation.
 	 * For easier implementation inheritance from std::iterator is used.
 	 */
-	template<typename Element>
-	class section_iterator
-		: public std::iterator<std::random_access_iterator_tag, Element>
+	template <typename Element> class section_iterator : public std::iterator<std::random_access_iterator_tag, Element>
 	{
-	private:		
+	private:
 		/** Reference to container which can be iterated */
 		section &container_;
 		/** Position in iterable container */
@@ -244,7 +241,7 @@ namespace inicpp
 		/**
 		 * Copy assignment.
 		 */
-		section_iterator& operator=(const section_iterator &source) = default;
+		section_iterator &operator=(const section_iterator &source) = default;
 		/**
 		 * Move constructor.
 		 */
@@ -252,7 +249,7 @@ namespace inicpp
 		/**
 		 * Move assignment.
 		 */
-		section_iterator& operator=(section_iterator &&source) = default;
+		section_iterator &operator=(section_iterator &&source) = default;
 
 		/**
 		 * Construct iterator on given container
@@ -260,13 +257,16 @@ namespace inicpp
 		 * @param source container which can be iterated
 		 * @param position initial position to given container
 		 */
-		section_iterator(section &source, size_t position)
-			: container_(source), position_(position) {}
+		section_iterator(section &source, size_t position) : container_(source), position_(position)
+		{
+		}
 		/**
 		 * Construct iterator on given container pointing at the start.
 		 * @param source container which can be iterated
 		 */
-		section_iterator(section &source) : section_iterator(source, 0) {}
+		section_iterator(section &source) : section_iterator(source, 0)
+		{
+		}
 
 		/**
 		 * Moves iterator to next position.

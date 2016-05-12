@@ -4,7 +4,7 @@ namespace inicpp
 {
 	option::option(const option &source)
 	{
-		this->operator =(source);
+		this->operator=(source);
 	}
 
 	option &option::operator=(const option &source)
@@ -15,24 +15,12 @@ namespace inicpp
 			type_ = source.type_;
 			for (const auto &value : source.values_) {
 				switch (type_) {
-				case option_type::boolean_e:
-					copy_option<boolean_ini_t>(value);
-					break;
-				case option_type::enum_e:
-					copy_option<enum_ini_t>(value);
-					break;
-				case option_type::float_e:
-					copy_option<float_ini_t>(value);
-					break;
-				case option_type::signed_e:
-					copy_option<signed_ini_t>(value);
-					break;
-				case option_type::string_e:
-					copy_option<string_ini_t>(value);
-					break;
-				case option_type::unsigned_e:
-					copy_option<unsigned_ini_t>(value);
-					break;
+				case option_type::boolean_e: copy_option<boolean_ini_t>(value); break;
+				case option_type::enum_e: copy_option<enum_ini_t>(value); break;
+				case option_type::float_e: copy_option<float_ini_t>(value); break;
+				case option_type::signed_e: copy_option<signed_ini_t>(value); break;
+				case option_type::string_e: copy_option<string_ini_t>(value); break;
+				case option_type::unsigned_e: copy_option<unsigned_ini_t>(value); break;
 				case option_type::invalid_e:
 					// never reached
 					throw invalid_type_exception("Invalid option type");
@@ -63,8 +51,7 @@ namespace inicpp
 		return *this;
 	}
 
-	option::option(const std::string &name, const std::string &value)
-		: name_(name), type_(option_type::string_e)
+	option::option(const std::string &name, const std::string &value) : name_(name), type_(option_type::string_e)
 	{
 		add_to_list<string_ini_t>(value);
 	}
@@ -141,9 +128,7 @@ namespace inicpp
 						return false;
 					}
 					break;
-				default:
-					throw invalid_type_exception("Invalid option type");
-					break;
+				default: throw invalid_type_exception("Invalid option type"); break;
 				}
 			}
 		}
@@ -219,10 +204,11 @@ namespace inicpp
 	// ----- Write functions -----
 
 
-	std::string escape_option_value(const std::string &str) {
+	std::string escape_option_value(const std::string &str)
+	{
 		std::string result(str);
 		if (str.length() > 0 && std::isspace(result[0])) {
-				result.insert(result.begin(), '\\');
+			result.insert(result.begin(), '\\');
 		}
 		if (str.length() > 1 && std::isspace(result[result.length() - 1])) {
 			result.insert(result.end() - 1, '\\');
@@ -287,24 +273,12 @@ namespace inicpp
 	{
 		os << opt.name_ << " = ";
 		switch (opt.type_) {
-		case option_type::boolean_e:
-			write_boolean_option(opt.get_list<boolean_ini_t>(), os);
-			break;
-		case option_type::enum_e:
-			write_enum_option(opt.get_list<enum_ini_t>(), os);
-			break;
-		case option_type::float_e:
-			write_float_option(opt.get_list<float_ini_t>(), os);
-			break;
-		case option_type::signed_e:
-			write_signed_option(opt.get_list<signed_ini_t>(), os);
-			break;
-		case option_type::string_e:
-			write_string_option(opt.get_list<string_ini_t>(), os);
-			break;
-		case option_type::unsigned_e:
-			write_unsigned_option(opt.get_list<unsigned_ini_t>(), os);
-			break;
+		case option_type::boolean_e: write_boolean_option(opt.get_list<boolean_ini_t>(), os); break;
+		case option_type::enum_e: write_enum_option(opt.get_list<enum_ini_t>(), os); break;
+		case option_type::float_e: write_float_option(opt.get_list<float_ini_t>(), os); break;
+		case option_type::signed_e: write_signed_option(opt.get_list<signed_ini_t>(), os); break;
+		case option_type::string_e: write_string_option(opt.get_list<string_ini_t>(), os); break;
+		case option_type::unsigned_e: write_unsigned_option(opt.get_list<unsigned_ini_t>(), os); break;
 		case option_type::invalid_e:
 			// never reached
 			throw invalid_type_exception("Invalid option type");

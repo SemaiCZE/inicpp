@@ -24,7 +24,8 @@ namespace inicpp
 		return result;
 	}
 
-	size_t parser::find_last_escaped(const std::string &str, char ch) {
+	size_t parser::find_last_escaped(const std::string &str, char ch)
+	{
 		size_t result = std::string::npos;
 		bool escaped = false;
 
@@ -120,8 +121,8 @@ namespace inicpp
 		return result;
 	}
 
-	void parser::handle_links(const config &cfg, const section &last_section,
-		std::vector<std::string> &option_val_list, size_t line_number)
+	void parser::handle_links(
+		const config &cfg, const section &last_section, std::vector<std::string> &option_val_list, size_t line_number)
 	{
 		using namespace string_utils;
 
@@ -129,7 +130,7 @@ namespace inicpp
 			if (starts_with(opt_value, "${") && ends_with(opt_value, "}")) {
 				std::string link = opt_value.substr(2, opt_value.length() - 3);
 				size_t delim = find_first_nonescaped(link, '#');
-				
+
 				// link always has to be in format "section#option"
 				// section and option cannot be empty
 				if (delim == std::string::npos || (delim + 1) == link.length()) {
@@ -140,7 +141,8 @@ namespace inicpp
 				std::string opt_link = link.substr(delim + 1);
 
 				if (sect_link.empty()) {
-					throw parser_exception("Section name in link cannot be empty on line " + std::to_string(line_number));
+					throw parser_exception(
+						"Section name in link cannot be empty on line " + std::to_string(line_number));
 				}
 
 				// find section with name specifid in link
@@ -228,7 +230,7 @@ namespace inicpp
 				// retrieve option name and value from line
 				std::string option_name = unescape(trim(line.substr(0, opt_delim)));
 				std::string option_val = line.substr(opt_delim + 1);
-				
+
 				// validate option name
 				validate_identifier(option_name, line_number);
 

@@ -13,7 +13,7 @@ namespace inicpp
 		for (auto &sect : source.sections_) {
 			sections_.push_back(std::make_shared<section>(*sect));
 		}
-		
+
 		// we already have constructed sections... now push them into map
 		for (auto &sect : sections_) {
 			sections_map_.insert(sections_map_pair(sect->get_name(), sect));
@@ -77,9 +77,10 @@ namespace inicpp
 			sections_map_.erase(del_it);
 			// remove from vector
 			sections_.erase(
-				std::remove_if(sections_.begin(), sections_.end(), [&](std::shared_ptr<section> sect) {
-				return (sect->get_name() == section_name ? true : false);
-			}), sections_.end());
+				std::remove_if(sections_.begin(),
+					sections_.end(),
+					[&](std::shared_ptr<section> sect) { return (sect->get_name() == section_name ? true : false); }),
+				sections_.end());
 		} else {
 			throw not_found_exception(section_name);
 		}
@@ -94,7 +95,7 @@ namespace inicpp
 			throw not_found_exception(section_name);
 		}
 	}
-	
+
 	void config::remove_option(const std::string &section_name, const std::string &option_name)
 	{
 		auto sect_it = sections_map_.find(section_name);
@@ -115,7 +116,7 @@ namespace inicpp
 		if (index >= sections_.size()) {
 			throw not_found_exception(index);
 		}
-		
+
 		return *sections_[index];
 	}
 
@@ -165,15 +166,17 @@ namespace inicpp
 		schm.validate_config(*this, mode);
 	}
 
-	bool config::operator ==(const config &other) const
+	bool config::operator==(const config &other) const
 	{
-		return std::equal(sections_.begin(), sections_.end(), other.sections_.begin(),
+		return std::equal(sections_.begin(),
+			sections_.end(),
+			other.sections_.begin(),
 			[](const std::shared_ptr<section> &first, const std::shared_ptr<section> &second) {
-			return *first == *second;
-		});
+				return *first == *second;
+			});
 	}
 
-	bool config::operator !=(const config &other) const
+	bool config::operator!=(const config &other) const
 	{
 		return !(*this == other);
 	}
