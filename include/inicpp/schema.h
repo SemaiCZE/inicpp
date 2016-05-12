@@ -1,13 +1,13 @@
 #ifndef INICPP_SCHEMA_H
 #define INICPP_SCHEMA_H
 
-#include <vector>
 #include <iostream>
+#include <vector>
 
-#include "exception.h"
-#include "section_schema.h"
-#include "option_schema.h"
 #include "config.h"
+#include "exception.h"
+#include "option_schema.h"
+#include "section_schema.h"
 
 
 namespace inicpp
@@ -75,8 +75,7 @@ namespace inicpp
 		 * @throws not_found_exception if section_name does not exist
 		 * @throws ambiguity_exception if option_schema with given name exists
 		 */
-		void add_option(const std::string &section_name,
-			const option_schema &opt_schema);
+		void add_option(const std::string &section_name, const option_schema &opt_schema);
 		/**
 		 * Creates option_schema from given arguments
 		 * and adds it to specified section.
@@ -85,9 +84,8 @@ namespace inicpp
 		 * @throws not_found_exception if section_name does not exist
 		 * @throws ambiguity_exception if option_schema with given name exists
 		 */
-		template<typename ArgType>
-		void add_option(const std::string &section_name,
-			option_schema_params<ArgType> &arguments)
+		template <typename ArgType>
+		void add_option(const std::string &section_name, option_schema_params<ArgType> &arguments)
 		{
 			auto sect_it = sections_map_.find(section_name);
 			if (sect_it != sections_map_.end()) {

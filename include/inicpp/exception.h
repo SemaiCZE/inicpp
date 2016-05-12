@@ -1,10 +1,10 @@
 #ifndef INICPP_EXCEPTION_H
 #define INICPP_EXCEPTION_H
 
-#include <vector>
-#include <string>
-#include <iostream>
 #include <exception>
+#include <iostream>
+#include <string>
+#include <vector>
 
 namespace inicpp
 {
@@ -16,6 +16,7 @@ namespace inicpp
 	protected:
 		/** Description of exception */
 		std::string what_;
+
 	public:
 		/**
 		 * Default constructor.
@@ -26,7 +27,7 @@ namespace inicpp
 		 * @param what exception description
 		 */
 		exception(const std::string &what);
-		
+
 		/**
 		 * Desctuctor.
 		 */
@@ -89,7 +90,7 @@ namespace inicpp
 		not_found_exception(size_t index);
 		/**
 		 * Element with specified name was not found.
-		 * @param element_name 
+		 * @param element_name
 		 */
 		not_found_exception(const std::string &element_name);
 	};

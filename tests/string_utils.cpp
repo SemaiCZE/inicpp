@@ -1,8 +1,8 @@
-#include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include <gtest/gtest.h>
 
-#include "string_utils.h"
 #include "exception.h"
+#include "string_utils.h"
 
 using namespace inicpp;
 using namespace string_utils;

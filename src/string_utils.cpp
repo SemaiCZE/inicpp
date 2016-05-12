@@ -1,7 +1,7 @@
 #include "string_utils.h"
 #include "exception.h"
-#include <string>
 #include <algorithm>
+#include <string>
 
 namespace inicpp
 {
@@ -83,34 +83,30 @@ namespace inicpp
 		}
 
 
-		template <>
-		string_ini_t parse_string<string_ini_t>(const std::string &value, const std::string &)
+		template <> string_ini_t parse_string<string_ini_t>(const std::string &value, const std::string &)
 		{
 			return value;
 		}
-		template <>
-		boolean_ini_t parse_string<boolean_ini_t>(const std::string &value, const std::string &option_name)
+		template <> boolean_ini_t parse_string<boolean_ini_t>(const std::string &value, const std::string &option_name)
 		{
-			if (value == "0" || value == "f" || value == "n" ||
-				value == "off" || value == "no" || value == "disabled") {
+			if (value == "0" || value == "f" || value == "n" || value == "off" || value == "no" ||
+				value == "disabled") {
 				return false;
-			} else if (value == "1" || value == "t" || value == "y" ||
-				value == "on" || value == "yes" || value == "enabled") {
+			} else if (value == "1" || value == "t" || value == "y" || value == "on" || value == "yes" ||
+				value == "enabled") {
 				return true;
 			} else {
-				throw invalid_type_exception("Option '" + option_name + "' parsing failed: String '" +
-					value + "' is not valid boolean type.");
+				throw invalid_type_exception(
+					"Option '" + option_name + "' parsing failed: String '" + value + "' is not valid boolean type.");
 			}
 		}
 
-		template <>
-		enum_ini_t parse_string<enum_ini_t>(const std::string &value, const std::string &)
+		template <> enum_ini_t parse_string<enum_ini_t>(const std::string &value, const std::string &)
 		{
 			return enum_ini_t(value);
 		}
 
-		template <>
-		float_ini_t parse_string<float_ini_t>(const std::string &value, const std::string &option_name)
+		template <> float_ini_t parse_string<float_ini_t>(const std::string &value, const std::string &option_name)
 		{
 			try {
 				return std::stod(value);
@@ -119,8 +115,7 @@ namespace inicpp
 			}
 		}
 
-		template <>
-		signed_ini_t parse_string<signed_ini_t>(const std::string &value, const std::string &option_name)
+		template <> signed_ini_t parse_string<signed_ini_t>(const std::string &value, const std::string &option_name)
 		{
 			try {
 				std::string binary_prefix = "0b";
@@ -154,7 +149,8 @@ namespace inicpp
 		}
 	}
 
-	namespace inistd {
+	namespace inistd
+	{
 		std::string to_string(const enum_ini_t &value)
 		{
 			return static_cast<std::string>(value);

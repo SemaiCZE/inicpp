@@ -1,14 +1,14 @@
 #ifndef INICPP_CONFIG_H
 #define INICPP_CONFIG_H
 
-#include <vector>
 #include <iostream>
 #include <map>
+#include <vector>
 
 #include "exception.h"
-#include "section.h"
 #include "option.h"
 #include "schema.h"
+#include "section.h"
 
 
 namespace inicpp
@@ -16,7 +16,7 @@ namespace inicpp
 	/** Forward declaration, stated because of ring dependencies */
 	class schema;
 	/** Forward declaration of iterator used in config class */
-	template<typename Element> class config_iterator;
+	template <typename Element> class config_iterator;
 
 
 	/**
@@ -100,9 +100,8 @@ namespace inicpp
 		 * @param value value which will be stored in new option
 		 * @throws ambiguity_exception if option with specified name exists
 		 */
-		template<typename ValueType>
-		void add_option(const std::string &section_name,
-			const std::string &option_name, ValueType value)
+		template <typename ValueType>
+		void add_option(const std::string &section_name, const std::string &option_name, ValueType value)
 		{
 			auto sect_it = sections_map_.find(section_name);
 			if (sect_it != sections_map_.end()) {
@@ -122,8 +121,7 @@ namespace inicpp
 		 * with given name does not exist
 		 * @throws not_found_exception if section or option with given name does not exist
 		 */
-		void remove_option(const std::string &section_name,
-			const std::string &option_name);
+		void remove_option(const std::string &section_name, const std::string &option_name);
 
 		/**
 		 * Returns size of sections list
@@ -178,13 +176,13 @@ namespace inicpp
 		 * @param other
 		 * @return
 		 */
-		bool operator ==(const config &other) const;
+		bool operator==(const config &other) const;
 		/**
 		 * Inequality operator.
 		 * @param other
 		 * @return
 		 */
-		bool operator !=(const config &other) const;
+		bool operator!=(const config &other) const;
 
 		/**
 		* Iterator pointing at the beginning of sections list.
@@ -233,9 +231,7 @@ namespace inicpp
 	 * Templates provide const and non-const iterator in one implementation.
 	 * For easier implementation inheritance from std::iterator is used.
 	 */
-	template<typename Element>
-	class config_iterator
-		: public std::iterator<std::random_access_iterator_tag, Element>
+	template <typename Element> class config_iterator : public std::iterator<std::random_access_iterator_tag, Element>
 	{
 	private:
 		/** Reference to container which can be iterated */
@@ -244,7 +240,6 @@ namespace inicpp
 		size_t position_;
 
 	public:
-
 		using typename std::iterator<std::random_access_iterator_tag, Element>::reference;
 		using typename std::iterator<std::random_access_iterator_tag, Element>::pointer;
 
@@ -259,7 +254,7 @@ namespace inicpp
 		/**
 		 * Copy assignment.
 		 */
-		config_iterator& operator=(const config_iterator &source) = default;
+		config_iterator &operator=(const config_iterator &source) = default;
 		/**
 		 * Move constructor.
 		 */
@@ -267,7 +262,7 @@ namespace inicpp
 		/**
 		 * Move assignment.
 		 */
-		config_iterator& operator=(config_iterator &&source) = default;
+		config_iterator &operator=(config_iterator &&source) = default;
 
 		/**
 		 * Construct iterator on given container
@@ -275,13 +270,16 @@ namespace inicpp
 		 * @param source container which can be iterated
 		 * @param position initial position to given container
 		 */
-		config_iterator(config &source, size_t position)
-			: container_(source), position_(position) {}
+		config_iterator(config &source, size_t position) : container_(source), position_(position)
+		{
+		}
 		/**
 		 * Construct iterator on given container pointing at the start.
 		 * @param source container which can be iterated
 		 */
-		config_iterator(config &source) : config_iterator(source, 0) {}
+		config_iterator(config &source) : config_iterator(source, 0)
+		{
+		}
 
 		/**
 		 * Moves iterator to next position.

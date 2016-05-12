@@ -1,9 +1,9 @@
-#include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include <gtest/gtest.h>
 
-#include <vector>
-#include "section.h"
 #include "option.h"
+#include "section.h"
+#include <vector>
 
 using namespace inicpp;
 using namespace std::literals;

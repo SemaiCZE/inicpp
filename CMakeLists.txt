@@ -58,3 +58,21 @@ add_subdirectory(tests EXCLUDE_FROM_ALL)
 
 # Add examples programs
 add_subdirectory(examples EXCLUDE_FROM_ALL)
+
+
+# ========== Formatting ==========
+file(GLOB_RECURSE ALL_SOURCE_FILES src/*.cpp src/*.h tests/*.cpp tests/*.h include/inicpp/*.h)
+if(UNIX)
+		add_custom_target(format
+				COMMAND clang-format --style=file -i ${ALL_SOURCE_FILES}
+				COMMENT "Running clang-format"
+				VERBATIM
+		)
+endif()
+
+# Count sum of lines in source files
+add_custom_target(lines
+		COMMAND echo -n "Total lines of code: " && cat ${ALL_SOURCE_FILES} | wc -l
+		COMMENT "Counting lines"
+		VERBATIM
+)

@@ -1,8 +1,8 @@
 #ifndef INICPP_SECTION_SCHEMA_H
 #define INICPP_SECTION_SCHEMA_H
 
-#include <vector>
 #include <iostream>
+#include <vector>
 
 #include "exception.h"
 #include "option_schema.h"
@@ -15,8 +15,7 @@ namespace inicpp
 	/**
 	 * Creation arguments which has to be supplied to section_schema.
 	 */
-	struct section_schema_params
-	{
+	struct section_schema_params {
 		/** Name of section_schema */
 		std::string name;
 		/** Determines whether this section is mandatory in configuration */
@@ -108,8 +107,7 @@ namespace inicpp
 		 * @param arguments creation paramaters
 		 * @throws ambiguity_exception if option_schema with given name exists
 		 */
-		template<typename ArgType>
-		void add_option(const option_schema_params<ArgType> &arguments)
+		template <typename ArgType> void add_option(const option_schema_params<ArgType> &arguments)
 		{
 			auto add_it = options_map_.find(arguments.name);
 			if (add_it == options_map_.end()) {

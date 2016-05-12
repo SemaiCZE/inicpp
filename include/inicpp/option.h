@@ -1,15 +1,15 @@
 #ifndef INICPP_OPTION_H
 #define INICPP_OPTION_H
 
-#include <vector>
-#include <memory>
 #include <iostream>
+#include <memory>
 #include <string>
+#include <vector>
 
 #include "exception.h"
-#include "types.h"
 #include "option_schema.h"
 #include "string_utils.h"
+#include "types.h"
 
 namespace inicpp
 {
@@ -27,7 +27,9 @@ namespace inicpp
 		/**
 		 * Has to be stated for completion.
 		 */
-		virtual ~option_holder() {}
+		virtual ~option_holder()
+		{
+		}
 	};
 
 
@@ -35,19 +37,22 @@ namespace inicpp
 	 * Class which actually stores option value in templated manner.
 	 * Getter and setter of course provided.
 	 */
-	template<typename ValueType>
-	class option_value : public option_holder
+	template <typename ValueType> class option_value : public option_holder
 	{
 	public:
 		/**
 		 * Construct option_value with given value.
 		 * @param value value which will be stored
 		 */
-		option_value(ValueType value) : value_(value) {}
+		option_value(ValueType value) : value_(value)
+		{
+		}
 		/**
 		 * Stated for completion.
 		 */
-		virtual ~option_value() {}
+		virtual ~option_value()
+		{
+		}
 
 		/**
 		 * Get this instance internal value.
@@ -76,15 +81,16 @@ namespace inicpp
 	 * Converting functions are specific only for option,
 	 * so hide them in anonymous namespace.
 	 */
-	namespace {
+	namespace
+	{
 		/**
 		 * Template class holding method for converting value to other type.
 		 *
 		 * This is separate class because of partial template specialization,
 		 * which is not allowed for templated methods.
 		 */
-		template <typename ActualType, typename ReturnType>
-		class convertor {
+		template <typename ActualType, typename ReturnType> class convertor
+		{
 		public:
 			/**
 			 * Get value of type ActualType from value argument and try to convert it
@@ -110,8 +116,8 @@ namespace inicpp
 		/**
 		 * Specialization of @ref convertor class for string result type
 		 */
-		template <typename ActualType>
-		class convertor<ActualType, string_ini_t> {
+		template <typename ActualType> class convertor<ActualType, string_ini_t>
+		{
 		public:
 			static string_ini_t get_converted_value(const std::unique_ptr<option_holder> &value)
 			{
@@ -123,7 +129,7 @@ namespace inicpp
 			}
 		};
 	} // anonymous namespace
-	
+
 	/**
 	 * Represent ini configuration option.
 	 * Can store one element or list of elements.
@@ -142,8 +148,7 @@ namespace inicpp
 		std::shared_ptr<option_schema> option_schema_;
 
 		/** Save copy of opt option into self */
-		template <typename ValueType>
-		void copy_option(const std::unique_ptr<option_holder> &opt)
+		template <typename ValueType> void copy_option(const std::unique_ptr<option_holder> &opt)
 		{
 			option_value<ValueType> *ptr = dynamic_cast<option_value<ValueType> *>(&*opt);
 			auto new_option_value = std::make_unique<option_value<ValueType>>(ptr->get());
@@ -152,8 +157,8 @@ namespace inicpp
 
 		/** Compare local and remote option values, both of ValueType type. */
 		template <typename ValueType>
-		bool compare_option(const std::unique_ptr<option_holder> &local,
-			const std::unique_ptr<option_holder> &remote) const
+		bool compare_option(
+			const std::unique_ptr<option_holder> &local, const std::unique_ptr<option_holder> &remote) const
 		{
 			option_value<ValueType> *loc = dynamic_cast<option_value<ValueType> *>(&*local);
 			option_value<ValueType> *rem = dynamic_cast<option_value<ValueType> *>(&*remote);
@@ -164,33 +169,23 @@ namespace inicpp
 		ReturnType convert_single_value(option_type source_type, const std::unique_ptr<option_holder> &value) const
 		{
 			switch (source_type) {
-			case option_type::boolean_e:
-				return convertor<boolean_ini_t, ReturnType>::get_converted_value(value);
-				break;
-			case option_type::enum_e:
-				return convertor<enum_ini_t, ReturnType>::get_converted_value(value);
-				break;
-			case option_type::float_e:
-				return convertor<float_ini_t, ReturnType>::get_converted_value(value);
-				break;
-			case option_type::signed_e:
-				return convertor<signed_ini_t, ReturnType>::get_converted_value(value);
-				break;
-			case option_type::string_e:
-				{
-					option_value<string_ini_t> *ptr = dynamic_cast<option_value<string_ini_t> *>(&*value);
-					if (ptr == nullptr) {
-						throw bad_cast_exception("Cannot cast to requested type");
-					}
-
-					// We have string, so try to parse it
-					try {
-						return string_utils::parse_string<ReturnType>(ptr->get(), get_name());
-					} catch (invalid_type_exception &e) {
-						throw bad_cast_exception(e.what());
-					}
+			case option_type::boolean_e: return convertor<boolean_ini_t, ReturnType>::get_converted_value(value); break;
+			case option_type::enum_e: return convertor<enum_ini_t, ReturnType>::get_converted_value(value); break;
+			case option_type::float_e: return convertor<float_ini_t, ReturnType>::get_converted_value(value); break;
+			case option_type::signed_e: return convertor<signed_ini_t, ReturnType>::get_converted_value(value); break;
+			case option_type::string_e: {
+				option_value<string_ini_t> *ptr = dynamic_cast<option_value<string_ini_t> *>(&*value);
+				if (ptr == nullptr) {
+					throw bad_cast_exception("Cannot cast to requested type");
 				}
-				break;
+
+				// We have string, so try to parse it
+				try {
+					return string_utils::parse_string<ReturnType>(ptr->get(), get_name());
+				} catch (invalid_type_exception &e) {
+					throw bad_cast_exception(e.what());
+				}
+			} break;
 			case option_type::unsigned_e:
 				return convertor<unsigned_ini_t, ReturnType>::get_converted_value(value);
 				break;
@@ -258,9 +253,9 @@ namespace inicpp
 		 * Set single element value.
 		 * @param value newly assigned option value
 		 */
-		template<typename ValueType> void set(ValueType value)
+		template <typename ValueType> void set(ValueType value)
 		{
-			this->operator =(value);
+			this->operator=(value);
 		}
 		/**
 		 * Overloaded alias for set() function.
@@ -311,7 +306,7 @@ namespace inicpp
 		 * @throws bad_cast_exception if internal type cannot be casted
 		 * @throws not_found_exception if there is no value
 		 */
-		template<typename ReturnType> ReturnType get() const
+		template <typename ReturnType> ReturnType get() const
 		{
 			if (values_.empty()) {
 				throw not_found_exception(0);
@@ -327,8 +322,7 @@ namespace inicpp
 		 * @throws bad_cast_exception if ValueType cannot be casted
 		 * to internal type
 		 */
-		template<typename ValueType> void set_list(
-			const std::vector<ValueType> &list)
+		template <typename ValueType> void set_list(const std::vector<ValueType> &list)
 		{
 			values_.clear();
 			type_ = get_option_enum_type<ValueType>();
@@ -336,14 +330,14 @@ namespace inicpp
 				add_to_list(item);
 			}
 		}
-		
+
 		/**
 		 * Get list of internal values. Returning list is newly created.
 		 * @return new list of all stored values
 		 * @throws bad_cast_exception if internal type cannot be casted
 		 * @throws not_found_exception if there is no value
 		 */
-		template<typename ReturnType> std::vector<ReturnType> get_list() const
+		template <typename ReturnType> std::vector<ReturnType> get_list() const
 		{
 			if (values_.empty()) {
 				throw not_found_exception(0);
@@ -361,7 +355,7 @@ namespace inicpp
 		 * @param value pushed value
 		 * @throws bad_cast_exception if ValueType cannot be casted
 		 */
-		template<typename ValueType> void add_to_list(ValueType value)
+		template <typename ValueType> void add_to_list(ValueType value)
 		{
 			if (get_option_enum_type<ValueType>() != type_) {
 				throw bad_cast_exception("Cannot cast to requested type");
@@ -377,8 +371,7 @@ namespace inicpp
 		 * @throws bad_cast_exception if ValueType cannot be casted
 		 * @throws not_found_exception if position is not in internal list
 		 */
-		template<typename ValueType> void add_to_list(ValueType value,
-			size_t position)
+		template <typename ValueType> void add_to_list(ValueType value, size_t position)
 		{
 			if (get_option_enum_type<ValueType>() != type_) {
 				throw bad_cast_exception("Cannot cast to requested type");
@@ -395,7 +388,7 @@ namespace inicpp
 		 * @param value
 		 * @throws bad_cast_exception if ValueType cannot be casted
 		 */
-		template<typename ValueType> void remove_from_list(ValueType value)
+		template <typename ValueType> void remove_from_list(ValueType value)
 		{
 			if (get_option_enum_type<ValueType>() != type_) {
 				throw bad_cast_exception("Cannot cast to requested type");
@@ -406,7 +399,6 @@ namespace inicpp
 					values_.erase(it);
 					break;
 				}
-
 			}
 		}
 

@@ -17,7 +17,7 @@ namespace inicpp
 			options_map_.insert(opt_schema_map_pair(opt->get_name(), opt));
 		}
 	}
-	
+
 	section_schema &section_schema::operator=(const section_schema &source)
 	{
 		if (this != &source) {
@@ -47,8 +47,7 @@ namespace inicpp
 	}
 
 	section_schema::section_schema(const section_schema_params &arguments)
-		: name_(arguments.name), requirement_(arguments.requirement),
-		comment_(arguments.comment)
+		: name_(arguments.name), requirement_(arguments.requirement), comment_(arguments.comment)
 	{
 	}
 
@@ -66,7 +65,7 @@ namespace inicpp
 	{
 		return (requirement_ == item_requirement::mandatory ? true : false);
 	}
-	
+
 	void section_schema::add_option(const option_schema &opt)
 	{
 		auto add_it = options_map_.find(opt.get_name());
@@ -86,10 +85,12 @@ namespace inicpp
 			// remove from map
 			options_map_.erase(del_it);
 			// remove from vector
-			options_.erase(
-				std::remove_if(options_.begin(), options_.end(), [&](std::shared_ptr<option_schema> opt) {
-				return (opt->get_name() == option_name ? true : false);
-			}), options_.end());
+			options_.erase(std::remove_if(options_.begin(),
+							   options_.end(),
+							   [&](std::shared_ptr<option_schema> opt) {
+								   return (opt->get_name() == option_name ? true : false);
+							   }),
+				options_.end());
 		} else {
 			throw not_found_exception(option_name);
 		}
@@ -165,8 +166,8 @@ namespace inicpp
 				opt->validate_option(sect[opt->get_name()]);
 			} else if (opt->is_mandatory()) {
 				// mandatory option is not present in given section (both modes)
-				throw validation_exception("Mandatory option '" + opt->get_name() +
-					"' is missing in section '" + sect.get_name() + "'");
+				throw validation_exception(
+					"Mandatory option '" + opt->get_name() + "' is missing in section '" + sect.get_name() + "'");
 			} else {
 				// option is not mandatory and not in given section
 				//   => add option with default value

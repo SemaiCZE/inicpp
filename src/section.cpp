@@ -2,8 +2,7 @@
 
 namespace inicpp
 {
-	section::section(const section &source)
-		: name_(source.name_)
+	section::section(const section &source) : name_(source.name_)
 	{
 		// we have to do deep copies of options
 		options_.reserve(source.options_.size());
@@ -72,9 +71,10 @@ namespace inicpp
 			options_map_.erase(del_it);
 			// remove from vector
 			options_.erase(
-				std::remove_if(options_.begin(), options_.end(), [&](std::shared_ptr<option> opt) {
-				return (opt->get_name() == option_name ? true : false);
-			}), options_.end());
+				std::remove_if(options_.begin(),
+					options_.end(),
+					[&](std::shared_ptr<option> opt) { return (opt->get_name() == option_name ? true : false); }),
+				options_.end());
 		} else {
 			throw not_found_exception(option_name);
 		}
@@ -146,10 +146,12 @@ namespace inicpp
 			return false;
 		}
 
-		return std::equal(options_.begin(), options_.end(), other.options_.begin(),
+		return std::equal(options_.begin(),
+			options_.end(),
+			other.options_.begin(),
 			[](const std::shared_ptr<option> &first, const std::shared_ptr<option> &second) {
-			return *first == *second;
-		});
+				return *first == *second;
+			});
 	}
 
 	bool section::operator!=(const section &other) const
@@ -161,12 +163,12 @@ namespace inicpp
 	{
 		return iterator(*this);
 	}
-	
+
 	section::iterator section::end()
 	{
 		return iterator(*this, options_.size());
 	}
-	
+
 	section::const_iterator section::begin() const
 	{
 		return const_iterator(const_cast<section &>(*this));
@@ -181,7 +183,7 @@ namespace inicpp
 	{
 		return const_iterator(const_cast<section &>(*this));
 	}
-	
+
 	section::const_iterator section::cend() const
 	{
 		return const_iterator(const_cast<section &>(*this), options_.size());

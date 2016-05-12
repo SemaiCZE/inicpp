@@ -1,10 +1,10 @@
 #ifndef INICPP_OPTION_SCHEMA_H
 #define INICPP_OPTION_SCHEMA_H
 
-#include <vector>
-#include <string>
-#include <iostream>
 #include <functional>
+#include <iostream>
+#include <string>
+#include <vector>
 
 #include "exception.h"
 #include "option.h"
@@ -19,7 +19,9 @@ namespace inicpp
 	class option_schema_params_base
 	{
 	public:
-		virtual ~option_schema_params_base() {}
+		virtual ~option_schema_params_base()
+		{
+		}
 		/** Name of option_schema */
 		std::string name;
 		/** Determines if this option is mandatory or not */
@@ -32,16 +34,17 @@ namespace inicpp
 		std::string comment = "";
 	};
 
-	
+
 	/**
 	 * Extended struct which adds type of the option (as template argument)
 	 * and holds in addition to parent functor for value validation.
 	 */
-	template<typename ArgType>
-	class option_schema_params : public option_schema_params_base
+	template <typename ArgType> class option_schema_params : public option_schema_params_base
 	{
 	public:
-		virtual ~option_schema_params() {}
+		virtual ~option_schema_params()
+		{
+		}
 		/**
 		 * Validating function - takes one argument of @a ArgType
 		 * and returns bool if valid or not
@@ -49,7 +52,7 @@ namespace inicpp
 		std::function<bool(ArgType)> validator = nullptr;
 	};
 
-	
+
 	/** Forward declaration, stated because of ring dependencies */
 	class option;
 
@@ -134,8 +137,7 @@ namespace inicpp
 		 * @param arguments creation arguments
 		 * @throws invalid_type_exception if given type is not valid
 		 */
-		template<typename ArgType>
-		option_schema(const option_schema_params<ArgType> &arguments)
+		template <typename ArgType> option_schema(const option_schema_params<ArgType> &arguments)
 		{
 			type_ = get_option_enum_type<ArgType>();
 			if (type_ == option_type::invalid_e) {

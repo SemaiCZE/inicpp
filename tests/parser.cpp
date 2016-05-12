@@ -1,5 +1,5 @@
-#include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include <gtest/gtest.h>
 
 #include "parser.h"
 
@@ -17,12 +17,12 @@ TEST(parser, load_config)
 	EXPECT_THROW(parser::load_file("nonexisting_file.txt"), parser_exception);
 
 	std::string str_config = ""
-		"[section]\n"
-		"opt = val\n"
-		"opt2 = val2, val3, val4\n"
-		"; other comment\n"
-		"[section2::a] ;with comment\n"
-		"link = ${section#opt}";
+							 "[section]\n"
+							 "opt = val\n"
+							 "opt2 = val2, val3, val4\n"
+							 "; other comment\n"
+							 "[section2::a] ;with comment\n"
+							 "link = ${section#opt}";
 	auto loaded_config = parser::load(str_config);
 	EXPECT_EQ(loaded_config.size(), 2u);
 	EXPECT_EQ(loaded_config[0].get_name(), "section");
@@ -34,17 +34,17 @@ TEST(parser, load_config)
 	EXPECT_EQ(loaded_config[0][0].get_name(), "opt");
 	EXPECT_EQ(loaded_config[0][1].get_name(), "opt2");
 	EXPECT_EQ(loaded_config[0][0].get<string_ini_t>(), "val");
-	std::vector<std::string> expected_list {"val2", "val3", "val4"};
+	std::vector<std::string> expected_list{"val2", "val3", "val4"};
 	EXPECT_EQ(loaded_config[0][1].get_list<string_ini_t>(), expected_list);
 	EXPECT_EQ(loaded_config[1][0].get<string_ini_t>(), "val");
 
 	str_config = ""
-		"[section]\n"
-		"opt = 15";
+				 "[section]\n"
+				 "opt = 15";
 	schema validatin_schema;
 
 	// Following is not possible in MS Visual C++ yet
-	//section_schema_params sect_params{ "section", item_requirement::mandatory, "comment" };
+	// section_schema_params sect_params{ "section", item_requirement::mandatory, "comment" };
 	section_schema_params sect_params;
 	sect_params.name = "section";
 	sect_params.requirement = item_requirement::mandatory;
@@ -84,7 +84,7 @@ TEST(parser, store_config)
 	schema validatin_schema;
 
 	// Following is not possible in MS Visual C++ yet
-	//section_schema sect_schema({ "section_name", item_requirement::mandatory, "comment" });
+	// section_schema sect_schema({ "section_name", item_requirement::mandatory, "comment" });
 
 	section_schema_params sect_params;
 	sect_params.name = "section_name";
@@ -93,7 +93,7 @@ TEST(parser, store_config)
 	section_schema sect_schema(sect_params);
 
 	// Following will be possible in C++17
-	//option_schema_params<string_ini_t> opt { {"opt", item_requirement::mandatory,
+	// option_schema_params<string_ini_t> opt { {"opt", item_requirement::mandatory,
 	//	option_item::single, "default value", "opt comment"}, nullptr};
 
 	option_schema_params<string_ini_t> opt1;
@@ -118,16 +118,16 @@ TEST(parser, store_config)
 	std::ostringstream str;
 	EXPECT_NO_THROW(parser::save(my_config, validatin_schema, str));
 	std::string expected_result = ""
-		";comment\n"
-		";<mandatory>\n"
-		"[section_name]\n"
-		";opt comment\n"
-		";<mandatory, single>\n"
-		";<default value: \"default value\">\n"
-		"opt = value\n"
-		";unsigned comment\n"
-		";<optional, single>\n"
-		";<default value: \"42\">\n"
-		"unsigned = 42\n";
+								  ";comment\n"
+								  ";<mandatory>\n"
+								  "[section_name]\n"
+								  ";opt comment\n"
+								  ";<mandatory, single>\n"
+								  ";<default value: \"default value\">\n"
+								  "opt = value\n"
+								  ";unsigned comment\n"
+								  ";<optional, single>\n"
+								  ";<default value: \"42\">\n"
+								  "unsigned = 42\n";
 	EXPECT_EQ(str.str(), expected_result);
 }

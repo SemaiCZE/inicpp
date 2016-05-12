@@ -1,14 +1,14 @@
 #ifndef INICPP_PARSER_H
 #define INICPP_PARSER_H
 
-#include <iostream>
-#include <sstream>
 #include <fstream>
-#include <string>
+#include <iostream>
 #include <regex>
+#include <sstream>
+#include <string>
 
-#include "exception.h"
 #include "config.h"
+#include "exception.h"
 #include "schema.h"
 #include "string_utils.h"
 
@@ -36,8 +36,10 @@ namespace inicpp
 		static std::string unescape(const std::string &str);
 		static std::string delete_comment(const std::string &str);
 		static std::vector<std::string> parse_option_list(const std::string &str);
-		static void handle_links(const config &cfg, const section &last_section,
-			std::vector<std::string> &option_val_list, size_t line_number);
+		static void handle_links(const config &cfg,
+			const section &last_section,
+			std::vector<std::string> &option_val_list,
+			size_t line_number);
 		static void validate_identifier(const std::string &str, size_t line_number);
 
 		static config internal_load(std::istream &str);
@@ -82,8 +84,7 @@ namespace inicpp
 		 * @throws parser_exception if ini configuration is wrong
 		 * @throws validation_exception if configuration does not comply schema
 		 */
-		static config load(const std::string &str, const schema &schm,
-			schema_mode mode);
+		static config load(const std::string &str, const schema &schm, schema_mode mode);
 		/**
 		 * Load ini configuration from given stream and return it.
 		 * @param str ini configuration description
@@ -101,8 +102,7 @@ namespace inicpp
 		 * @throws parser_exception if ini configuration is wrong
 		 * @throws validation_exception if configuration does not comply schema
 		 */
-		static config load(std::istream &str, const schema &schm,
-			schema_mode mode);
+		static config load(std::istream &str, const schema &schm, schema_mode mode);
 
 		/**
 		 * Load ini configuration from file with specified name.
@@ -121,8 +121,7 @@ namespace inicpp
 		 * @throws parser_exception if ini configuration is wrong
 		 * @throws validation_exception if configuration does not comply schema
 		 */
-		static config load_file(const std::string &file, const schema &schm,
-			schema_mode mode);
+		static config load_file(const std::string &file, const schema &schm, schema_mode mode);
 
 		/**
 		 * Save given configuration to file.

@@ -1,9 +1,9 @@
-#include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include <gtest/gtest.h>
 
+#include "option_schema.h"
 #include "schema.h"
 #include "section_schema.h"
-#include "option_schema.h"
 
 using namespace inicpp;
 
@@ -143,13 +143,13 @@ TEST(schema, stream_output)
 
 	// test expectations
 	std::string expected = ""
-		";multiline\n"
-		";comment\n"
-		";<mandatory>\n"
-		"[name]\n"
-		";other section\n"
-		";<optional>\n"
-		"[other]\n";
+						   ";multiline\n"
+						   ";comment\n"
+						   ";<mandatory>\n"
+						   "[name]\n"
+						   ";other section\n"
+						   ";<optional>\n"
+						   "[other]\n";
 
 	std::ostringstream str;
 	str << schm;
