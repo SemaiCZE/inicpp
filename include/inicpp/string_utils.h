@@ -7,6 +7,7 @@
 #include <vector>
 #include <sstream>
 #include "types.h"
+#include "exception.h"
 
 namespace inicpp
 {
@@ -63,38 +64,24 @@ namespace inicpp
 		 */
 		std::vector<std::string> split(const std::string &str, char delim);
 
+
 		/**
-		 * Parse string to signed value.
+		 * Function for parsing string input value to strongly typed one
 		 * @param value Value to be parsed
 		 * @param option_name Option name from this value - will be in exception text if thrown
-		 * @return parsed value with correct type
-		 * @throws invalid_type_exception if string cannot be parsed
+		 * @result Value parsed to proper (ValueType) type
+		 * @throws invalid_type_exception if such cast cannot be made
 		 */
-		signed_ini_t parse_signed_type(const std::string &value, const std::string &option_name);
+		template <typename ValueType>
+		ValueType parse_string(const std::string &value, const std::string &option_name)
+		{
+			throw invalid_type_exception("Invalid option type");
+		}
 		/**
-		 * Parse string to unsigned value.
-		 * @param value Value to be parsed
-		 * @param option_name Option name from this value - will be in exception text if thrown
-		 * @return parsed value with correct type
-		 * @throws invalid_type_exception if string cannot be parsed
+		 * Specialization for string type, which doesn't need to be explicitely parsed.
 		 */
-		unsigned_ini_t parse_unsigned_type(const std::string &value, const std::string &option_name);
-		/**
-		 * Parse string to float value.
-		 * @param value Value to be parsed
-		 * @param option_name Option name from this value - will be in exception text if thrown
-		 * @return parsed value with correct type
-		 * @throws invalid_type_exception if string cannot be parsed
-		 */
-		float_ini_t parse_float_type(const std::string &value, const std::string &option_name);
-		/**
-		 * Parse string to enum value.
-		 * @param value Value to be parsed
-		 * @param option_name Option name from this value - will be in exception text if thrown
-		 * @return parsed value with correct type
-		 * @throws invalid_type_exception if string cannot be parsed
-		 */
-		enum_ini_t parse_enum_type(const std::string &value, const std::string &option_name);
+		template <>
+		string_ini_t parse_string<string_ini_t>(const std::string &value, const std::string &);
 		/**
 		 * Parse string to boolean value.
 		 * @param value Value to be parsed
@@ -102,8 +89,54 @@ namespace inicpp
 		 * @return parsed value with correct type
 		 * @throws invalid_type_exception if string cannot be parsed
 		 */
-		boolean_ini_t parse_boolean_type(const std::string &value, const std::string &option_name);
+		template <>
+		boolean_ini_t parse_string<boolean_ini_t>(const std::string &value, const std::string &option_name);
+		/**
+		 * Parse string to enum value.
+		 * @param value Value to be parsed
+		 * @param option_name Option name from this value - will be in exception text if thrown
+		 * @return parsed value with correct type
+		 * @throws invalid_type_exception if string cannot be parsed
+		 */
+		template <>
+		enum_ini_t parse_string<enum_ini_t>(const std::string &value, const std::string &option_name);
+		/**
+		 * Parse string to float value.
+		 * @param value Value to be parsed
+		 * @param option_name Option name from this value - will be in exception text if thrown
+		 * @return parsed value with correct type
+		 * @throws invalid_type_exception if string cannot be parsed
+		 */
+		template <>
+		float_ini_t parse_string<float_ini_t>(const std::string &value, const std::string &option_name);
+		/**
+		 * Parse string to signed value.
+		 * @param value Value to be parsed
+		 * @param option_name Option name from this value - will be in exception text if thrown
+		 * @return parsed value with correct type
+		 * @throws invalid_type_exception if string cannot be parsed
+		 */
+		template <>
+		signed_ini_t parse_string<signed_ini_t>(const std::string &value, const std::string &option_name);
+		/**
+		 * Parse string to unsigned value.
+		 * @param value Value to be parsed
+		 * @param option_name Option name from this value - will be in exception text if thrown
+		 * @return parsed value with correct type
+		 * @throws invalid_type_exception if string cannot be parsed
+		 */
+		template <>
+		unsigned_ini_t parse_string<unsigned_ini_t>(const std::string &value, const std::string &option_name);
+
 	}
+
+	/** Internal namespace to hide to_string methods. */
+	namespace inistd {
+		/** Standard std::to_string method for all types */
+		using std::to_string;
+		/** Custom to_string method for enum_ini_t type */
+		std::string to_string(const enum_ini_t &value);
+	};
 }
 
 #endif // INICPP_STRING_UTILS_H

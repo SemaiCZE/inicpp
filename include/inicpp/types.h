@@ -17,11 +17,22 @@ namespace inicpp
 		internal_enum_type() : internal_enum_type("") {}
 		/** Constructor with initial value */
 		internal_enum_type(const std::string &value) : data_(value) {}
+		/** Constructor with initial value */
+		internal_enum_type(const char *value) : data_(value) {}
 		/** Copy constructor */
 		internal_enum_type(const internal_enum_type &other)
 		{
 			this->operator =(other);
 		}
+		/** Conversion contructor - only for template compilation, allways throws std::runtime_error */
+		explicit internal_enum_type(bool) { throw std::runtime_error(""); }
+		/** Conversion contructor - only for template compilation, allways throws std::runtime_error */
+		explicit internal_enum_type(int64_t) { throw std::runtime_error(""); }
+		/** Conversion contructor - only for template compilation, allways throws std::runtime_error */
+		explicit internal_enum_type(uint64_t) { throw std::runtime_error(""); }
+		/** Conversion contructor - only for template compilation, allways throws std::runtime_error */
+		explicit internal_enum_type(double) { throw std::runtime_error(""); }
+
 		/** Assignment operator */
 		internal_enum_type &operator =(const internal_enum_type &other)
 		{
@@ -61,6 +72,7 @@ namespace inicpp
 		/** Value of instance */
 		std::string data_;
 	};
+
 
 	/**
 	 * Types which can be used in option and option_schema classes.

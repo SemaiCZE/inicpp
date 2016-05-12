@@ -71,100 +71,58 @@ namespace inicpp
 		ValueType value_;
 	};
 
-	/** Internal namespace to hide to_string methods. */
-	namespace inistd {
-		/** Standard std::to_string method for all types */
-		using std::to_string;
-		/** Custom to_string method for enum_ini_t type */
-		std::string to_string(const enum_ini_t &value);
-	};
 
 	/**
-	 * Template class holding method for converting value to other type.
-	 *
-	 * This is separate class because of partial template specialization,
-	 * which is not allowed for templated methods.
+	 * Converting functions are specific only for option,
+	 * so hide them in anonymous namespace.
 	 */
-	template <typename ActualType, typename ReturnType>
-	class convertor {
-	public:
+	namespace {
 		/**
-		 * Get value of type ActualType from value argument and try to convert it
-		 * to ReturnType.
-		 * @param value Pointer to internal representation of option value
-		 * @return Converted option value
-		 * @throws bad_cast_exception if such cast cannot be made
+		 * Template class holding method for converting value to other type.
+		 *
+		 * This is separate class because of partial template specialization,
+		 * which is not allowed for templated methods.
 		 */
-		static ReturnType get_converted_value(const std::unique_ptr<option_holder> &value)
-		{
-			option_value<ActualType> *ptr = dynamic_cast<option_value<ActualType> *>(&*value);
-			if (ptr == nullptr) {
-				throw bad_cast_exception("Cannot cast to requested type");
+		template <typename ActualType, typename ReturnType>
+		class convertor {
+		public:
+			/**
+			 * Get value of type ActualType from value argument and try to convert it
+			 * to ReturnType.
+			 * @param value Pointer to internal representation of option value
+			 * @return Converted option value
+			 * @throws bad_cast_exception if such cast cannot be made
+			 */
+			static ReturnType get_converted_value(const std::unique_ptr<option_holder> &value)
+			{
+				option_value<ActualType> *ptr = dynamic_cast<option_value<ActualType> *>(&*value);
+				if (ptr == nullptr) {
+					throw bad_cast_exception("Cannot cast to requested type");
+				}
+				try {
+					return static_cast<ReturnType>(ptr->get());
+				} catch (std::runtime_error &e) {
+					throw bad_cast_exception(e.what());
+				}
 			}
-			try {
-				return static_cast<ReturnType>(ptr->get());
-			} catch (std::runtime_error &e) {
-				throw bad_cast_exception(e.what());
+		};
+
+		/**
+		 * Specialization of @ref convertor class for string result type
+		 */
+		template <typename ActualType>
+		class convertor<ActualType, string_ini_t> {
+		public:
+			static string_ini_t get_converted_value(const std::unique_ptr<option_holder> &value)
+			{
+				option_value<ActualType> *ptr = dynamic_cast<option_value<ActualType> *>(&*value);
+				if (ptr == nullptr) {
+					throw bad_cast_exception("Cannot cast to requested type");
+				}
+				return inistd::to_string(ptr->get());
 			}
-		}
-	};
-
-	/**
-	 * Specialization of @ref convertor class for string result type
-	 */
-	template <typename ActualType>
-	class convertor<ActualType, string_ini_t> {
-	public:
-		static string_ini_t get_converted_value(const std::unique_ptr<option_holder> &value)
-		{
-			option_value<ActualType> *ptr = dynamic_cast<option_value<ActualType> *>(&*value);
-			if (ptr == nullptr) {
-				throw bad_cast_exception("Cannot cast to requested type");
-			}
-			return inistd::to_string(ptr->get());
-		}
-	};
-
-	/**
-	 * Function for parsing string input value to strongly typed one
-	 * @param value Value to be parsed
-	 * @param option_name Option name from this value - will be in exception text if thrown
-	 * @result Value parsed to proper (ValueType) type
-	 * @throws invalid_type_exception if such cast cannot be made
-	 */
-	template <typename ValueType>
-	ValueType parse_string(const std::string &value, const std::string &option_name)
-	{
-		switch (get_option_enum_type<ValueType>()) {
-		case option_type::boolean_e:
-			return string_utils::parse_boolean_type(value, option_name);
-			break;
-		case option_type::enum_e:
-			return string_utils::parse_enum_type(value, option_name);
-			break;
-		case option_type::float_e:
-			return string_utils::parse_float_type(value, option_name);
-			break;
-		case option_type::signed_e:
-			return string_utils::parse_signed_type(value, option_name);
-			break;
-		case option_type::unsigned_e:
-			return string_utils::parse_unsigned_type(value, option_name);
-			break;
-		case option_type::invalid_e:
-		default:
-			// never reached
-			throw invalid_type_exception("Invalid option type");
-			break;
-		}
-	}
-
-	/**
-	 * Specialization for string type, which doesn't need to be casted.
-	 */
-	template <>
-	string_ini_t parse_string<string_ini_t>(const std::string &value, const std::string &);
-
+		};
+	} // anonymous namespace
 	
 	/**
 	 * Represent ini configuration option.
@@ -183,6 +141,7 @@ namespace inicpp
 		/** Corresponding option_schema if any */
 		std::shared_ptr<option_schema> option_schema_;
 
+		/** Save copy of opt option into self */
 		template <typename ValueType>
 		void copy_option(const std::unique_ptr<option_holder> &opt)
 		{
@@ -191,6 +150,7 @@ namespace inicpp
 			values_.push_back(std::move(new_option_value));
 		}
 
+		/** Compare local and remote option values, both of ValueType type. */
 		template <typename ValueType>
 		bool compare_option(const std::unique_ptr<option_holder> &local,
 			const std::unique_ptr<option_holder> &remote) const
@@ -200,6 +160,47 @@ namespace inicpp
 			return loc->get() == rem->get();
 		}
 
+		template <typename ReturnType>
+		ReturnType convert_single_value(option_type source_type, const std::unique_ptr<option_holder> &value) const
+		{
+			switch (source_type) {
+			case option_type::boolean_e:
+				return convertor<boolean_ini_t, ReturnType>::get_converted_value(value);
+				break;
+			case option_type::enum_e:
+				return convertor<enum_ini_t, ReturnType>::get_converted_value(value);
+				break;
+			case option_type::float_e:
+				return convertor<float_ini_t, ReturnType>::get_converted_value(value);
+				break;
+			case option_type::signed_e:
+				return convertor<signed_ini_t, ReturnType>::get_converted_value(value);
+				break;
+			case option_type::string_e:
+				{
+					option_value<string_ini_t> *ptr = dynamic_cast<option_value<string_ini_t> *>(&*value);
+					if (ptr == nullptr) {
+						throw bad_cast_exception("Cannot cast to requested type");
+					}
+
+					// We have string, so try to parse it
+					try {
+						return string_utils::parse_string<ReturnType>(ptr->get(), get_name());
+					} catch (invalid_type_exception &e) {
+						throw bad_cast_exception(e.what());
+					}
+				}
+				break;
+			case option_type::unsigned_e:
+				return convertor<unsigned_ini_t, ReturnType>::get_converted_value(value);
+				break;
+			case option_type::invalid_e:
+			default:
+				// never reached
+				throw invalid_type_exception("Invalid option type");
+				break;
+			}
+		}
 
 	public:
 		/**
@@ -310,50 +311,14 @@ namespace inicpp
 		 * @throws bad_cast_exception if internal type cannot be casted
 		 * @throws not_found_exception if there is no value
 		 */
-		template<typename ValueType> ValueType get() const
+		template<typename ReturnType> ReturnType get() const
 		{
 			if (values_.empty()) {
 				throw not_found_exception(0);
 			}
 
 			// Get the value and try to convert it
-			switch (type_) {
-			case option_type::boolean_e:
-				return convertor<boolean_ini_t, ValueType>::get_converted_value(values_[0]);
-				break;
-			case option_type::enum_e:
-				return convertor<enum_ini_t, ValueType>::get_converted_value(values_[0]);
-				break;
-			case option_type::float_e:
-				return convertor<float_ini_t, ValueType>::get_converted_value(values_[0]);
-				break;
-			case option_type::signed_e:
-				return convertor<signed_ini_t, ValueType>::get_converted_value(values_[0]);
-				break;
-			case option_type::string_e:
-				{
-					option_value<string_ini_t> *ptr = dynamic_cast<option_value<string_ini_t> *>(&*values_[0]);
-					if (ptr == nullptr) {
-						throw bad_cast_exception("Cannot cast to requested type");
-					}
-
-					// We have string, so try to parse it
-					try {
-						return parse_string<ValueType>(ptr->get(), get_name());
-					} catch (invalid_type_exception &e) {
-						throw bad_cast_exception(e.what());
-					}
-				}
-				break;
-			case option_type::unsigned_e:
-				return convertor<unsigned_ini_t, ValueType>::get_converted_value(values_[0]);
-				break;
-			case option_type::invalid_e:
-			default:
-				// never reached
-				throw invalid_type_exception("Invalid option type");
-				break;
-			}
+			return convert_single_value<ReturnType>(type_, values_[0]);
 		}
 
 		/**
@@ -378,18 +343,14 @@ namespace inicpp
 		 * @throws bad_cast_exception if internal type cannot be casted
 		 * @throws not_found_exception if there is no value
 		 */
-		template<typename ValueType> std::vector<ValueType> get_list() const
+		template<typename ReturnType> std::vector<ReturnType> get_list() const
 		{
 			if (values_.empty()) {
 				throw not_found_exception(0);
 			}
-			std::vector<ValueType> results;
+			std::vector<ReturnType> results;
 			for (const auto &value : values_) {
-				option_value<ValueType> *ptr = dynamic_cast<option_value<ValueType> *>(&*value);
-				if (ptr == nullptr) {
-					throw bad_cast_exception("Cannot cast to requested type");
-				}
-				results.push_back(ptr->get());
+				results.push_back(convert_single_value<ReturnType>(type_, value));
 			}
 
 			return results;

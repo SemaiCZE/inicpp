@@ -135,22 +135,22 @@ namespace inicpp
 		switch (type_) {
 		case option_type::boolean_e:
 			opt.set_list<boolean_ini_t>(parse_typed_option_items<boolean_ini_t>(
-				opt.get_list<string_ini_t>(), string_utils::parse_boolean_type, opt.get_name())
+				opt.get_list<string_ini_t>(), string_utils::parse_string<boolean_ini_t>, opt.get_name())
 			);
 			break;
 		case option_type::enum_e:
 			opt.set_list<enum_ini_t>(parse_typed_option_items<enum_ini_t>(
-				opt.get_list<string_ini_t>(), string_utils::parse_enum_type, opt.get_name())
+				opt.get_list<string_ini_t>(), string_utils::parse_string<enum_ini_t>, opt.get_name())
 			);
 			break;
 		case option_type::float_e:
 			opt.set_list<float_ini_t>(parse_typed_option_items<float_ini_t>(
-				opt.get_list<string_ini_t>(), string_utils::parse_float_type, opt.get_name())
+				opt.get_list<string_ini_t>(), string_utils::parse_string<float_ini_t>, opt.get_name())
 			);
 			break;
 		case option_type::signed_e:
 			opt.set_list<signed_ini_t>(parse_typed_option_items<signed_ini_t>(
-				opt.get_list<string_ini_t>(), string_utils::parse_signed_type, opt.get_name())
+				opt.get_list<string_ini_t>(), string_utils::parse_string<signed_ini_t>, opt.get_name())
 			);
 			break;
 		case option_type::string_e:
@@ -158,7 +158,7 @@ namespace inicpp
 			break;
 		case option_type::unsigned_e:
 			opt.set_list<unsigned_ini_t>(parse_typed_option_items<unsigned_ini_t>(
-				opt.get_list<string_ini_t>(), string_utils::parse_unsigned_type, opt.get_name())
+				opt.get_list<string_ini_t>(), string_utils::parse_string<unsigned_ini_t>, opt.get_name())
 			);
 			break;
 		case option_type::invalid_e:
