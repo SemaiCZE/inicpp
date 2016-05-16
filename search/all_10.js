@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['_7eexception',['~exception',['../classinicpp_1_1exception.html#a53b93d017b3144a6448f82c8adfd8cd1',1,'inicpp::exception']]],
-  ['_7eoption_5fholder',['~option_holder',['../classinicpp_1_1option__holder.html#ae9a936149174cbc21bb27f2c7177fd9b',1,'inicpp::option_holder']]],
-  ['_7eoption_5fvalue',['~option_value',['../classinicpp_1_1option__value.html#a6ad26fd1f043ad45fe4420a417f49e9e',1,'inicpp::option_value']]]
+  ['what',['what',['../classinicpp_1_1exception.html#a6ad4030df4334c3e83f507d7f7368601',1,'inicpp::exception']]],
+  ['what_5f',['what_',['../classinicpp_1_1exception.html#ae90ab565cdc2112d2e2dcee96ad9889b',1,'inicpp::exception']]],
+  ['write_5fadditional_5finfo',['write_additional_info',['../classinicpp_1_1option__schema.html#a63bec01881bf47d93ae84a522272fb6c',1,'inicpp::option_schema::write_additional_info()'],['../classinicpp_1_1section__schema.html#ab0852bfd74c5bcb50e1fb2950789f354',1,'inicpp::section_schema::write_additional_info()']]],
+  ['write_5fsection_5fname',['write_section_name',['../classinicpp_1_1section__schema.html#a161f8b0dd6830e6c71900908cd94b0e2',1,'inicpp::section_schema']]]
 ];

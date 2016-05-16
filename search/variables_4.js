@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['name',['name',['../structinicpp_1_1option__schema__params__base.html#ab9b6af57640fc845267e2e0aa8a380e6',1,'inicpp::option_schema_params_base::name()'],['../structinicpp_1_1section__schema__params.html#adea73abd5ca2679bd7dcf7bdc201866a',1,'inicpp::section_schema_params::name()']]]
+  ['type',['type',['../classinicpp_1_1option__schema__params__base.html#a2b865d4fed3e59b9f7f9bafbe6cbfbb0',1,'inicpp::option_schema_params_base']]]
 ];

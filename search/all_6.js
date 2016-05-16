@@ -1,8 +1,9 @@
 var searchData=
 [
-  ['invalid_5fconfig_5fexception',['invalid_config_exception',['../classinicpp_1_1invalid__config__exception.html',1,'inicpp']]],
-  ['invalid_5fconfig_5fexception',['invalid_config_exception',['../classinicpp_1_1invalid__config__exception.html#a0b9e9e14d00af7356681487b92de4935',1,'inicpp::invalid_config_exception']]],
-  ['is_5flist',['is_list',['../structinicpp_1_1option__schema__params__base.html#a8c861b7028bcaae151b5a7c7e5dbc0d8',1,'inicpp::option_schema_params_base::is_list()'],['../classinicpp_1_1option.html#a5961126b599253f836501ac1b076222c',1,'inicpp::option::is_list()'],['../classinicpp_1_1option__schema.html#aeff9849fe5c316c3103d743f976394f6',1,'inicpp::option_schema::is_list()']]],
-  ['is_5fmandatory',['is_mandatory',['../classinicpp_1_1option__schema.html#ab3b3544b60a58bd262c16a06b1fe2b38',1,'inicpp::option_schema::is_mandatory()'],['../classinicpp_1_1section__schema.html#a6a757ade9097353c34ca4fe2000d5f76',1,'inicpp::section_schema::is_mandatory()']]],
-  ['iterator',['iterator',['../classinicpp_1_1config.html#a9f4db9beb7fe5b096a05aa809662727d',1,'inicpp::config::iterator()'],['../classinicpp_1_1section.html#af64bbba5f1febc8c3e4d4b3ef3323d51',1,'inicpp::section::iterator()']]]
+  ['get',['get',['../classinicpp_1_1option__value.html#a04c428c36944410ce66923fba3576bc7',1,'inicpp::option_value::get()'],['../classinicpp_1_1option.html#a3ead7028c9bc3efad4d783ac7adb1128',1,'inicpp::option::get()']]],
+  ['get_5fcomment',['get_comment',['../classinicpp_1_1option__schema.html#a02cd17ceaeb75a56ab633daaa2fb6e71',1,'inicpp::option_schema::get_comment()'],['../classinicpp_1_1section__schema.html#a81c247ac6c85eb7a07e8060eb8bfba0f',1,'inicpp::section_schema::get_comment()']]],
+  ['get_5fdefault_5fvalue',['get_default_value',['../classinicpp_1_1option__schema.html#a4587fb36fbb05948e4c084663042c60c',1,'inicpp::option_schema']]],
+  ['get_5flist',['get_list',['../classinicpp_1_1option.html#aecde865cf6fa98b8b10f0b5b2ec90c18',1,'inicpp::option']]],
+  ['get_5fname',['get_name',['../classinicpp_1_1option.html#a212c230e7d263fbfc0fe91a29a232cb1',1,'inicpp::option::get_name()'],['../classinicpp_1_1option__schema.html#ac82d96f2be659e7e143e87e342a5b3e4',1,'inicpp::option_schema::get_name()'],['../classinicpp_1_1section.html#a18f76f76e8e3f51b004ab889f41d003f',1,'inicpp::section::get_name()'],['../classinicpp_1_1section__schema.html#a17b4bba10432e25d9c0a35787ba896f8',1,'inicpp::section_schema::get_name()']]],
+  ['get_5ftype',['get_type',['../classinicpp_1_1option.html#a8f008967179a255c2eb1c0cb1bd31622',1,'inicpp::option::get_type()'],['../classinicpp_1_1option__schema.html#a4deef3bc15bf122f0f18da78e890b3d1',1,'inicpp::option_schema::get_type()']]]
 ];

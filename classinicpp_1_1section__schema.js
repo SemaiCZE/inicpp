@@ -6,11 +6,20 @@ var classinicpp_1_1section__schema =
     [ "section_schema", "classinicpp_1_1section__schema.html#a10e322f307aabd89ed3ab22ecf79df23", null ],
     [ "add_option", "classinicpp_1_1section__schema.html#ad15de69029cb98eb50f1c03368caa213", null ],
     [ "add_option", "classinicpp_1_1section__schema.html#a6619c1ba13e84d09c28915de160b9ac3", null ],
+    [ "contains", "classinicpp_1_1section__schema.html#a18dfb1e8a5ddddb41ed7e66daec6fa96", null ],
     [ "get_comment", "classinicpp_1_1section__schema.html#a81c247ac6c85eb7a07e8060eb8bfba0f", null ],
     [ "get_name", "classinicpp_1_1section__schema.html#a17b4bba10432e25d9c0a35787ba896f8", null ],
     [ "is_mandatory", "classinicpp_1_1section__schema.html#a6a757ade9097353c34ca4fe2000d5f76", null ],
-    [ "operator<<", "classinicpp_1_1section__schema.html#adde42a49f590cf5164bf5d086fadd8ed", null ],
     [ "operator=", "classinicpp_1_1section__schema.html#ac50cb32039053710af1f295b9c661f4f", null ],
     [ "operator=", "classinicpp_1_1section__schema.html#a84e076316fd29284f7a85e107c4bdb87", null ],
-    [ "validate", "classinicpp_1_1section__schema.html#a6b7df0119986a7f8fc8e71feb3ceaa1b", null ]
+    [ "operator[]", "classinicpp_1_1section__schema.html#a7f7c72378adc6a44e318bef9809ce845", null ],
+    [ "operator[]", "classinicpp_1_1section__schema.html#a310e7f98133e353a0f445b7a96daece2", null ],
+    [ "operator[]", "classinicpp_1_1section__schema.html#a17818bec640f438d1a207cb056866ded", null ],
+    [ "operator[]", "classinicpp_1_1section__schema.html#acba28a785b28acf2ae72e1eb57e22b5b", null ],
+    [ "remove_option", "classinicpp_1_1section__schema.html#a43ec99c8fed802e2fa79342818350d0f", null ],
+    [ "size", "classinicpp_1_1section__schema.html#a99a217cf34b20526cc27f6586fbd9d2c", null ],
+    [ "validate_section", "classinicpp_1_1section__schema.html#a5700098feaa08dc68a148bfe34817e52", null ],
+    [ "write_additional_info", "classinicpp_1_1section__schema.html#ab0852bfd74c5bcb50e1fb2950789f354", null ],
+    [ "write_section_name", "classinicpp_1_1section__schema.html#a161f8b0dd6830e6c71900908cd94b0e2", null ],
+    [ "operator<<", "classinicpp_1_1section__schema.html#a5bfad44e9c2ee83e8e08f6505bd286a3", null ]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['mandatory',['mandatory',['../structinicpp_1_1option__schema__params__base.html#a99f2e9a9e39e2c0057356f6bef16dbdd',1,'inicpp::option_schema_params_base::mandatory()'],['../structinicpp_1_1section__schema__params.html#acd172288248897c6c48c4ccfbd48d0e7',1,'inicpp::section_schema_params::mandatory()']]]
+  ['requirement',['requirement',['../classinicpp_1_1option__schema__params__base.html#a78b555a3af237c7f616650b60ba51103',1,'inicpp::option_schema_params_base::requirement()'],['../structinicpp_1_1section__schema__params.html#a10c1cc46939c31722ce3c08fe935ede1',1,'inicpp::section_schema_params::requirement()']]]
 ];
