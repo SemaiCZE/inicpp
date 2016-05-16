@@ -49,7 +49,32 @@ $ ./tests/run_tests
 
 ### Windows
 
-_**To be done...**_
+For Windows there are two ways of building `inicpp`. For both ways `cmake` has to be installed on machine.
+
+Using **MS Visual Studio**:
+- As stated `Visual Studio 2015` (or later) should be installed on the machine.
+- If dependencies are successfully fulfilled then run `cmake` in root directory of repository using:
+```
+> cmake -G "Visual Studio 14 2015"
+```
+- This command will generate solution files
+- Open solution file `inicpp.sln` using `Visual Studio`
+- Build `ALL_BUILD` project which will hopefully successfully build whole library
+- Distribute static or shared binaries which can be found in target build directories to your program/library
+
+Using **MS Visual C++**:
+- Besides `Visual C++ 2015` (or later) `nmake` compilation tool is needed (both should be part of `Windows SDK`)
+- Run `cmake` in root directory of repository using:
+```
+> cmake -G "NMake Makefiles"
+```
+- This will generate file `Makefile` which can be interpreted with `nmake`
+- Now enter following easy command:
+```
+> nmake
+```
+- After this compiled library should appear in working directory
+- Depending on your needs use `inicpp` or `inicpp_static` in your library or program
 
 ## Examples
 
