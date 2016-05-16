@@ -132,7 +132,7 @@ namespace inicpp
 		const section_schema &operator[](const std::string &section_name) const;
 		/**
 		 * Tries to find section_schema with specified name inside this config.
-		 * @parame section_name name which is searched
+		 * @param section_name name which is searched
 		 * @return true if section_schema with this name is present, false otherwise
 		 */
 		bool contains(const std::string &section_name) const;
@@ -148,6 +148,7 @@ namespace inicpp
 		/**
 		 * Classic stream operator for printing this instance to output stream.
 		 * @param os output stream
+		 * @param schm reference to schema instance to be written
 		 * @return reference to output stream which allows chaining
 		 */
 		INICPP_API friend std::ostream &operator<<(std::ostream &os, const schema &schm);

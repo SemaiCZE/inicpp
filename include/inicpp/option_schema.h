@@ -182,7 +182,6 @@ namespace inicpp
 		/**
 		 * Validate given option against this option_schema.
 		 * @param opt validated option
-		 * @param mode validation mode
 		 * @throws validation_exception if error occured
 		 */
 		void validate_option(option &opt) const;
@@ -197,6 +196,7 @@ namespace inicpp
 		/**
 		 * Classic stream operator for printing this instance to output stream.
 		 * @param os output stream
+		 * @param opt_schema reference to option_schema instance to be written
 		 * @return reference to output stream which allows chaining
 		 */
 		INICPP_API friend std::ostream &operator<<(std::ostream &os, const option_schema &opt_schema);

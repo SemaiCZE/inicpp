@@ -231,7 +231,7 @@ namespace inicpp
 		/**
 		 * Construct ini option with specified value of specified list type.
 		 * @param name name of newly created option
-		 * @param value initial value
+		 * @param values initial value
 		 */
 		option(const std::string &name, const std::vector<std::string> &values);
 
@@ -444,6 +444,7 @@ namespace inicpp
 		/**
 		 * Classic stream operator for printing this instance to output stream.
 		 * @param os output stream
+		 * @param opt reference to option instance to be written
 		 * @return reference to output stream which allows chaining
 		 */
 		INICPP_API friend std::ostream &operator<<(std::ostream &os, const option &opt);

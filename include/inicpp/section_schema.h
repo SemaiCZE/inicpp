@@ -161,7 +161,7 @@ namespace inicpp
 		const option_schema &operator[](const std::string &option_name) const;
 		/**
 		 * Tries to find option_schema with specified name inside this section.
-		 * @parame option_name name which is searched
+		 * @param option_name name which is searched
 		 * @return true if option_schema with this name is present, false otherwise
 		 */
 		bool contains(const std::string &option_name) const;
@@ -191,6 +191,7 @@ namespace inicpp
 		/**
 		 * Classic stream operator for printing this instance to output stream.
 		 * @param os output stream
+		 * @param sect_schema reference to section_schema instance to be written
 		 * @return reference to output stream which allows chaining
 		 */
 		INICPP_API friend std::ostream &operator<<(std::ostream &os, const section_schema &sect_schema);
