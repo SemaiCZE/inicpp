@@ -69,6 +69,20 @@ if(MSVC)
 endif()
 
 
+# ========== Install targets - 'sudo make install' ==========
+include(InstallRequiredSystemLibraries)
+if(UNIX)
+	install(DIRECTORY ${INCLUDE_DIR} DESTINATION /usr/local/include)
+	install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION /usr/local/lib COMPONENT library)
+elseif(MSVC)
+	install(DIRECTORY ${INCLUDE_DIR} DESTINATION include)
+	install(TARGETS ${PROJECT_NAME} DESTINATION lib COMPONENT library)
+else()
+	install(DIRECTORY ${INCLUDE_DIR} DESTINATION inicpp/include)
+	install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION inicpp/lib COMPONENT library)
+endif()
+
+
 # ========== Formatting ==========
 file(GLOB_RECURSE ALL_SOURCE_FILES src/*.cpp src/*.h tests/*.cpp tests/*.h include/inicpp/*.h)
 if(UNIX)
