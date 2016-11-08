@@ -1,5 +1,6 @@
 # inicpp
 
+[![Build Status](https://travis-ci.org/SemaiCZE/inicpp.svg?branch=master)](https://travis-ci.org/SemaiCZE/inicpp)
 [![License](https://img.shields.io/badge/license-mit-blue.svg)](http://badges.mit-license.org)
 [![Wiki](https://img.shields.io/badge/docs-wiki-orange.svg)](https://github.com/SemaiCZE/inicpp/wiki)
 [![Docs](https://img.shields.io/badge/docs-latest-brightgreen.svg)](http://semaicze.github.io/inicpp)
