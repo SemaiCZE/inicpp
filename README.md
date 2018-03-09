@@ -32,7 +32,7 @@ Also C++ compiler with at least C++14 support is required.
 
 To build the library run following commands from root of source code directory:
 
-```{.sh}
+```.sh
 $ mkdir -p build
 $ cd build
 $ cmake ..
@@ -41,7 +41,7 @@ $ make
 
 To build and run unit tests using Google Test framework run additional commands:
 
-```{.sh}
+```.sh
 $ make -f tests/Makefile
 $ ./tests/run_tests
 ```
@@ -81,13 +81,13 @@ Using **MS Visual C++**:
 
 Some examples are located in `examples` directory. Compiling them requires additional steps after standard library compilation, for example on Linux (note that you must be in `build` directory):
 
-```{.sh}
+```.sh
 $ make -f examples/Makefile
 ```
 
 Compiled examples can be run as follows:
 
-```{.sh}
+```.sh
 $ ./examples/schema_validation/inicpp_schema
 $ ./examples/basic/inicpp_basic
 ```
@@ -99,7 +99,7 @@ Expected outputs are also provided with examples sources.
 
 Slightly modified version of basic example.
 
-```{.cpp}
+```.cpp
 std::cout << "Load and parse config from string" << std::endl;
 config example_conf = parser::load(get_config());
 
@@ -168,7 +168,7 @@ Without schema all items are treated as string type, but runtime conversion coul
 
 Schema validation can bring you ability to make sure, that a config file contain what you expect with type safety. In addition, this implies better performance on heavy reading of validated configuration. Slightly modified version of schema validation example.
 
-```{.cpp}
+```.cpp
 std::cout << "Create config schema" << std::endl;
 schema schm;
 
