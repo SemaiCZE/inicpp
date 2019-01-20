@@ -1,0 +1,16 @@
+Remove google testing framework from top-level CMakeLists.txt.  Runnin cmake
+fails on this subdirectory unless the user manually checks out additional git
+submodules that are not included in the source tarball.
+--- CMakeLists.txt.orig	2016-05-16 16:41:41.000000000 -0500
++++ CMakeLists.txt	2019-01-16 15:06:04.340492501 -0600
+@@ -49,10 +49,6 @@
+ 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -Wall")
+ endif()
+ 
+-# Set up google testing framework (not compile by default)
+-set(gtest_force_shared_crt ON CACHE BOOL "Use shared (DLL) run-time lib even when Google Test is built as static lib.")
+-add_subdirectory(vendor/googletest EXCLUDE_FROM_ALL)
+-
+ # Add our very own unit tests (not compile by default)
+ add_subdirectory(tests EXCLUDE_FROM_ALL)
+ 
