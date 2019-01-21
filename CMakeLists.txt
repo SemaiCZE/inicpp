@@ -50,8 +50,11 @@ if(UNIX)
 endif()
 
 # Set up google testing framework (not compile by default)
-set(gtest_force_shared_crt ON CACHE BOOL "Use shared (DLL) run-time lib even when Google Test is built as static lib.")
-add_subdirectory(vendor/googletest EXCLUDE_FROM_ALL)
+set(NO_GOOGLE_TEST OFF CACHE BOOL "Disable google testing framework.  Useful when buidling from a tarball since google testing framework support requires fetching of additional git submodules.")
+if(NOT ${NO_GOOGLE_TEST})
+	set(gtest_force_shared_crt ON CACHE BOOL "Use shared (DLL) run-time lib even when Google Test is built as static lib.")
+	add_subdirectory(vendor/googletest EXCLUDE_FROM_ALL)
+endif()
 
 # Add our very own unit tests (not compile by default)
 add_subdirectory(tests EXCLUDE_FROM_ALL)
