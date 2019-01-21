@@ -74,9 +74,11 @@ endif()
 
 # ========== Install targets - 'sudo make install' ==========
 include(InstallRequiredSystemLibraries)
+set(INCLUDE_INSTALL_DIR /usr/local/include CACHE PATH "Directory in which to install system header files.")
+set(INCLUDE_INSTALL_DIR /usr/local/include CACHE PATH "Directory in which to install system libraries.")
 if(UNIX)
-	install(DIRECTORY ${INCLUDE_DIR} DESTINATION /usr/include)
-	install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION /usr/lib COMPONENT library)
+	install(DIRECTORY ${INCLUDE_DIR} DESTINATION ${INCLUDE_INSTALL_DIR})
+	install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION ${LIB_INSTALL_DIR} COMPONENT library)
 elseif(MSVC)
 	install(DIRECTORY ${INCLUDE_DIR} DESTINATION include)
 	install(TARGETS ${PROJECT_NAME} DESTINATION lib COMPONENT library)
