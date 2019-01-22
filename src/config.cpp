@@ -2,22 +2,18 @@
 
 namespace inicpp
 {
-	config::config()
+	config::config() : sections_(), sections_map_()
 	{
 	}
 
-	config::config(const config &source)
+	config::config(const config &source) : sections_(), sections_map_()
 	{
 		// we have to do deep copies of sections
 		sections_.reserve(source.sections_.size());
-		for (auto &sect : source.sections_) {
-			sections_.push_back(std::make_shared<section>(*sect));
-		}
+		for (auto &sect : source.sections_) { sections_.push_back(std::make_shared<section>(*sect)); }
 
 		// we already have constructed sections... now push them into map
-		for (auto &sect : sections_) {
-			sections_map_.insert(sections_map_pair(sect->get_name(), sect));
-		}
+		for (auto &sect : sections_) { sections_map_.insert(sections_map_pair(sect->get_name(), sect)); }
 	}
 
 	config &config::operator=(const config &source)
@@ -31,7 +27,7 @@ namespace inicpp
 		return *this;
 	}
 
-	config::config(config &&source)
+	config::config(config &&source) : sections_(), sections_map_()
 	{
 		operator=(std::move(source));
 	}
@@ -113,18 +109,14 @@ namespace inicpp
 
 	section &config::operator[](size_t index)
 	{
-		if (index >= sections_.size()) {
-			throw not_found_exception(index);
-		}
+		if (index >= sections_.size()) { throw not_found_exception(index); }
 
 		return *sections_[index];
 	}
 
 	const section &config::operator[](size_t index) const
 	{
-		if (index >= sections_.size()) {
-			throw not_found_exception(index);
-		}
+		if (index >= sections_.size()) { throw not_found_exception(index); }
 
 		return *sections_[index];
 	}
@@ -134,7 +126,7 @@ namespace inicpp
 		std::shared_ptr<section> result;
 		try {
 			result = sections_map_.at(section_name);
-		} catch (std::out_of_range) {
+		} catch (const std::out_of_range &) {
 			throw not_found_exception(section_name);
 		}
 		return *result;
@@ -145,7 +137,7 @@ namespace inicpp
 		std::shared_ptr<section> result;
 		try {
 			result = sections_map_.at(section_name);
-		} catch (std::out_of_range) {
+		} catch (const std::out_of_range &) {
 			throw not_found_exception(section_name);
 		}
 		return *result;
@@ -156,7 +148,7 @@ namespace inicpp
 		try {
 			sections_map_.at(section_name);
 			return true;
-		} catch (std::out_of_range) {
+		} catch (const std::out_of_range &) {
 			return false;
 		}
 	}
@@ -213,10 +205,8 @@ namespace inicpp
 
 	std::ostream &operator<<(std::ostream &os, const config &conf)
 	{
-		for (auto &sect : conf.sections_) {
-			os << *sect;
-		}
+		for (auto &sect : conf.sections_) { os << *sect; }
 
 		return os;
 	}
-}
+} // namespace inicpp

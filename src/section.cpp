@@ -2,18 +2,14 @@
 
 namespace inicpp
 {
-	section::section(const section &source) : name_(source.name_)
+	section::section(const section &source) : options_(), options_map_(), name_(source.name_)
 	{
 		// we have to do deep copies of options
 		options_.reserve(source.options_.size());
-		for (auto &opt : source.options_) {
-			options_.push_back(std::make_shared<option>(*opt));
-		}
+		for (auto &opt : source.options_) { options_.push_back(std::make_shared<option>(*opt)); }
 
 		// we already have constructed options... now push them into map
-		for (auto &opt : options_) {
-			options_map_.insert(options_map_pair(opt->get_name(), opt));
-		}
+		for (auto &opt : options_) { options_map_.insert(options_map_pair(opt->get_name(), opt)); }
 	}
 
 	section &section::operator=(const section &source)
@@ -27,7 +23,7 @@ namespace inicpp
 		return *this;
 	}
 
-	section::section(section &&source)
+	section::section(section &&source) : options_(), options_map_(), name_()
 	{
 		operator=(std::move(source));
 	}
@@ -42,7 +38,7 @@ namespace inicpp
 		return *this;
 	}
 
-	section::section(const std::string &name) : name_(name)
+	section::section(const std::string &name) : options_(), options_map_(), name_(name)
 	{
 	}
 
@@ -87,18 +83,14 @@ namespace inicpp
 
 	option &section::operator[](size_t index)
 	{
-		if (index >= size()) {
-			throw not_found_exception(index);
-		}
+		if (index >= size()) { throw not_found_exception(index); }
 
 		return *options_[index];
 	}
 
 	const option &section::operator[](size_t index) const
 	{
-		if (index >= size()) {
-			throw not_found_exception(index);
-		}
+		if (index >= size()) { throw not_found_exception(index); }
 
 		return *options_[index];
 	}
@@ -108,7 +100,7 @@ namespace inicpp
 		std::shared_ptr<option> result;
 		try {
 			result = options_map_.at(option_name);
-		} catch (std::out_of_range) {
+		} catch (const std::out_of_range &) {
 			throw not_found_exception(option_name);
 		}
 		return *result;
@@ -119,7 +111,7 @@ namespace inicpp
 		std::shared_ptr<option> result;
 		try {
 			result = options_map_.at(option_name);
-		} catch (std::out_of_range) {
+		} catch (const std::out_of_range &) {
 			throw not_found_exception(option_name);
 		}
 		return *result;
@@ -130,7 +122,7 @@ namespace inicpp
 		try {
 			options_map_.at(option_name);
 			return true;
-		} catch (std::out_of_range) {
+		} catch (const std::out_of_range &) {
 			return false;
 		}
 	}
@@ -142,9 +134,7 @@ namespace inicpp
 
 	bool section::operator==(const section &other) const
 	{
-		if (name_ != other.name_) {
-			return false;
-		}
+		if (name_ != other.name_) { return false; }
 
 		return std::equal(options_.begin(),
 			options_.end(),
@@ -192,10 +182,8 @@ namespace inicpp
 	std::ostream &operator<<(std::ostream &os, const section &sect)
 	{
 		os << "[" << sect.get_name() << "]" << std::endl;
-		for (auto &opt : sect.options_) {
-			os << *opt;
-		}
+		for (auto &opt : sect.options_) { os << *opt; }
 
 		return os;
 	}
-}
+} // namespace inicpp

@@ -2,7 +2,7 @@
 
 namespace inicpp
 {
-	option::option(const option &source)
+	option::option(const option &source) : name_(), type_(), values_(), option_schema_()
 	{
 		this->operator=(source);
 	}
@@ -24,7 +24,6 @@ namespace inicpp
 				case option_type::invalid_e:
 					// never reached
 					throw invalid_type_exception("Invalid option type");
-					break;
 				}
 			}
 			option_schema_ = source.option_schema_;
@@ -32,7 +31,7 @@ namespace inicpp
 		return *this;
 	}
 
-	option::option(option &&source)
+	option::option(option &&source) : name_(), type_(), values_(), option_schema_()
 	{
 		name_ = source.name_;
 		type_ = source.type_;
@@ -51,17 +50,16 @@ namespace inicpp
 		return *this;
 	}
 
-	option::option(const std::string &name, const std::string &value) : name_(name), type_(option_type::string_e)
+	option::option(const std::string &name, const std::string &value)
+		: name_(name), type_(option_type::string_e), values_(), option_schema_()
 	{
 		add_to_list<string_ini_t>(value);
 	}
 
 	option::option(const std::string &name, const std::vector<std::string> &values)
-		: name_(name), type_(option_type::string_e)
+		: name_(name), type_(option_type::string_e), values_(), option_schema_()
 	{
-		for (const auto &input_value : values) {
-			add_to_list<string_ini_t>(input_value);
-		}
+		for (const auto &input_value : values) { add_to_list<string_ini_t>(input_value); }
 	}
 
 	const std::string &option::get_name() const
@@ -76,9 +74,7 @@ namespace inicpp
 
 	void option::remove_from_list_pos(size_t position)
 	{
-		if (position >= values_.size()) {
-			throw not_found_exception(position);
-		}
+		if (position >= values_.size()) { throw not_found_exception(position); }
 		values_.erase(values_.begin() + position);
 	}
 
@@ -89,9 +85,7 @@ namespace inicpp
 
 	bool option::operator==(const option &other) const
 	{
-		if (name_ != other.name_ || type_ != other.type_) {
-			return false;
-		}
+		if (name_ != other.name_ || type_ != other.type_) { return false; }
 
 		if (values_.size() != other.values_.size()) {
 			return false;
@@ -99,36 +93,24 @@ namespace inicpp
 			for (size_t i = 0; i < values_.size(); ++i) {
 				switch (type_) {
 				case option_type::boolean_e:
-					if (!compare_option<boolean_ini_t>(values_[i], other.values_[i])) {
-						return false;
-					}
+					if (!compare_option<boolean_ini_t>(values_[i], other.values_[i])) { return false; }
 					break;
 				case option_type::enum_e:
-					if (!compare_option<enum_ini_t>(values_[i], other.values_[i])) {
-						return false;
-					}
+					if (!compare_option<enum_ini_t>(values_[i], other.values_[i])) { return false; }
 					break;
 				case option_type::float_e:
-					if (!compare_option<float_ini_t>(values_[i], other.values_[i])) {
-						return false;
-					}
+					if (!compare_option<float_ini_t>(values_[i], other.values_[i])) { return false; }
 					break;
 				case option_type::signed_e:
-					if (!compare_option<signed_ini_t>(values_[i], other.values_[i])) {
-						return false;
-					}
+					if (!compare_option<signed_ini_t>(values_[i], other.values_[i])) { return false; }
 					break;
 				case option_type::string_e:
-					if (!compare_option<string_ini_t>(values_[i], other.values_[i])) {
-						return false;
-					}
+					if (!compare_option<string_ini_t>(values_[i], other.values_[i])) { return false; }
 					break;
 				case option_type::unsigned_e:
-					if (!compare_option<unsigned_ini_t>(values_[i], other.values_[i])) {
-						return false;
-					}
+					if (!compare_option<unsigned_ini_t>(values_[i], other.values_[i])) { return false; }
 					break;
-				default: throw invalid_type_exception("Invalid option type"); break;
+				default: throw invalid_type_exception("Invalid option type");
 				}
 			}
 		}
@@ -207,12 +189,8 @@ namespace inicpp
 	std::string escape_option_value(const std::string &str)
 	{
 		std::string result(str);
-		if (str.length() > 0 && std::isspace(result[0])) {
-			result.insert(result.begin(), '\\');
-		}
-		if (str.length() > 1 && std::isspace(result[result.length() - 1])) {
-			result.insert(result.end() - 1, '\\');
-		}
+		if (str.length() > 0 && std::isspace(result[0])) { result.insert(result.begin(), '\\'); }
+		if (str.length() > 1 && std::isspace(result[result.length() - 1])) { result.insert(result.end() - 1, '\\'); }
 
 		return result;
 	}
@@ -243,30 +221,22 @@ namespace inicpp
 	void write_float_option(std::vector<float_ini_t> values, std::ostream &os)
 	{
 		os << values[0];
-		for (auto it = values.begin() + 1; it != values.end(); ++it) {
-			os << "," << *it;
-		}
+		for (auto it = values.begin() + 1; it != values.end(); ++it) { os << "," << *it; }
 	}
 	void write_signed_option(std::vector<signed_ini_t> values, std::ostream &os)
 	{
 		os << values[0];
-		for (auto it = values.begin() + 1; it != values.end(); ++it) {
-			os << "," << *it;
-		}
+		for (auto it = values.begin() + 1; it != values.end(); ++it) { os << "," << *it; }
 	}
 	void write_unsigned_option(std::vector<unsigned_ini_t> values, std::ostream &os)
 	{
 		os << values[0];
-		for (auto it = values.begin() + 1; it != values.end(); ++it) {
-			os << "," << *it;
-		}
+		for (auto it = values.begin() + 1; it != values.end(); ++it) { os << "," << *it; }
 	}
 	void write_string_option(std::vector<string_ini_t> values, std::ostream &os)
 	{
 		os << escape_option_value(values[0]);
-		for (auto it = values.begin() + 1; it != values.end(); ++it) {
-			os << "," << escape_option_value(*it);
-		}
+		for (auto it = values.begin() + 1; it != values.end(); ++it) { os << "," << escape_option_value(*it); }
 	}
 
 	std::ostream &operator<<(std::ostream &os, const option &opt)
@@ -282,10 +252,9 @@ namespace inicpp
 		case option_type::invalid_e:
 			// never reached
 			throw invalid_type_exception("Invalid option type");
-			break;
 		}
 		os << std::endl;
 
 		return os;
 	}
-}
+} // namespace inicpp

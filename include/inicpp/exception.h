@@ -52,15 +52,15 @@ namespace inicpp
 
 
 	/**
-	* Occurs when parsing went wrong in some way
-	*/
+	 * Occurs when parsing went wrong in some way
+	 */
 	class parser_exception : public exception
 	{
 	public:
 		/**
-		* General parser_exception constructor with given description.
-		* @param message exception cause
-		*/
+		 * General parser_exception constructor with given description.
+		 * @param message exception cause
+		 */
 		parser_exception(const std::string &message) : inicpp::exception(message)
 		{
 		}
@@ -84,7 +84,7 @@ namespace inicpp
 		 * Constructor in which casted elements can be specified.
 		 * @param from type from which conversion was invoked
 		 * @param to type to which conversion was invoked
-		*/
+		 */
 		bad_cast_exception(const std::string &from, const std::string &to)
 			: inicpp::exception("Bad conversion from: " + from + " to: " + to)
 		{
@@ -182,6 +182,6 @@ namespace inicpp
 		{
 		}
 	};
-}
+} // namespace inicpp
 
 #endif

@@ -15,8 +15,8 @@
 
 // Disable unwanted and not necessary MSVC++ warnings
 #ifdef _MSC_VER
-#pragma warning(disable:4800)
-#pragma warning(disable:4251)
+#pragma warning(disable : 4800)
+#pragma warning(disable : 4251)
 #endif
 
 

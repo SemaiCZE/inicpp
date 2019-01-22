@@ -4,7 +4,6 @@
 #include <fstream>
 #include <iostream>
 #include <regex>
-#include <regex>
 #include <sstream>
 #include <string>
 
@@ -154,18 +153,18 @@ namespace inicpp
 		 */
 		static void save(const config &cfg, const schema &schm, std::ostream &str);
 		/**
-		* Save validation schema to file.
-		* @param schm schema which will be saved
-		* @param file name of output file
-		*/
+		 * Save validation schema to file.
+		 * @param schm schema which will be saved
+		 * @param file name of output file
+		 */
 		static void save(const schema &schm, const std::string &file);
 		/**
-		* Save given validation schema to output stream.
-		* @param schm schema which will be saved
-		* @param str output stream
-		*/
+		 * Save given validation schema to output stream.
+		 * @param schm schema which will be saved
+		 * @param str output stream
+		 */
 		static void save(const schema &schm, std::ostream &str);
 	};
-}
+} // namespace inicpp
 
 #endif

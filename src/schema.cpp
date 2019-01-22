@@ -2,22 +2,18 @@
 
 namespace inicpp
 {
-	schema::schema()
+	schema::schema() : sections_(), sections_map_()
 	{
 	}
 
-	schema::schema(const schema &source)
+	schema::schema(const schema &source) : sections_(), sections_map_()
 	{
 		// we have to do deep copies of section schemas
 		sections_.reserve(source.sections_.size());
-		for (auto &sect : source.sections_) {
-			sections_.push_back(std::make_shared<section_schema>(*sect));
-		}
+		for (auto &sect : source.sections_) { sections_.push_back(std::make_shared<section_schema>(*sect)); }
 
 		// we already have constructed section schemas... now push them into map
-		for (auto &sect : sections_) {
-			sections_map_.insert(sect_schema_map_pair(sect->get_name(), sect));
-		}
+		for (auto &sect : sections_) { sections_map_.insert(sect_schema_map_pair(sect->get_name(), sect)); }
 	}
 
 	schema &schema::operator=(const schema &source)
@@ -30,7 +26,7 @@ namespace inicpp
 		return *this;
 	}
 
-	schema::schema(schema &&source)
+	schema::schema(schema &&source) : sections_(), sections_map_()
 	{
 		*this = std::move(source);
 	}
@@ -86,18 +82,14 @@ namespace inicpp
 
 	section_schema &schema::operator[](size_t index)
 	{
-		if (index >= sections_.size()) {
-			throw not_found_exception(index);
-		}
+		if (index >= sections_.size()) { throw not_found_exception(index); }
 
 		return *sections_[index];
 	}
 
 	const section_schema &schema::operator[](size_t index) const
 	{
-		if (index >= sections_.size()) {
-			throw not_found_exception(index);
-		}
+		if (index >= sections_.size()) { throw not_found_exception(index); }
 
 		return *sections_[index];
 	}
@@ -107,7 +99,7 @@ namespace inicpp
 		std::shared_ptr<section_schema> result;
 		try {
 			result = sections_map_.at(section_name);
-		} catch (std::out_of_range) {
+		} catch (const std::out_of_range &) {
 			throw not_found_exception(section_name);
 		}
 		return *result;
@@ -118,7 +110,7 @@ namespace inicpp
 		std::shared_ptr<section_schema> result;
 		try {
 			result = sections_map_.at(section_name);
-		} catch (std::out_of_range) {
+		} catch (const std::out_of_range &) {
 			throw not_found_exception(section_name);
 		}
 		return *result;
@@ -129,7 +121,7 @@ namespace inicpp
 		try {
 			sections_map_.at(section_name);
 			return true;
-		} catch (std::out_of_range) {
+		} catch (const std::out_of_range &) {
 			return false;
 		}
 	}
@@ -170,9 +162,7 @@ namespace inicpp
 			bool contains = this->contains(sect.get_name());
 
 			// if schema contains section everything is fine, we handled this above
-			if (contains) {
-				continue;
-			}
+			if (contains) { continue; }
 
 			// we have strict mode and section which is not in schema
 			if (mode == schema_mode::strict) {
@@ -183,10 +173,8 @@ namespace inicpp
 
 	std::ostream &operator<<(std::ostream &os, const schema &schm)
 	{
-		for (auto &sect : schm.sections_) {
-			os << *sect;
-		}
+		for (auto &sect : schm.sections_) { os << *sect; }
 
 		return os;
 	}
-}
+} // namespace inicpp

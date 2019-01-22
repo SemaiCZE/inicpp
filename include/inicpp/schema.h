@@ -155,6 +155,6 @@ namespace inicpp
 	};
 
 	INICPP_API std::ostream &operator<<(std::ostream &os, const schema &schm);
-}
+} // namespace inicpp
 
 #endif
