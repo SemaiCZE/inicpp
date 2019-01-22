@@ -24,9 +24,7 @@ namespace inicpp
 			auto front = std::find_if(str.begin(), str.end(), [](int c) { return !std::isspace(c); });
 			auto back = std::find_if(str.rbegin(), str.rend(), [](int c) { return !std::isspace(c); }).base();
 
-			if (back <= front) {
-				return "";
-			}
+			if (back <= front) { return ""; }
 			return std::string(front, back);
 		}
 
@@ -39,14 +37,10 @@ namespace inicpp
 		{
 			size_t search_str_length = search_str.length();
 
-			if (search_str_length > str.length()) {
-				return false;
-			}
+			if (search_str_length > str.length()) { return false; }
 
 			for (size_t i = 0; i < search_str_length; ++i) {
-				if (str[i] != search_str[i]) {
-					return false;
-				}
+				if (str[i] != search_str[i]) { return false; }
 			}
 
 			return true;
@@ -57,14 +51,10 @@ namespace inicpp
 			size_t search_str_length = search_str.length();
 			size_t str_length = str.length();
 
-			if (search_str_length > str.length()) {
-				return false;
-			}
+			if (search_str_length > str.length()) { return false; }
 
 			for (size_t i = 0; i < search_str_length; ++i) {
-				if (str[str_length - i - 1] != search_str[search_str_length - i - 1]) {
-					return false;
-				}
+				if (str[str_length - i - 1] != search_str[search_str_length - i - 1]) { return false; }
 			}
 
 			return true;
@@ -76,9 +66,7 @@ namespace inicpp
 			std::stringstream stream(str);
 			std::string item;
 
-			while (std::getline(stream, item, delim)) {
-				result.push_back(item);
-			}
+			while (std::getline(stream, item, delim)) { result.push_back(item); }
 			return result;
 		}
 
@@ -147,7 +135,7 @@ namespace inicpp
 				throw invalid_type_exception("Option '" + option_name + "' parsing failed: " + e.what());
 			}
 		}
-	}
+	} // namespace string_utils
 
 	namespace inistd
 	{
@@ -155,5 +143,5 @@ namespace inicpp
 		{
 			return static_cast<std::string>(value);
 		}
-	}
-}
+	} // namespace inistd
+} // namespace inicpp

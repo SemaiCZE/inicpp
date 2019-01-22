@@ -105,9 +105,7 @@ namespace inicpp
 			const std::string &option_name) const
 		{
 			std::vector<ValueType> typed_items;
-			for (const auto &item : items) {
-				typed_items.push_back(parser(item, option_name));
-			}
+			for (const auto &item : items) { typed_items.push_back(parser(item, option_name)); }
 			return typed_items;
 		}
 
@@ -141,9 +139,7 @@ namespace inicpp
 		template <typename ArgType> option_schema(const option_schema_params<ArgType> &arguments)
 		{
 			type_ = get_option_enum_type<ArgType>();
-			if (type_ == option_type::invalid_e) {
-				throw invalid_type_exception("Invalid schema type");
-			}
+			if (type_ == option_type::invalid_e) { throw invalid_type_exception("Invalid schema type"); }
 
 			params_ = std::make_unique<option_schema_params<ArgType>>(arguments);
 		}
@@ -203,6 +199,6 @@ namespace inicpp
 	};
 
 	INICPP_API std::ostream &operator<<(std::ostream &os, const option_schema &opt_schema);
-}
+} // namespace inicpp
 
 #endif

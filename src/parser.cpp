@@ -34,9 +34,7 @@ namespace inicpp
 				// escaped character, do not do anything
 				escaped = false;
 
-				if (str[i] == ch) {
-					result = i;
-				}
+				if (str[i] == ch) { result = i; }
 			} else if (str[i] == '\\') {
 				// next character will be escaped
 				escaped = true;
@@ -101,9 +99,7 @@ namespace inicpp
 			value = right_trim(value);
 			if (whitespace_pos != std::string::npos) {
 				// last character is escaped whitespace
-				if (value.size() == whitespace_pos) {
-					value.push_back(' ');
-				}
+				if (value.size() == whitespace_pos) { value.push_back(' '); }
 			}
 			// finally unescape
 			value = unescape(value);
@@ -200,9 +196,7 @@ namespace inicpp
 					}
 
 					// if there is cached section, save it
-					if (last_section != nullptr) {
-						cfg.add_section(*last_section);
-					}
+					if (last_section != nullptr) { cfg.add_section(*last_section); }
 
 					// extract name and validate it and finally create section object
 					std::string sect_name = unescape(line.substr(1, line.length() - 2));
@@ -252,9 +246,7 @@ namespace inicpp
 		}
 
 		// if there is cached section we have to add it to created config too
-		if (last_section != nullptr) {
-			cfg.add_section(*last_section);
-		}
+		if (last_section != nullptr) { cfg.add_section(*last_section); }
 
 		return cfg;
 	}
@@ -331,9 +323,7 @@ namespace inicpp
 	config parser::load_file(const std::string &file)
 	{
 		std::ifstream input(file);
-		if (input.fail()) {
-			throw parser_exception("File reading error");
-		}
+		if (input.fail()) { throw parser_exception("File reading error"); }
 
 		return internal_load(input);
 	}
@@ -341,9 +331,7 @@ namespace inicpp
 	config parser::load_file(const std::string &file, const schema &schm, schema_mode mode)
 	{
 		std::ifstream input(file);
-		if (input.fail()) {
-			throw parser_exception("File reading error");
-		}
+		if (input.fail()) { throw parser_exception("File reading error"); }
 
 		config cfg = internal_load(input);
 		cfg.validate(schm, mode);
@@ -385,4 +373,4 @@ namespace inicpp
 	{
 		str << schm;
 	}
-}
+} // namespace inicpp

@@ -198,6 +198,6 @@ namespace inicpp
 	};
 
 	INICPP_API std::ostream &operator<<(std::ostream &os, const section_schema &sect_schema);
-}
+} // namespace inicpp
 
 #endif

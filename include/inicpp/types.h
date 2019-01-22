@@ -27,27 +27,27 @@ namespace inicpp
 		{
 		}
 		/** Copy constructor */
-		internal_enum_type(const internal_enum_type &other)
+		internal_enum_type(const internal_enum_type &other) : data_()
 		{
 			this->operator=(other);
 		}
 		/** Conversion contructor - only for template compilation, allways throws std::runtime_error */
-		explicit internal_enum_type(bool)
+		[[noreturn]] explicit internal_enum_type(bool) : data_()
 		{
 			throw std::runtime_error("");
 		}
 		/** Conversion contructor - only for template compilation, allways throws std::runtime_error */
-		explicit internal_enum_type(int64_t)
+		[[noreturn]] explicit internal_enum_type(int64_t) : data_()
 		{
 			throw std::runtime_error("");
 		}
 		/** Conversion contructor - only for template compilation, allways throws std::runtime_error */
-		explicit internal_enum_type(uint64_t)
+		[[noreturn]] explicit internal_enum_type(uint64_t) : data_()
 		{
 			throw std::runtime_error("");
 		}
 		/** Conversion contructor - only for template compilation, allways throws std::runtime_error */
-		explicit internal_enum_type(double)
+		[[noreturn]] explicit internal_enum_type(double) : data_()
 		{
 			throw std::runtime_error("");
 		}
@@ -152,6 +152,6 @@ namespace inicpp
 			return option_type::invalid_e;
 		}
 	}
-}
+} // namespace inicpp
 
 #endif // INICPP_TYPES_H

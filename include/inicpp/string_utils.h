@@ -121,7 +121,7 @@ namespace inicpp
 		 */
 		template <>
 		unsigned_ini_t parse_string<unsigned_ini_t>(const std::string &value, const std::string &option_name);
-	}
+	} // namespace string_utils
 
 	/** Internal namespace to hide to_string methods. */
 	namespace inistd
@@ -130,7 +130,7 @@ namespace inicpp
 		using std::to_string;
 		/** Custom to_string method for enum_ini_t type */
 		std::string to_string(const enum_ini_t &value);
-	};
-}
+	}; // namespace inistd
+} // namespace inicpp
 
 #endif // INICPP_STRING_UTILS_H

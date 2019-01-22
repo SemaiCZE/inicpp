@@ -11,7 +11,6 @@
 #include "option_schema.h"
 #include "string_utils.h"
 #include "types.h"
-#include "types.h"
 
 
 namespace inicpp
@@ -105,9 +104,7 @@ namespace inicpp
 			static ReturnType get_converted_value(const std::unique_ptr<option_holder> &value)
 			{
 				option_value<ActualType> *ptr = dynamic_cast<option_value<ActualType> *>(&*value);
-				if (ptr == nullptr) {
-					throw bad_cast_exception("Cannot cast to requested type");
-				}
+				if (ptr == nullptr) { throw bad_cast_exception("Cannot cast to requested type"); }
 				try {
 					return static_cast<ReturnType>(ptr->get());
 				} catch (std::runtime_error &e) {
@@ -125,9 +122,7 @@ namespace inicpp
 			static string_ini_t get_converted_value(const std::unique_ptr<option_holder> &value)
 			{
 				option_value<ActualType> *ptr = dynamic_cast<option_value<ActualType> *>(&*value);
-				if (ptr == nullptr) {
-					throw bad_cast_exception("Cannot cast to requested type");
-				}
+				if (ptr == nullptr) { throw bad_cast_exception("Cannot cast to requested type"); }
 				return inistd::to_string(ptr->get());
 			}
 		};
@@ -178,9 +173,7 @@ namespace inicpp
 			case option_type::signed_e: return convertor<signed_ini_t, ReturnType>::get_converted_value(value); break;
 			case option_type::string_e: {
 				option_value<string_ini_t> *ptr = dynamic_cast<option_value<string_ini_t> *>(&*value);
-				if (ptr == nullptr) {
-					throw bad_cast_exception("Cannot cast to requested type");
-				}
+				if (ptr == nullptr) { throw bad_cast_exception("Cannot cast to requested type"); }
 
 				// We have string, so try to parse it
 				try {
@@ -247,9 +240,9 @@ namespace inicpp
 		 */
 		option_type get_type() const;
 		/**
-		* Determines if option is list or not.
-		* @return true if option is list, false otherwise
-		*/
+		 * Determines if option is list or not.
+		 * @return true if option is list, false otherwise
+		 */
 		bool is_list() const;
 
 		/**
@@ -314,9 +307,7 @@ namespace inicpp
 		 */
 		template <typename ReturnType> ReturnType get() const
 		{
-			if (values_.empty()) {
-				throw not_found_exception(0);
-			}
+			if (values_.empty()) { throw not_found_exception(0); }
 
 			// Get the value and try to convert it
 			return convert_single_value<ReturnType>(type_, values_[0]);
@@ -334,9 +325,7 @@ namespace inicpp
 		{
 			values_.clear();
 			type_ = get_option_enum_type<ValueType>();
-			for (const auto &item : list) {
-				add_to_list(item);
-			}
+			for (const auto &item : list) { add_to_list(item); }
 		}
 
 		/**
@@ -349,13 +338,9 @@ namespace inicpp
 		 */
 		template <typename ReturnType> std::vector<ReturnType> get_list() const
 		{
-			if (values_.empty()) {
-				throw not_found_exception(0);
-			}
+			if (values_.empty()) { throw not_found_exception(0); }
 			std::vector<ReturnType> results;
-			for (const auto &value : values_) {
-				results.push_back(convert_single_value<ReturnType>(type_, value));
-			}
+			for (const auto &value : values_) { results.push_back(convert_single_value<ReturnType>(type_, value)); }
 
 			return results;
 		}
@@ -388,9 +373,7 @@ namespace inicpp
 			if (get_option_enum_type<ValueType>() != type_) {
 				throw bad_cast_exception("Cannot cast to requested type");
 			}
-			if (position > values_.size()) {
-				throw not_found_exception(position);
-			}
+			if (position > values_.size()) { throw not_found_exception(position); }
 			auto new_option_value = std::make_unique<option_value<ValueType>>(value);
 			values_.insert(values_.begin() + position, std::move(new_option_value));
 		}
@@ -451,6 +434,6 @@ namespace inicpp
 	};
 
 	INICPP_API std::ostream &operator<<(std::ostream &os, const option &opt);
-}
+} // namespace inicpp
 
 #endif

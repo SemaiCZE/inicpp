@@ -186,14 +186,14 @@ namespace inicpp
 		bool operator!=(const config &other) const;
 
 		/**
-		* Iterator pointing at the beginning of sections list.
-		* @return config_iterator
-		*/
+		 * Iterator pointing at the beginning of sections list.
+		 * @return config_iterator
+		 */
 		iterator begin();
 		/**
-		* Iterator pointing at the end of sections list.
-		* @return config_iterator
-		*/
+		 * Iterator pointing at the end of sections list.
+		 * @return config_iterator
+		 */
 		iterator end();
 		/**
 		 * Constant iterator pointing at the beginning of sections list.
@@ -349,6 +349,6 @@ namespace inicpp
 			return &(operator*());
 		}
 	};
-}
+} // namespace inicpp
 
 #endif

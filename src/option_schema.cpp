@@ -3,7 +3,7 @@
 
 namespace inicpp
 {
-	option_schema::option_schema(const option_schema &source)
+	option_schema::option_schema(const option_schema &source) : type_(), params_()
 	{
 		this->operator=(source);
 	}
@@ -22,13 +22,12 @@ namespace inicpp
 		case option_type::invalid_e:
 			// never reached
 			throw invalid_type_exception("Invalid option type");
-			break;
 		}
 
 		return *this;
 	}
 
-	option_schema::option_schema(option_schema &&source)
+	option_schema::option_schema(option_schema &&source) : type_(), params_()
 	{
 		this->operator=(std::move(source));
 	}
@@ -81,9 +80,7 @@ namespace inicpp
 		}
 
 		// if option type doesn't match, parse it to proper one
-		if (opt.get_type() != type_) {
-			parse_option_items(opt);
-		}
+		if (opt.get_type() != type_) { parse_option_items(opt); }
 
 		// validate range using provided validator
 		validate_option_items(opt);
@@ -114,7 +111,6 @@ namespace inicpp
 		case option_type::invalid_e:
 			// never reached
 			throw invalid_type_exception("Option '" + opt.get_name() + "' - invalid option type");
-			break;
 		}
 	}
 
@@ -147,7 +143,6 @@ namespace inicpp
 		case option_type::invalid_e:
 			// never reached
 			throw invalid_type_exception("Option '" + opt.get_name() + "' - invalid option type");
-			break;
 		}
 	}
 
@@ -155,9 +150,7 @@ namespace inicpp
 	{
 		// write comment
 		auto comment_lines = string_utils::split(get_comment(), '\n');
-		for (auto &comment_line : comment_lines) {
-			os << ";" << comment_line << std::endl;
-		}
+		for (auto &comment_line : comment_lines) { os << ";" << comment_line << std::endl; }
 
 		// optional/mandatory and single/list
 		std::string info_line = is_mandatory() ? "mandatory" : "optional";
@@ -181,4 +174,4 @@ namespace inicpp
 
 		return os;
 	}
-}
+} // namespace inicpp

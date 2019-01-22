@@ -4,18 +4,14 @@
 namespace inicpp
 {
 	section_schema::section_schema(const section_schema &source)
-		: name_(source.name_), requirement_(source.requirement_), comment_(source.comment_)
+		: name_(source.name_), requirement_(source.requirement_), comment_(source.comment_), options_(), options_map_()
 	{
 		// we have to do deep copies of option schemas
 		options_.reserve(source.options_.size());
-		for (auto &opt : source.options_) {
-			options_.push_back(std::make_shared<option_schema>(*opt));
-		}
+		for (auto &opt : source.options_) { options_.push_back(std::make_shared<option_schema>(*opt)); }
 
 		// we already have constructed option schemas... now push them into map
-		for (auto &opt : options_) {
-			options_map_.insert(opt_schema_map_pair(opt->get_name(), opt));
-		}
+		for (auto &opt : options_) { options_map_.insert(opt_schema_map_pair(opt->get_name(), opt)); }
 	}
 
 	section_schema &section_schema::operator=(const section_schema &source)
@@ -29,6 +25,7 @@ namespace inicpp
 	}
 
 	section_schema::section_schema(section_schema &&source)
+		: name_(), requirement_(), comment_(), options_(), options_map_()
 	{
 		*this = std::move(source);
 	}
@@ -47,7 +44,8 @@ namespace inicpp
 	}
 
 	section_schema::section_schema(const section_schema_params &arguments)
-		: name_(arguments.name), requirement_(arguments.requirement), comment_(arguments.comment)
+		: name_(arguments.name), requirement_(arguments.requirement), comment_(arguments.comment), options_(),
+		  options_map_()
 	{
 	}
 
@@ -103,18 +101,14 @@ namespace inicpp
 
 	option_schema &section_schema::operator[](size_t index)
 	{
-		if (index >= size()) {
-			throw not_found_exception(index);
-		}
+		if (index >= size()) { throw not_found_exception(index); }
 
 		return *options_[index];
 	}
 
 	const option_schema &section_schema::operator[](size_t index) const
 	{
-		if (index >= size()) {
-			throw not_found_exception(index);
-		}
+		if (index >= size()) { throw not_found_exception(index); }
 
 		return *options_[index];
 	}
@@ -131,7 +125,7 @@ namespace inicpp
 		std::shared_ptr<option_schema> result;
 		try {
 			result = options_map_.at(option_name);
-		} catch (std::out_of_range) {
+		} catch (const std::out_of_range &) {
 			throw not_found_exception(option_name);
 		}
 		return *result;
@@ -142,7 +136,7 @@ namespace inicpp
 		try {
 			options_map_.at(option_name);
 			return true;
-		} catch (std::out_of_range) {
+		} catch (const std::out_of_range &) {
 			return false;
 		}
 	}
@@ -182,9 +176,7 @@ namespace inicpp
 			bool contains = this->contains(opt.get_name());
 
 			// if section_schema contains option everything is fine, we handled this above
-			if (contains) {
-				continue;
-			}
+			if (contains) { continue; }
 
 			// we have strict mode and option which is not in section_schema
 			if (mode == schema_mode::strict) {
@@ -197,9 +189,7 @@ namespace inicpp
 	{
 		// write comment
 		auto comment_lines = string_utils::split(get_comment(), '\n');
-		for (auto &comment_line : comment_lines) {
-			os << ";" << comment_line << std::endl;
-		}
+		for (auto &comment_line : comment_lines) { os << ";" << comment_line << std::endl; }
 
 		// optional/mandatory
 		std::string info_line = is_mandatory() ? "mandatory" : "optional";
@@ -223,10 +213,8 @@ namespace inicpp
 		sect_schema.write_section_name(os);
 
 		// write all containing options
-		for (auto &opt : sect_schema.options_) {
-			os << *opt;
-		}
+		for (auto &opt : sect_schema.options_) { os << *opt; }
 
 		return os;
 	}
-}
+} // namespace inicpp
