@@ -1,11 +1,10 @@
 Name: inicpp
-Version: 1.0.0
+Version: 1.0.1
 Release: 1%{?dist}
 Summary: C++ parser of INI files.
 License: MIT
 BuildRequires: cmake, make, (gcc-c++ or clang)
 URL: https://github.com/SemaiCZE/%{name}
-Patch0: %{name}-cmake.patch
 Source0: https://github.com/SemaiCZE/%{name}/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
 %description
@@ -17,16 +16,12 @@ Modern, C++14 library for parsing INI files with schema validation.
 %build
 mkdir build
 cd build
-%cmake ..
+%cmake -DNO_GOOGLE_TEST=ON ..
 %make_build
-cd ..
 
 %install
-mkdir -p %{buildroot}/%{_libdir}
-mkdir -p %{buildroot}/%{_includedir}/inicpp
-install -m 0644 include/inicpp/*.h %{buildroot}/%{_includedir}/inicpp
-install -m 0644 build/libinicpp_static.a %{buildroot}/%{_libdir}
-install -m 0755 build/libinicpp.so %{buildroot}/%{_libdir}
+cd build
+%make_install
 
 %files
 %license LICENSE
@@ -44,5 +39,7 @@ Recommends: %{name}
 %{_includedir}/inicpp/*.h
 
 %changelog
+* Mon Jan 21 2019 Benjamin Kay <benjamin@benkay.net> - 1.0.1-1
+- Upstream version bump, cmake build system changes
 * Wed Jan 16 2019 Benjamin Kay <benjamin@benkay.net> - 1.0.0-1
 - First package of inicpp
