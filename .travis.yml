@@ -1,5 +1,5 @@
 sudo: required
-dist: trusty
+dist: xenial
 language: cpp
 
 matrix:
@@ -10,11 +10,11 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - g++-6
-      env: MATRIX_ENV="CC=gcc-6 && CXX=g++-6"
-    
+            - g++-8
+      env: MATRIX_EVAL="CC=gcc-8 && CXX=g++-8"
+
 before_install:
-  - eval $MATRIX_ENV
+  - eval "${MATRIX_EVAL}"
 
 script:
   - mkdir build
