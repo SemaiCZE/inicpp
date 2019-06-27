@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 2.8.5)
 project(inicpp)
 
 set(SRC_DIR src)
@@ -73,16 +73,15 @@ endif()
 
 
 # ========== Install targets - 'sudo make install' ==========
+include(GNUInstallDirs)
 include(InstallRequiredSystemLibraries)
-set(INCLUDE_INSTALL_DIR /usr/local/include CACHE PATH "Directory in which to install system header files.")
-set(LIB_INSTALL_DIR /usr/local/include CACHE PATH "Directory in which to install system libraries.")
 if(UNIX)
-	install(DIRECTORY ${INCLUDE_DIR} DESTINATION ${INCLUDE_INSTALL_DIR})
-	install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION ${LIB_INSTALL_DIR} COMPONENT library)
-	install(TARGETS ${PROJECT_NAME}_static ARCHIVE DESTINATION ${LIB_INSTALL_DIR} COMPONENT library)
+	install(DIRECTORY ${INCLUDE_DIR} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+	install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT library)
+	install(TARGETS ${PROJECT_NAME}_static ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT library)
 elseif(MSVC)
-	install(DIRECTORY ${INCLUDE_DIR} DESTINATION include)
-	install(TARGETS ${PROJECT_NAME} DESTINATION lib COMPONENT library)
+	install(DIRECTORY ${INCLUDE_DIR} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+	install(TARGETS ${PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT library)
 else()
 	install(DIRECTORY ${INCLUDE_DIR} DESTINATION inicpp/include)
 	install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION inicpp/lib COMPONENT library)
