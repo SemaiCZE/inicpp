@@ -77,7 +77,7 @@ namespace inicpp
 			option_schema_params<ValueType> *ptr = dynamic_cast<option_schema_params<ValueType> *>(&*opt);
 			// call copy constructor of option_schema_params<ValueType>
 			auto new_schema_value = std::make_unique<option_schema_params<ValueType>>(*ptr);
-			return std::move(new_schema_value);
+			return new_schema_value;
 		}
 
 		/**
