@@ -1,5 +1,5 @@
 Name: inicpp
-Version: 1.0.1
+Version: 1.0.2
 Release: 1%{?dist}
 Summary: C++ parser of INI files.
 License: MIT
@@ -32,13 +32,15 @@ Summary: Header and static library for %{name}.
 Recommends: %{name}
 
 %description devel
-%{name} is a modern, C++14 library for parsing INI files with schema validation.  This %{name}-devel package contains the headers and optional static library for compiling against the library.
+%{name} is a modern, C++14 library for parsing INI files with schema validation. This %{name}-devel package contains the headers and optional static library for compiling against the library.
 
 %files devel
 %{_libdir}/libinicpp_static.a
 %{_includedir}/inicpp/*.h
 
 %changelog
+* Thu Jun 27 2019 Petr Stefan <ptr.stef@gmail.com> - 1.0.2-1
+- GNU install dirs
 * Mon Jan 21 2019 Benjamin Kay <benjamin@benkay.net> - 1.0.1-1
 - Upstream version bump, cmake build system changes
 * Wed Jan 16 2019 Benjamin Kay <benjamin@benkay.net> - 1.0.0-1
