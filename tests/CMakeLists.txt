@@ -27,7 +27,6 @@ add_executable(${TESTS_NAME}
 	option_schema.cpp
 	section_schema.cpp
 	string_utils.cpp
-	types.cpp
 	schema.cpp
 )
 

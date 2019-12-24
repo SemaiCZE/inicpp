@@ -4,6 +4,7 @@
 #include <stdexcept>
 #include <string>
 #include <type_traits>
+#include <variant>
 
 
 namespace inicpp
@@ -94,13 +95,6 @@ namespace inicpp
 	};
 
 
-	/**
-	 * Types which can be used in option and option_schema classes.
-	 * Only from and to this types casting is recommended.
-	 * For all of this types appropriate typedefs are supplied.
-	 */
-	enum class option_type : char { boolean_e, signed_e, unsigned_e, float_e, enum_e, string_e, invalid_e };
-
 	// modern C++11 way of typedef
 	using boolean_ini_t = bool;
 	using signed_ini_t = int64_t;
@@ -108,6 +102,15 @@ namespace inicpp
 	using float_ini_t = double;
 	using enum_ini_t = internal_enum_type;
 	using string_ini_t = std::string;
+
+	using option_value =
+		std::variant<boolean_ini_t, signed_ini_t, unsigned_ini_t, float_ini_t, enum_ini_t, string_ini_t>;
+
+	// helper type for the type visitor
+	template <class... Ts> struct overloaded : Ts... {
+		using Ts::operator()...;
+	};
+	template <class... Ts> overloaded(Ts...)->overloaded<Ts...>;
 
 	/**
 	 * Enumeration type used in schema specification which distinguishes
@@ -128,30 +131,6 @@ namespace inicpp
 	 */
 	enum class schema_mode : bool { strict, relaxed };
 
-	/**
-	 * Function for convert type (one of *_ini_t) to option_type
-	 * enumeration type. If type cannot be converted, invalid_e
-	 * is returned.
-	 * @return enum representation of templated type
-	 */
-	template <typename ValueType> option_type get_option_enum_type()
-	{
-		if (std::is_same<ValueType, boolean_ini_t>::value) {
-			return option_type::boolean_e;
-		} else if (std::is_same<ValueType, signed_ini_t>::value) {
-			return option_type::signed_e;
-		} else if (std::is_same<ValueType, unsigned_ini_t>::value) {
-			return option_type::unsigned_e;
-		} else if (std::is_same<ValueType, float_ini_t>::value) {
-			return option_type::float_e;
-		} else if (std::is_same<ValueType, string_ini_t>::value) {
-			return option_type::string_e;
-		} else if (std::is_same<ValueType, enum_ini_t>::value) {
-			return option_type::enum_e;
-		} else {
-			return option_type::invalid_e;
-		}
-	}
 } // namespace inicpp
 
 #endif // INICPP_TYPES_H

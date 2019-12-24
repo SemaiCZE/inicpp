@@ -29,5 +29,6 @@
 
 build/
 doc/
-CMakeLists.txt.user
+.vscode/
+CMakeLists.txt.user*
 

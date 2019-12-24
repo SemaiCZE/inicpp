@@ -3,84 +3,72 @@
 
 namespace inicpp
 {
-	option_schema::option_schema(const option_schema &source) : type_(), params_()
+	option_schema::option_schema(const option_schema &source) : params_()
 	{
 		this->operator=(source);
 	}
 
 	option_schema &option_schema::operator=(const option_schema &source)
 	{
-		type_ = source.type_;
-
-		switch (type_) {
-		case option_type::boolean_e: params_ = copy_schema<boolean_ini_t>(source.params_); break;
-		case option_type::enum_e: params_ = copy_schema<enum_ini_t>(source.params_); break;
-		case option_type::float_e: params_ = copy_schema<float_ini_t>(source.params_); break;
-		case option_type::signed_e: params_ = copy_schema<signed_ini_t>(source.params_); break;
-		case option_type::string_e: params_ = copy_schema<string_ini_t>(source.params_); break;
-		case option_type::unsigned_e: params_ = copy_schema<unsigned_ini_t>(source.params_); break;
-		case option_type::invalid_e:
-			// never reached
-			throw invalid_type_exception("Invalid option type");
-		}
+		params_ = source.params_;
 
 		return *this;
 	}
 
-	option_schema::option_schema(option_schema &&source) : type_(), params_()
+	option_schema::option_schema(option_schema &&source) : params_()
 	{
 		this->operator=(std::move(source));
 	}
 
 	option_schema &option_schema::operator=(option_schema &&source)
 	{
-		if (this != &source) {
-			type_ = source.type_;
-			params_ = std::move(source.params_);
-		}
+		if (this != &source) { params_ = std::move(source.params_); }
 		return *this;
 	}
 
-	const std::string &option_schema::get_name() const
+	std::string option_schema::get_name() const
 	{
-		return params_->name;
-	}
-
-	option_type option_schema::get_type() const
-	{
-		return type_;
+		return std::visit([](const auto &arg) { return arg.name; }, params_);
 	}
 
 	bool option_schema::is_list() const
 	{
-		return params_->type == option_item::list;
+		return std::visit([](const auto &arg) { return arg.type == option_item::list; }, params_);
 	}
 
-	const std::string &option_schema::get_default_value() const
+	std::string option_schema::get_default_value() const
 	{
-		return params_->default_value;
+		return std::visit([](const auto &arg) { return arg.default_value; }, params_);
 	}
 
 	bool option_schema::is_mandatory() const
 	{
-		return params_->requirement == item_requirement::mandatory;
+		return std::visit([](const auto &arg) { return arg.requirement == item_requirement::mandatory; }, params_);
 	}
 
-	const std::string &option_schema::get_comment() const
+	std::string option_schema::get_comment() const
 	{
-		return params_->comment;
+		return std::visit([](const auto &arg) { return arg.comment; }, params_);
 	}
 
 	void option_schema::validate_option(option &opt) const
 	{
-		if (params_->type == option_item::single && opt.is_list()) {
+		if (!is_list() && opt.is_list()) {
 			throw validation_exception("Option '" + opt.get_name() + "' - list given, single value expected");
-		} else if (params_->type == option_item::list && !opt.is_list()) {
+		} else if (is_list() && !opt.is_list()) {
 			throw validation_exception("Option '" + opt.get_name() + "' - single value given, list expected");
 		}
 
 		// if option type doesn't match, parse it to proper one
-		if (opt.get_type() != type_) { parse_option_items(opt); }
+		std::visit(
+			[&](auto &&arg) {
+				using T = std::decay_t<decltype(arg)>;
+				if (!opt.holds_type<typename T::data_t>()) {
+					opt.set_list<typename T::data_t>(parse_typed_option_items<typename T::data_t>(
+						opt.get_list<string_ini_t>(), string_utils::parse_string<typename T::data_t>, opt.get_name()));
+				}
+			},
+			params_);
 
 		// validate range using provided validator
 		validate_option_items(opt);
@@ -89,61 +77,12 @@ namespace inicpp
 	void option_schema::validate_option_items(option &opt) const
 	{
 		// load value and call validate function on it
-		switch (type_) {
-		case option_type::boolean_e:
-			validate_typed_option_items<boolean_ini_t>(opt.get_list<boolean_ini_t>(), opt.get_name());
-			break;
-		case option_type::enum_e:
-			validate_typed_option_items<enum_ini_t>(opt.get_list<enum_ini_t>(), opt.get_name());
-			break;
-		case option_type::float_e:
-			validate_typed_option_items<float_ini_t>(opt.get_list<float_ini_t>(), opt.get_name());
-			break;
-		case option_type::signed_e:
-			validate_typed_option_items<signed_ini_t>(opt.get_list<signed_ini_t>(), opt.get_name());
-			break;
-		case option_type::string_e:
-			validate_typed_option_items<string_ini_t>(opt.get_list<string_ini_t>(), opt.get_name());
-			break;
-		case option_type::unsigned_e:
-			validate_typed_option_items<unsigned_ini_t>(opt.get_list<unsigned_ini_t>(), opt.get_name());
-			break;
-		case option_type::invalid_e:
-			// never reached
-			throw invalid_type_exception("Option '" + opt.get_name() + "' - invalid option type");
-		}
-	}
-
-	void option_schema::parse_option_items(option &opt) const
-	{
-		switch (type_) {
-		case option_type::boolean_e:
-			opt.set_list<boolean_ini_t>(parse_typed_option_items<boolean_ini_t>(
-				opt.get_list<string_ini_t>(), string_utils::parse_string<boolean_ini_t>, opt.get_name()));
-			break;
-		case option_type::enum_e:
-			opt.set_list<enum_ini_t>(parse_typed_option_items<enum_ini_t>(
-				opt.get_list<string_ini_t>(), string_utils::parse_string<enum_ini_t>, opt.get_name()));
-			break;
-		case option_type::float_e:
-			opt.set_list<float_ini_t>(parse_typed_option_items<float_ini_t>(
-				opt.get_list<string_ini_t>(), string_utils::parse_string<float_ini_t>, opt.get_name()));
-			break;
-		case option_type::signed_e:
-			opt.set_list<signed_ini_t>(parse_typed_option_items<signed_ini_t>(
-				opt.get_list<string_ini_t>(), string_utils::parse_string<signed_ini_t>, opt.get_name()));
-			break;
-		case option_type::string_e:
-			// string doesn't need to be parsed
-			break;
-		case option_type::unsigned_e:
-			opt.set_list<unsigned_ini_t>(parse_typed_option_items<unsigned_ini_t>(
-				opt.get_list<string_ini_t>(), string_utils::parse_string<unsigned_ini_t>, opt.get_name()));
-			break;
-		case option_type::invalid_e:
-			// never reached
-			throw invalid_type_exception("Option '" + opt.get_name() + "' - invalid option type");
-		}
+		std::visit(
+			[&](auto &&arg) {
+				using T = std::decay_t<decltype(arg)>;
+				validate_typed_option_items<typename T::data_t>(opt.get_list<typename T::data_t>(), opt.get_name());
+			},
+			params_);
 	}
 
 	std::ostream &option_schema::write_additional_info(std::ostream &os) const
