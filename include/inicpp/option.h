@@ -18,6 +18,60 @@ namespace inicpp
 	/** Forward declaration, stated because of ring dependencies */
 	class option_schema;
 
+
+	namespace
+	{
+		std::string escape_option_value(const std::string &str)
+		{
+			std::string result(str);
+			if (str.length() > 0 && std::isspace(result[0])) { result.insert(result.begin(), '\\'); }
+			if (str.length() > 1 && std::isspace(result[result.length() - 1])) {
+				result.insert(result.end() - 1, '\\');
+			}
+
+			return result;
+		}
+
+		template <typename ReturnType>
+		ReturnType convert_single_value(const option_value &value, const std::string &name)
+		{
+			if (std::holds_alternative<string_ini_t>(value) && !std::is_same_v<string_ini_t, ReturnType>) {
+				// Try to parse the value (have string, want typed value)
+				try {
+					auto v = std::get<string_ini_t>(value);
+					return string_utils::parse_string<ReturnType>(v, name);
+				} catch (invalid_type_exception &e) {
+					throw bad_cast_exception(e.what());
+				}
+			} else {
+				// Try to return the requested type
+				return std::get<ReturnType>(value);
+			}
+		}
+
+		template <> string_ini_t convert_single_value(const option_value &value, const std::string &)
+		{
+			// disable compiler warning that this function is unused when building the library
+			(void)convert_single_value<string_ini_t>;
+
+			try {
+				// Try to return the strign
+				return std::get<string_ini_t>(value);
+			} catch (const std::bad_variant_access &) {
+				// It didn't work, convert actual value to string
+				std::stringstream s;
+				std::visit(overloaded{[&](boolean_ini_t x) { s << (x ? "yes" : "no"); },
+							   [&](enum_ini_t x) { s << escape_option_value(static_cast<std::string>(x)); },
+							   [&](float_ini_t x) { s << x; },
+							   [&](signed_ini_t x) { s << x; },
+							   [&](unsigned_ini_t x) { s << x; },
+							   [&](string_ini_t x) { s << escape_option_value(x); }},
+					value);
+				return s.str();
+			}
+		}
+	} // namespace
+
 	/**
 	 * Represent ini configuration option.
 	 * Can store one element or list of elements.
@@ -32,20 +86,6 @@ namespace inicpp
 		std::vector<option_value> values_;
 		/** Corresponding option_schema if any */
 		std::shared_ptr<option_schema> option_schema_;
-
-		template <typename ReturnType> ReturnType convert_single_value(const option_value &value) const
-		{
-			if (std::holds_alternative<string_ini_t>(value) && !std::is_same_v<string_ini_t, ReturnType>) {
-				try {
-					auto v = std::get<string_ini_t>(value);
-					return string_utils::parse_string<ReturnType>(v, get_name());
-				} catch (invalid_type_exception &e) {
-					throw bad_cast_exception(e.what());
-				}
-			} else {
-				return std::get<ReturnType>(value);
-			}
-		}
 
 	public:
 		/**
@@ -168,7 +208,7 @@ namespace inicpp
 			if (values_.empty()) { throw not_found_exception(0); }
 
 			// Get the value and try to convert it
-			return convert_single_value<ReturnType>(values_[0]);
+			return convert_single_value<ReturnType>(values_[0], get_name());
 		}
 
 		/**
@@ -197,7 +237,9 @@ namespace inicpp
 		{
 			if (values_.empty()) { throw not_found_exception(0); }
 			std::vector<ReturnType> results;
-			for (const auto &value : values_) { results.push_back(convert_single_value<ReturnType>(value)); }
+			for (const auto &value : values_) {
+				results.push_back(convert_single_value<ReturnType>(value, get_name()));
+			}
 
 			return results;
 		}

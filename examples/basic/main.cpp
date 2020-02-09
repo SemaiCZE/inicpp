@@ -74,7 +74,7 @@ int main(void)
 		signed_ini_t number = example_conf["Numbers"]["num"].get<signed_ini_t>();
 		std::cout << "  Item 'num' in 'Numbers' section casted to signed_ini_t type has value '" <<
 			number << "'" << std::endl;
-	} catch (bad_cast_exception) {
+	} catch (const bad_cast_exception &) {
 		std::cout << "  Item 'num' in 'Numbers' section cannot be casted to signed_ini_t type" << std::endl;
 	}
 	std::cout << "done..." << std::endl << std::endl;
@@ -101,7 +101,7 @@ int main(void)
 		string_ini_t str_number = example_conf["Numbers"]["num"].get<string_ini_t>();
 		std::cout << "  Item 'num' in 'Numbers' section is signed_ini_t type, but string '" <<
 			str_number << "' can be retrieved" << std::endl;
-	} catch (bad_cast_exception) {
+	} catch (const bad_cast_exception &) {
 		std::cout << "  Item 'num' in 'Numbers' section cannot be casted to string_ini_t type" << std::endl;
 	}
 	std::cout << "done..." << std::endl << std::endl;
