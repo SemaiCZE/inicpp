@@ -26,7 +26,7 @@ int main(void)
 	schema schm;
 
 	// add section 'Section 1'
-	section_schema_params section_1_params;
+	section_schema_params section_1_params {};
 	section_1_params.name = "Section 1";
 	section_1_params.comment = "comment";
 	section_1_params.requirement = item_requirement::optional;
@@ -93,7 +93,7 @@ int main(void)
 	std::cout << "---------------------------------------------------------" << std::endl;
 	try {
 		parser::load(get_config(), schm, schema_mode::strict);
-	} catch (validation_exception) {
+	} catch (const validation_exception &) {
 		std::cout << "  Strict mode validation failed" << std::endl;
 	}
 	std::cout << "done..." << std::endl << std::endl;

@@ -14,17 +14,16 @@
 namespace inicpp
 {
 	/**
-	 * Base struct which sums up all common information needed
-	 * for option_schema creation.
+	 * Extended struct which adds type of the option (as template argument)
+	 * and holds in addition to parent functor for value validation.
 	 */
-	class option_schema_params_base
+	template <typename ArgType> class option_schema_params
 	{
 	public:
-		virtual ~option_schema_params_base()
-		{
-		}
+		using data_t = ArgType;
+
 		/** Name of option_schema */
-		std::string name;
+		std::string name = "";
 		/** Determines if this option is mandatory or not */
 		item_requirement requirement = item_requirement::mandatory;
 		/** True if list has to be stored in option */
@@ -33,25 +32,19 @@ namespace inicpp
 		std::string default_value = "";
 		/** Description of option */
 		std::string comment = "";
-	};
-
-
-	/**
-	 * Extended struct which adds type of the option (as template argument)
-	 * and holds in addition to parent functor for value validation.
-	 */
-	template <typename ArgType> class option_schema_params : public option_schema_params_base
-	{
-	public:
-		virtual ~option_schema_params()
-		{
-		}
 		/**
 		 * Validating function - takes one argument of @a ArgType
 		 * and returns bool if valid or not
 		 */
 		std::function<bool(ArgType)> validator = nullptr;
 	};
+
+	using schema_params_t = std::variant<option_schema_params<boolean_ini_t>,
+		option_schema_params<enum_ini_t>,
+		option_schema_params<float_ini_t>,
+		option_schema_params<signed_ini_t>,
+		option_schema_params<unsigned_ini_t>,
+		option_schema_params<string_ini_t>>;
 
 
 	/** Forward declaration, stated because of ring dependencies */
@@ -66,19 +59,8 @@ namespace inicpp
 	class INICPP_API option_schema
 	{
 	private:
-		/** Assumed type of option */
-		option_type type_;
 		/** Internal properties of the option */
-		std::unique_ptr<option_schema_params_base> params_;
-
-		template <typename ValueType>
-		std::unique_ptr<option_schema_params_base> copy_schema(const std::unique_ptr<option_schema_params_base> &opt)
-		{
-			option_schema_params<ValueType> *ptr = dynamic_cast<option_schema_params<ValueType> *>(&*opt);
-			// call copy constructor of option_schema_params<ValueType>
-			auto new_schema_value = std::make_unique<option_schema_params<ValueType>>(*ptr);
-			return new_schema_value;
-		}
+		schema_params_t params_;
 
 		/**
 		 * Run provided validator on all items in option.
@@ -89,10 +71,12 @@ namespace inicpp
 		template <typename ValueType>
 		void validate_typed_option_items(const std::vector<ValueType> &items, const std::string &option_name) const
 		{
-			for (const auto &item : items) {
-				option_schema_params<ValueType> *ptr = dynamic_cast<option_schema_params<ValueType> *>(&*params_);
-				if (ptr != nullptr && ptr->validator != nullptr && !ptr->validator(item)) {
-					throw validation_exception("Option '" + option_name + "' - validation failed");
+			auto params = std::get<option_schema_params<ValueType>>(params_);
+			if (params.validator != nullptr) {
+				for (const auto &item : items) {
+					if (!params.validator(item)) {
+						throw validation_exception("Option '" + option_name + "' - validation failed");
+					}
 				}
 			}
 		}
@@ -136,24 +120,23 @@ namespace inicpp
 		 * @param arguments creation arguments
 		 * @throws invalid_type_exception if given type is not valid
 		 */
-		template <typename ArgType> option_schema(const option_schema_params<ArgType> &arguments)
+		template <typename ArgType> option_schema(const option_schema_params<ArgType> &arguments) : params_(arguments)
 		{
-			type_ = get_option_enum_type<ArgType>();
-			if (type_ == option_type::invalid_e) { throw invalid_type_exception("Invalid schema type"); }
-
-			params_ = std::make_unique<option_schema_params<ArgType>>(arguments);
 		}
 
 		/**
 		 * Get name of this option.
 		 * @return constant reference
 		 */
-		const std::string &get_name() const;
+		std::string get_name() const;
 		/**
 		 * Gets type of option.
 		 * @return option_type structure
 		 */
-		option_type get_type() const;
+		template <typename ArgType> bool holds_type() const
+		{
+			return std::holds_alternative<option_schema_params<ArgType>>(params_);
+		}
 		/**
 		 * Determines if list has to be stored in option.
 		 * @return true if option should store list
@@ -163,7 +146,7 @@ namespace inicpp
 		 * Get option default value.
 		 * @return constant reference
 		 */
-		const std::string &get_default_value() const;
+		std::string get_default_value() const;
 		/**
 		 * Determines whether option is mandatory in configuration.
 		 * @return true if option is mandatory and should be in configuration
@@ -173,7 +156,7 @@ namespace inicpp
 		 * Returns textual description of option.
 		 * @return constant reference
 		 */
-		const std::string &get_comment() const;
+		std::string get_comment() const;
 
 		/**
 		 * Validate given option against this option_schema.

@@ -8,16 +8,6 @@
 using namespace std::literals;
 using namespace inicpp;
 
-/**
- * Construct, get and set value to @ref option_value class.
- */
-TEST(option, option_value_helper_class)
-{
-	option_value<string_ini_t> value("testing string");
-	EXPECT_EQ(value.get(), "testing string");
-	value.set("another string");
-	EXPECT_EQ(value.get(), "another string");
-}
 
 /**
  * Create @ref option with single @ref string_t type and get some values.

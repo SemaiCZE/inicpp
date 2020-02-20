@@ -37,10 +37,7 @@ TEST(option_schema, creation_and_copying)
 	option_schema_params<signed_ini_t> params;
 	params.name = "name";
 	option_schema_params<unsigned_ini_t> other_params;
-	option_schema_params<const char *> invalid_params;
-
 	option_schema my_option(params);
-	EXPECT_THROW(option_schema invalid_option(invalid_params), invalid_type_exception);
 
 	// copy constructor
 	option_schema copied(my_option);
@@ -75,7 +72,7 @@ TEST(option_schema, querying_properties)
 
 	EXPECT_EQ(my_option.get_name(), "name");
 	EXPECT_FALSE(my_option.is_mandatory());
-	EXPECT_EQ(my_option.get_type(), option_type::signed_e);
+	EXPECT_TRUE(my_option.holds_type<signed_ini_t>());
 	EXPECT_TRUE(my_option.is_list());
 	EXPECT_EQ(my_option.get_default_value(), "default_value");
 	EXPECT_EQ(my_option.get_comment(), "comment");
@@ -85,27 +82,27 @@ TEST(option_schema, type_deduction)
 {
 	option_schema_params<signed_ini_t> signed_params;
 	option_schema signed_option(signed_params);
-	EXPECT_EQ(signed_option.get_type(), option_type::signed_e);
+	EXPECT_TRUE(signed_option.holds_type<signed_ini_t>());
 
 	option_schema_params<unsigned_ini_t> unsigned_params;
 	option_schema unsigned_option(unsigned_params);
-	EXPECT_EQ(unsigned_option.get_type(), option_type::unsigned_e);
+	EXPECT_TRUE(unsigned_option.holds_type<unsigned_ini_t>());
 
 	option_schema_params<boolean_ini_t> boolean_params;
 	option_schema boolean_option(boolean_params);
-	EXPECT_EQ(boolean_option.get_type(), option_type::boolean_e);
+	EXPECT_TRUE(boolean_option.holds_type<boolean_ini_t>());
 
 	option_schema_params<string_ini_t> string_params;
 	option_schema string_option(string_params);
-	EXPECT_EQ(string_option.get_type(), option_type::string_e);
+	EXPECT_TRUE(string_option.holds_type<string_ini_t>());
 
 	option_schema_params<float_ini_t> float_params;
 	option_schema float_option(float_params);
-	EXPECT_EQ(float_option.get_type(), option_type::float_e);
+	EXPECT_TRUE(float_option.holds_type<float_ini_t>());
 
 	option_schema_params<enum_ini_t> enum_params;
 	option_schema enum_option(enum_params);
-	EXPECT_EQ(enum_option.get_type(), option_type::enum_e);
+	EXPECT_TRUE(enum_option.holds_type<enum_ini_t>());
 }
 
 TEST(option_schema, validation)

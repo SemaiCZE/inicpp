@@ -11,12 +11,16 @@ C++ parser of INI files with schema validation.
 
 This project started as semestral work for _Recommended Programming Practices_ class at **MFF UK**, Prague, in 2016. After deadline the project was published at _GitHub_ under MIT license.
 
-Great emphasis was put on qualities of object oriented design and clean implementation with modern C++14 features.
+Great emphasis was put on qualities of object oriented design and clean implementation with modern C++ features.
 
 Originally written by:
 
 - Petr Stefan (_[SemaiCZE](https://github.com/SemaiCZE/)_)
 - Martin Polanka (_[Neloop](https://github.com/Neloop/)_)
+
+## Versions
+
+`Master` branch contains source code using `std::variant` feature and it requires compiler with C++17 support. Older version with C++14 support is in `cpp14` branch and is still supported by us.
 
 ## Build instructions
 
@@ -26,7 +30,7 @@ Originally written by:
 cmake [-G generator] [-DBUILD_STATIC=ON|OFF] [-DBUILD_SHARED=ON|OFF] source_dir
 ```
 
-Also C++ compiler with at least C++14 support is required.
+Also C++ compiler with at least C++17 support is required.
 
 ### Linux
 
