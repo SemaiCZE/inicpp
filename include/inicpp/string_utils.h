@@ -130,7 +130,7 @@ namespace inicpp
 		using std::to_string;
 		/** Custom to_string method for enum_ini_t type */
 		std::string to_string(const enum_ini_t &value);
-	}; // namespace inistd
+	} // namespace inistd
 } // namespace inicpp
 
 #endif // INICPP_STRING_UTILS_H
