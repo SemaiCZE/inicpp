@@ -52,7 +52,7 @@ namespace inicpp
 		template <> string_ini_t convert_single_value(const option_value &value, const std::string &)
 		{
 			// disable compiler warning that this function is unused when building the library
-			(void)convert_single_value<string_ini_t>;
+			(void) convert_single_value<string_ini_t>;
 
 			try {
 				// Try to return the strign

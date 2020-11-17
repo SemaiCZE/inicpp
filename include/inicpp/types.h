@@ -110,7 +110,7 @@ namespace inicpp
 	template <class... Ts> struct overloaded : Ts... {
 		using Ts::operator()...;
 	};
-	template <class... Ts> overloaded(Ts...)->overloaded<Ts...>;
+	template <class... Ts> overloaded(Ts...) -> overloaded<Ts...>;
 
 	/**
 	 * Enumeration type used in schema specification which distinguishes
