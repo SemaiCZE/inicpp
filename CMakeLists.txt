@@ -46,7 +46,7 @@ endif()
 
 # Use C++14 features
 if(UNIX)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -Wextra -Wdeprecated -Wconversion -Wold-style-cast -Weffc++ -Wformat")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -Wextra -Wdeprecated -Wconversion -Wold-style-cast -Wformat")
 endif()
 
 # Set up google testing framework (not compile by default)
