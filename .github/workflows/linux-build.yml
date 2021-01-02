@@ -1,0 +1,24 @@
+name: Linux Build
+
+on: [push, pull_request]
+
+jobs:
+  tests:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - run: g++ --version
+      - run: cmake --version
+
+      # script
+      - run: mkdir build
+      - run: cmake ..
+        working-directory: build
+      - run: make -j 4
+        working-directory: build
+      - run: make -j 4 -f tests/Makefile
+        working-directory: build
+      - run: ./tests/run_tests
+        working-directory: build
