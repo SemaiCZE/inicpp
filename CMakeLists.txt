@@ -44,9 +44,11 @@ if(BUILD_STATIC)
 	add_library(${PROJECT_NAME}_static STATIC ${SOURCE_FILES})
 endif()
 
-# Use C++14 features
+# Use C++17 features
 if(UNIX)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -Wextra -Wdeprecated -Wconversion -Wold-style-cast -Wformat")
+elseif(MSVC)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17")
 endif()
 
 # Set up google testing framework (not compile by default)
