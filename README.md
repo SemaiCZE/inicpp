@@ -1,6 +1,7 @@
 # inicpp
 
 [![Linux Build Status](https://github.com/SemaiCZE/inicpp/workflows/Linux%20Build/badge.svg)](https://github.com/SemaiCZE/inicpp/actions)
+[![Windows Build Status](https://github.com/SemaiCZE/inicpp/workflows/Windows%20Build/badge.svg)](https://github.com/SemaiCZE/inicpp/actions)
 [![License](https://img.shields.io/badge/license-mit-blue.svg)](http://badges.mit-license.org)
 [![Wiki](https://img.shields.io/badge/docs-wiki-orange.svg)](https://github.com/SemaiCZE/inicpp/wiki)
 [![Docs](https://img.shields.io/badge/docs-latest-brightgreen.svg)](http://semaicze.github.io/inicpp)
@@ -57,10 +58,10 @@ $ ./tests/run_tests
 For Windows there are two ways of building `inicpp`. For both ways `cmake` has to be installed on machine.
 
 Using **MS Visual Studio**:
-- As stated `Visual Studio 2015` (or later) should be installed on the machine.
+- As stated `Visual Studio 2017` (or later) should be installed on the machine.
 - If dependencies are successfully fulfilled then run `cmake` in root directory of repository using:
 ```
-> cmake -G "Visual Studio 14 2015"
+> cmake -G "Visual Studio 15 2017"
 ```
 - This command will generate solution files
 - Open solution file `inicpp.sln` using `Visual Studio`
@@ -68,7 +69,7 @@ Using **MS Visual Studio**:
 - Distribute static or shared binaries which can be found in target build directories to your program/library
 
 Using **MS Visual C++**:
-- Besides `Visual C++ 2015` (or later) `nmake` compilation tool is needed (both should be part of `Windows SDK`)
+- Besides `Visual C++ 2017` (or later) `nmake` compilation tool is needed (both should be part of `Windows SDK`)
 - Run `cmake` in root directory of repository using:
 ```
 > cmake -G "NMake Makefiles"
