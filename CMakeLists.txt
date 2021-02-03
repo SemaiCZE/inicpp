@@ -31,14 +31,14 @@ set(INICPP_SOURCES
 include_directories(${INICPP_INCLUDE_DIR})
 
 # Set options to disable build of shared and static library
-option(BUILD_SHARED "Specifies if shared library is build." ON)
-option(BUILD_STATIC "Specifies if static library is build." ON)
+option(INICPP_BUILD_SHARED "Specifies if shared library is built, if not set a static library will be built intstead." OFF)
 option(INICPP_BUILD_TESTS "Specifies if tests should be built." OFF)
 option(INICPP_BUILD_EXAMPLES "Specifies if examples should be built." OFF)
 
-# Compile dynamic library
-if(BUILD_SHARED)
+if(INICPP_BUILD_SHARED)
 	add_library(${PROJECT_NAME} SHARED ${INICPP_SOURCES})
+else()
+	add_library(${PROJECT_NAME} STATIC ${INICPP_SOURCES})
 endif()
 
 # Compile static library
