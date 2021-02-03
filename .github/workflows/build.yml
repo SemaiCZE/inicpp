@@ -1,0 +1,74 @@
+name: Github Actions Build
+
+on: [push, pull_request]
+
+jobs:
+  tests:
+    name: ${{ matrix.name }} ${{ matrix.compiler }} ${{ matrix.build_type }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+        compiler: [GCC, Clang, MSVC]
+        build_type: [Debug, Release]
+        build_shared: [ON, OFF]
+        exclude:
+          - os: windows-latest
+            compiler: GCC
+          - os: ubuntu-latest
+            compiler: MSVC
+          - os: macos-latest
+            compiler: MSVC
+        include:
+          - compiler: gcc
+            c_compiler: gcc-9
+            cxx_compiler: g++-9
+          - compiler: clang
+            c_compiler: clang
+            cxx_compiler: clang++
+            msvc_toolset: ClangCL
+          - compiler: msvc
+            msvc_toolset: v142
+          - os: macos-latest
+            name: MacOS
+          - os: ubuntu-latest
+            name: Ubuntu
+          - os: windows-latest
+            name: Windows
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Buildtools Version
+        run: ${{ matrix.cxx_compiler }} --version
+        if: matrix.os != 'windows-latest'
+
+      - name: Configure
+        run: |
+          mkdir build
+          cd build
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            cmake .. -DINICPP_BUILD_TESTS=ON -DINICPP_BUILD_EXAMPLES=ON -DINICPP_BUILD_SHARED=${{matrix.build_shared}}
+          else
+            cmake .. -GNinja -DCMAKE_BUILD_TYPE=${{matrix.build_type}} -DCMAKE_C_COMPILER=${{matrix.c_compiler}} -DCMAKE_CXX_COMPILER=${{matrix.cxx_compiler}} -DINICPP_BUILD_TESTS=ON -DINICPP_BUILD_EXAMPLES=ON -DINICPP_BUILD_SHARED=${{matrix.build_shared}}
+          fi
+        shell: bash
+
+      - name: Build
+        run: |
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            cmake --build . --config=${{matrix.build_type}}
+          else
+            cmake --build .
+          fi
+        shell: bash
+        working-directory: build
+
+      - name: Tests
+        run: ctest . --output-on-failure
+        shell: bash
+        working-directory: build
