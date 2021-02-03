@@ -15,7 +15,6 @@ set(${TESTS_NAME}_SOURCES
 
 add_executable(${TESTS_NAME} ${${TESTS_NAME}_SOURCES})
 
-# Link with Google libraries
 target_link_libraries(${TESTS_NAME} gtest gtest_main)
 target_link_libraries(${TESTS_NAME} gmock gmock_main)
 
