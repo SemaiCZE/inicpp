@@ -41,17 +41,20 @@ else()
 	add_library(${PROJECT_NAME} STATIC ${INICPP_SOURCES})
 endif()
 
-# Compile static library
-if(BUILD_STATIC)
-	add_library(${PROJECT_NAME}_static STATIC ${INICPP_SOURCES})
+add_library(${PROJECT_NAME}_private_options INTERFACE)
+if(UNIX)
+	target_compile_options(${PROJECT_NAME}_private_options INTERFACE "-Wall -Wextra -Wdeprecated -Wconversion -Wold-style-cast -Wformat")
+else()
+	target_compile_options(${PROJECT_NAME}_private_options INTERFACE "/W4")
 endif()
 
-# Use C++17 features
-if(UNIX)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -Wextra -Wdeprecated -Wconversion -Wold-style-cast -Wformat")
-elseif(MSVC)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17")
-endif()
+add_library(${PROJECT_NAME}_public_options INTERFACE)
+target_compile_features(${PROJECT_NAME}_public_options INTERFACE cxx_std_17)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE
+		${PROJECT_NAME}_private_options)
+target_link_libraries(${PROJECT_NAME} PUBLIC
+		${PROJECT_NAME}_public_options)
 
 if(INICPP_BUILD_TESTS)
 	# Set up google testing framework (not compile by default)
