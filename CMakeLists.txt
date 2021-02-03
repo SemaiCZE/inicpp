@@ -37,6 +37,13 @@ option(INICPP_BUILD_EXAMPLES "Specifies if examples should be built." OFF)
 
 if(INICPP_BUILD_SHARED)
 	add_library(${PROJECT_NAME} SHARED ${INICPP_SOURCES})
+	if(MSVC)
+		# set preprocessor macros for dll export
+		target_compile_definitions(${PROJECT_NAME} PUBLIC
+				INICPP_DLL)
+		target_compile_definitions(${PROJECT_NAME} PRIVATE
+				INICPP_EXPORT)
+	endif()
 else()
 	add_library(${PROJECT_NAME} STATIC ${INICPP_SOURCES})
 endif()
@@ -72,16 +79,6 @@ if(INICPP_BUILD_EXAMPLES)
 	# Add examples programs
 	add_subdirectory(examples)
 endif()
-
-# MS Visual C++ specialities
-if(MSVC)
-	# set different preprocessor macros
-	if(BUILD_SHARED)
-		# set preprocessor macro for windows exporting of symbols
-		set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_DEFINITIONS "INICPP_DLL;INICPP_EXPORT")
-	endif()
-endif()
-
 
 # ========== Install targets - 'sudo make install' ==========
 include(GNUInstallDirs)
