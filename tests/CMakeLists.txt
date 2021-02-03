@@ -2,7 +2,7 @@ project(inicpp_tests)
 
 set(TESTS_NAME inicpp_tests)
 
-add_executable(${TESTS_NAME}
+set(${TESTS_NAME}_SOURCES
 	option.cpp
 	section_iterator.cpp
 	section.cpp
@@ -13,8 +13,9 @@ add_executable(${TESTS_NAME}
 	option_schema.cpp
 	section_schema.cpp
 	string_utils.cpp
-	schema.cpp
-)
+	schema.cpp)
+
+add_executable(${TESTS_NAME} ${${TESTS_NAME}_SOURCES})
 
 # Link with Google libraries
 target_link_libraries(${TESTS_NAME} gtest gtest_main)
