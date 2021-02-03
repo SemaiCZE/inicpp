@@ -72,6 +72,7 @@ if(INICPP_BUILD_TESTS)
 	endif()
 
 	# Add our very own unit tests
+	enable_testing()
 	add_subdirectory(tests)
 endif()
 
