@@ -33,6 +33,8 @@ include_directories(${INCLUDE_DIR})
 # Set options to disable build of shared and static library
 option(BUILD_SHARED "Specifies if shared library is build." ON)
 option(BUILD_STATIC "Specifies if static library is build." ON)
+option(INICPP_BUILD_TESTS "Specifies if tests should be built." OFF)
+option(INICPP_BUILD_EXAMPLES "Specifies if examples should be built." OFF)
 
 # Compile dynamic library
 if(BUILD_SHARED)
@@ -51,18 +53,22 @@ elseif(MSVC)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17")
 endif()
 
-# Set up google testing framework (not compile by default)
-set(NO_GOOGLE_TEST OFF CACHE BOOL "Disable google testing framework.  Useful when buidling from a tarball since google testing framework support requires fetching of additional git submodules.")
-if(NOT ${NO_GOOGLE_TEST})
-	set(gtest_force_shared_crt ON CACHE BOOL "Use shared (DLL) run-time lib even when Google Test is built as static lib.")
-	add_subdirectory(vendor/googletest EXCLUDE_FROM_ALL)
+if(INICPP_BUILD_TESTS)
+	# Set up google testing framework (not compile by default)
+	set(NO_GOOGLE_TEST OFF CACHE BOOL "Disable google testing framework.  Useful when buidling from a tarball since google testing framework support requires fetching of additional git submodules.")
+	if(NOT ${NO_GOOGLE_TEST})
+		set(gtest_force_shared_crt ON CACHE BOOL "Use shared (DLL) run-time lib even when Google Test is built as static lib.")
+		add_subdirectory(vendor/googletest)
+	endif()
+
+	# Add our very own unit tests (not compile by default)
+	add_subdirectory(tests)
 endif()
 
-# Add our very own unit tests (not compile by default)
-add_subdirectory(tests EXCLUDE_FROM_ALL)
-
-# Add examples programs
-add_subdirectory(examples EXCLUDE_FROM_ALL)
+if(INICPP_BUILD_EXAMPLES)
+	# Add examples programs
+	add_subdirectory(examples)
+endif()
 
 # MS Visual C++ specialities
 if(MSVC)
