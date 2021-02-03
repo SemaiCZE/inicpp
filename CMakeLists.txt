@@ -30,7 +30,7 @@ set(INICPP_SOURCES
 # Find header files in include directory
 include_directories(${INICPP_INCLUDE_DIR})
 
-# Set options to disable build of shared and static library
+# Set options to determine what/how you want to build
 option(INICPP_BUILD_SHARED "Specifies if shared library is built, if not set a static library will be built intstead." OFF)
 option(INICPP_BUILD_TESTS "Specifies if tests should be built." OFF)
 option(INICPP_BUILD_EXAMPLES "Specifies if examples should be built." OFF)
@@ -64,14 +64,14 @@ target_link_libraries(${PROJECT_NAME} PUBLIC
 		${PROJECT_NAME}_public_options)
 
 if(INICPP_BUILD_TESTS)
-	# Set up google testing framework (not compile by default)
+	# Set up google testing framework
 	set(NO_GOOGLE_TEST OFF CACHE BOOL "Disable google testing framework.  Useful when buidling from a tarball since google testing framework support requires fetching of additional git submodules.")
 	if(NOT ${NO_GOOGLE_TEST})
 		set(gtest_force_shared_crt ON CACHE BOOL "Use shared (DLL) run-time lib even when Google Test is built as static lib.")
 		add_subdirectory(vendor/googletest)
 	endif()
 
-	# Add our very own unit tests (not compile by default)
+	# Add our very own unit tests
 	add_subdirectory(tests)
 endif()
 
@@ -80,7 +80,7 @@ if(INICPP_BUILD_EXAMPLES)
 	add_subdirectory(examples)
 endif()
 
-# ========== Install targets - 'sudo make install' ==========
+# ========== Install targets - 'cmake --install .' ==========
 include(GNUInstallDirs)
 include(InstallRequiredSystemLibraries)
 if(UNIX)
