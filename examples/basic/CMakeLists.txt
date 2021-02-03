@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.1)
 project(inicpp_basic)
 
 set(EXEC_NAME ${PROJECT_NAME})
