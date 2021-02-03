@@ -1,5 +1,3 @@
-project(inicpp_tests)
-
 set(TESTS_NAME inicpp_tests)
 
 set(${TESTS_NAME}_SOURCES
