@@ -42,7 +42,8 @@ jobs:
             lib_type: Static
 
     steps:
-      - uses: seanmiddleditch/gha-setup-ninja@v1
+      - uses: lukka/get-cmake@v3.19.2
+      - uses: seanmiddleditch/gha-setup-ninja@v3
 
       - name: Checkout
         uses: actions/checkout@v2
