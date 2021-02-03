@@ -1,34 +1,34 @@
 cmake_minimum_required(VERSION 3.1)
 project(inicpp)
 
-set(SRC_DIR src)
-set(INCLUDE_DIR include/inicpp)
+set(INICPP_SRC_DIR src)
+set(INICPP_INCLUDE_DIR include/inicpp)
 
-set(SOURCE_FILES
-	${INCLUDE_DIR}/config.h
-	${SRC_DIR}/config.cpp
-	${INCLUDE_DIR}/exception.h
-	${INCLUDE_DIR}/option.h
-	${SRC_DIR}/option.cpp
-	${INCLUDE_DIR}/option_schema.h
-	${SRC_DIR}/option_schema.cpp
-	${INCLUDE_DIR}/parser.h
-	${SRC_DIR}/parser.cpp
-	${INCLUDE_DIR}/schema.h
-	${SRC_DIR}/schema.cpp
-	${INCLUDE_DIR}/section.h
-	${SRC_DIR}/section.cpp
-	${INCLUDE_DIR}/section_schema.h
-	${SRC_DIR}/section_schema.cpp
-	${INCLUDE_DIR}/types.h
-	${INCLUDE_DIR}/string_utils.h
-	${SRC_DIR}/string_utils.cpp
-	${INCLUDE_DIR}/inicpp.h
-	${INCLUDE_DIR}/dll.h
+set(INICPP_SOURCES
+	${INICPP_INCLUDE_DIR}/config.h
+	${INICPP_SRC_DIR}/config.cpp
+	${INICPP_INCLUDE_DIR}/exception.h
+	${INICPP_INCLUDE_DIR}/option.h
+	${INICPP_SRC_DIR}/option.cpp
+	${INICPP_INCLUDE_DIR}/option_schema.h
+	${INICPP_SRC_DIR}/option_schema.cpp
+	${INICPP_INCLUDE_DIR}/parser.h
+	${INICPP_SRC_DIR}/parser.cpp
+	${INICPP_INCLUDE_DIR}/schema.h
+	${INICPP_SRC_DIR}/schema.cpp
+	${INICPP_INCLUDE_DIR}/section.h
+	${INICPP_SRC_DIR}/section.cpp
+	${INICPP_INCLUDE_DIR}/section_schema.h
+	${INICPP_SRC_DIR}/section_schema.cpp
+	${INICPP_INCLUDE_DIR}/types.h
+	${INICPP_INCLUDE_DIR}/string_utils.h
+	${INICPP_SRC_DIR}/string_utils.cpp
+	${INICPP_INCLUDE_DIR}/inicpp.h
+	${INICPP_INCLUDE_DIR}/dll.h
 )
 
 # Find header files in include directory
-include_directories(${INCLUDE_DIR})
+include_directories(${INICPP_INCLUDE_DIR})
 
 # Set options to disable build of shared and static library
 option(BUILD_SHARED "Specifies if shared library is build." ON)
@@ -38,12 +38,12 @@ option(INICPP_BUILD_EXAMPLES "Specifies if examples should be built." OFF)
 
 # Compile dynamic library
 if(BUILD_SHARED)
-	add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
+	add_library(${PROJECT_NAME} SHARED ${INICPP_SOURCES})
 endif()
 
 # Compile static library
 if(BUILD_STATIC)
-	add_library(${PROJECT_NAME}_static STATIC ${SOURCE_FILES})
+	add_library(${PROJECT_NAME}_static STATIC ${INICPP_SOURCES})
 endif()
 
 # Use C++17 features
@@ -84,7 +84,7 @@ endif()
 include(GNUInstallDirs)
 include(InstallRequiredSystemLibraries)
 if(UNIX)
-	install(DIRECTORY ${INCLUDE_DIR} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+	install(DIRECTORY ${INICPP_INCLUDE_DIR} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 	if(BUILD_SHARED)
 		install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT library)
 	endif()
@@ -92,10 +92,10 @@ if(UNIX)
 		install(TARGETS ${PROJECT_NAME}_static ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT library)
 	endif()
 elseif(MSVC)
-	install(DIRECTORY ${INCLUDE_DIR} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+	install(DIRECTORY ${INICPP_INCLUDE_DIR} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 	install(TARGETS ${PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT library)
 else()
-	install(DIRECTORY ${INCLUDE_DIR} DESTINATION inicpp/include)
+	install(DIRECTORY ${INICPP_INCLUDE_DIR} DESTINATION inicpp/include)
 	install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION inicpp/lib COMPONENT library)
 endif()
 
