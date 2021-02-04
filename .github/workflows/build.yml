@@ -69,7 +69,7 @@ jobs:
       - name: Build
         run: |
           if [ "$RUNNER_OS" == "Windows" ]; then
-            cmake --build . --config=${{matrix.build_type}}
+            cmake --build . --config ${{matrix.build_type}}
           else
             cmake --build .
           fi
