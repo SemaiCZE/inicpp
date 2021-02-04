@@ -53,25 +53,24 @@ jobs:
           submodules: true
 
       - name: Buildtools Version
-        run: ${{ matrix.cxx_compiler }} --version
-        if: matrix.os != 'windows-latest'
-
-      - name: Buildtools Version
         run: |
-          if [ "${{ matrix.compiler }}" == "Clang" ]; then
-            clang-cl.exe --version
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            if [ "${{ matrix.compiler }}" == "Clang" ]; then
+              clang-cl.exe --version
+            else
+              cl.exe
+            fi
           else
-            cl.exe
+            ${{ matrix.cxx_compiler }} --version
           fi
         shell: bash
-        if: matrix.os == 'windows-latest'
 
       - name: Configure
         run: |
           mkdir build
           cd build
           if [ "$RUNNER_OS" == "Windows" ]; then
-            cmake .. -DINICPP_BUILD_TESTS=ON -DINICPP_BUILD_EXAMPLES=ON -DINICPP_BUILD_SHARED=${{matrix.build_shared}} -T${matrix.msvc_toolset}
+            cmake .. -DINICPP_BUILD_TESTS=ON -DINICPP_BUILD_EXAMPLES=ON -DINICPP_BUILD_SHARED=${{matrix.build_shared}} -T${{matrix.msvc_toolset}}
           else
             cmake .. -GNinja -DCMAKE_BUILD_TYPE=${{matrix.build_type}} -DCMAKE_C_COMPILER=${{matrix.c_compiler}} -DCMAKE_CXX_COMPILER=${{matrix.cxx_compiler}} -DINICPP_BUILD_TESTS=ON -DINICPP_BUILD_EXAMPLES=ON -DINICPP_BUILD_SHARED=${{matrix.build_shared}}
           fi
