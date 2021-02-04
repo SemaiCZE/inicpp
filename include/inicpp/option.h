@@ -270,7 +270,8 @@ namespace inicpp
 			if (!holds_type<ValueType>()) { throw bad_cast_exception("Cannot cast to requested type"); }
 			if (position > values_.size()) { throw not_found_exception(position); }
 			option_value new_option_value = value;
-			values_.insert(values_.begin() + position, std::move(new_option_value));
+			auto p = static_cast<std::iterator_traits<decltype(values_.begin())>::difference_type>(position);
+			values_.insert(std::next(values_.begin(), p), std::move(new_option_value));
 		}
 
 		/**

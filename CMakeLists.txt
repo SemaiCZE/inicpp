@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.1)
 project(inicpp)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(INICPP_SRC_DIR src)
 set(INICPP_INCLUDE_DIR include/inicpp)
 

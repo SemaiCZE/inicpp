@@ -54,7 +54,8 @@ namespace inicpp
 	void option::remove_from_list_pos(size_t position)
 	{
 		if (position >= values_.size()) { throw not_found_exception(position); }
-		values_.erase(values_.begin() + position);
+		auto p = static_cast<std::iterator_traits<decltype(values_.begin())>::difference_type>(position);
+		values_.erase(std::next(values_.begin(), p));
 	}
 
 	void option::validate(const option_schema &opt_schema)
