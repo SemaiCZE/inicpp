@@ -56,6 +56,6 @@ jobs:
         working-directory: build
 
       - name: Tests
-        run: ctest . --output-on-failure
+        run: ctest . -C ${{matrix.build_type}} --output-on-failure
         shell: bash
         working-directory: build

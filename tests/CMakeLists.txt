@@ -20,5 +20,12 @@ target_link_libraries(${TESTS_NAME} gmock gmock_main)
 
 target_link_libraries(${TESTS_NAME} inicpp)
 
-add_test(${TESTS_NAME} ${TESTS_NAME})
-set_target_properties(${TESTS_NAME} PROPERTIES FOLDER tests)
+if(MSVC)
+	set_target_properties(${TESTS_NAME}
+		PROPERTIES
+		RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+	)
+endif()
+
+add_test(NAME ${TESTS_NAME} COMMAND $<TARGET_FILE:${TESTS_NAME}>)
+set_target_properties(${TESTS_NAME} PROPERTIES FOLDER inicpp_tests)
