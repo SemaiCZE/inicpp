@@ -72,7 +72,9 @@ namespace inicpp
 		 * @result Value parsed to proper (ReturnType) type
 		 * @throws invalid_type_exception if such cast cannot be made
 		 */
-		template <typename ReturnType> ReturnType parse_string(const std::string &value, const std::string &option_name)
+		template <typename ReturnType>
+		ReturnType parse_string(
+			[[maybe_unused]] const std::string &value, [[maybe_unused]] const std::string &option_name)
 		{
 			throw invalid_type_exception("Invalid option type");
 		}
