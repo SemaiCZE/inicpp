@@ -50,9 +50,9 @@ endif()
 
 add_library(${PROJECT_NAME}_private_options INTERFACE)
 if(UNIX)
-	target_compile_options(${PROJECT_NAME}_private_options INTERFACE "-Wall -Wextra -Wdeprecated -Wconversion -Wold-style-cast -Wformat")
+	target_compile_options(${PROJECT_NAME}_private_options INTERFACE -Wall -Wextra -Wdeprecated -Wconversion -Wold-style-cast -Wformat)
 else()
-	target_compile_options(${PROJECT_NAME}_private_options INTERFACE "/W4")
+	target_compile_options(${PROJECT_NAME}_private_options INTERFACE /W4)
 endif()
 
 add_library(${PROJECT_NAME}_public_options INTERFACE)
