@@ -1,22 +1,6 @@
-project(inicpp_tests)
+set(TESTS_NAME inicpp_tests)
 
-set(TESTS_NAME run_tests)
-set(SRC_DIR ../src)
-set(LIBS_DIR ../vendor)
-
-# Google Test and Google Mock headers
-include_directories(${LIBS_DIR}/googletest/googletest/include)
-include_directories(${LIBS_DIR}/googletest/googlemock/include)
-
-add_executable(${TESTS_NAME}
-	${SRC_DIR}/config.cpp
-	${SRC_DIR}/option.cpp
-	${SRC_DIR}/option_schema.cpp
-	${SRC_DIR}/parser.cpp
-	${SRC_DIR}/schema.cpp
-	${SRC_DIR}/section.cpp
-	${SRC_DIR}/section_schema.cpp
-	${SRC_DIR}/string_utils.cpp
+set(${TESTS_NAME}_SOURCES
 	option.cpp
 	section_iterator.cpp
 	section.cpp
@@ -27,10 +11,21 @@ add_executable(${TESTS_NAME}
 	option_schema.cpp
 	section_schema.cpp
 	string_utils.cpp
-	schema.cpp
-)
+	schema.cpp)
 
-# Link with Google libraries
+add_executable(${TESTS_NAME} ${${TESTS_NAME}_SOURCES})
+
 target_link_libraries(${TESTS_NAME} gtest gtest_main)
 target_link_libraries(${TESTS_NAME} gmock gmock_main)
 
+target_link_libraries(${TESTS_NAME} inicpp)
+
+if(MSVC)
+	set_target_properties(${TESTS_NAME}
+		PROPERTIES
+		RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+	)
+endif()
+
+add_test(NAME ${TESTS_NAME} COMMAND $<TARGET_FILE:${TESTS_NAME}>)
+set_target_properties(${TESTS_NAME} PROPERTIES FOLDER inicpp_tests)

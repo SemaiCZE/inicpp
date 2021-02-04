@@ -4,20 +4,27 @@ on: [push, pull_request]
 
 jobs:
   tests:
-    name: Windows ${{ matrix.compiler }} ${{ matrix.build_type }} - ${{ matrix.lib_type }}
-    runs-on: windows-latest
+    name: ${{ matrix.name }} ${{ matrix.compiler }} ${{ matrix.build_type }} - ${{ matrix.lib_type }}
+    runs-on: ${{ matrix.os }}
 
     strategy:
       fail-fast: false
       matrix:
-        compiler: [Clang, MSVC]
+        os: [macos-latest, ubuntu-latest]
+        compiler: [GCC, Clang]
         build_type: [Debug, Release]
         build_shared: [ON, OFF]
         include:
+          - compiler: gcc
+            c_compiler: gcc-9
+            cxx_compiler: g++-9
           - compiler: clang
-            msvc_toolset: ClangCL
-          - compiler: msvc
-            msvc_toolset: v142
+            c_compiler: clang
+            cxx_compiler: clang++
+          - os: macos-latest
+            name: MacOS
+          - os: ubuntu-latest
+            name: Ubuntu
           - build_shared: ON
             lib_type: Shared
           - build_shared: OFF
@@ -26,7 +33,6 @@ jobs:
     steps:
       - uses: lukka/get-cmake@v3.19.2
       - uses: seanmiddleditch/gha-setup-ninja@v3
-      - uses: ilammy/msvc-dev-cmd@v1
 
       - name: Checkout
         uses: actions/checkout@v2
@@ -35,27 +41,23 @@ jobs:
 
       - name: Buildtools Version
         run: |
-          if [ "${{ matrix.compiler }}" == "Clang" ]; then
-            clang-cl.exe --version
-          else
-            cl.exe
-          fi
+          ${{ matrix.cxx_compiler }} --version
         shell: bash
 
       - name: Configure
         run: |
           mkdir build
           cd build
-          cmake .. -DINICPP_BUILD_TESTS=ON -DINICPP_BUILD_EXAMPLES=ON -DINICPP_BUILD_SHARED=${{matrix.build_shared}} -T${{matrix.msvc_toolset}} -A "x64"
+          cmake .. -GNinja -DCMAKE_BUILD_TYPE=${{matrix.build_type}} -DCMAKE_C_COMPILER=${{matrix.c_compiler}} -DCMAKE_CXX_COMPILER=${{matrix.cxx_compiler}} -DINICPP_BUILD_TESTS=ON -DINICPP_BUILD_EXAMPLES=ON -DINICPP_BUILD_SHARED=${{matrix.build_shared}}
         shell: bash
 
       - name: Build
         run: |
-          cmake --build . --config ${{matrix.build_type}}
+          cmake --build .
         shell: bash
         working-directory: build
 
       - name: Tests
-        run: ctest . -C ${{matrix.build_type}} --output-on-failure
+        run: ctest . --output-on-failure
         shell: bash
         working-directory: build

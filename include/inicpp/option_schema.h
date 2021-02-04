@@ -73,7 +73,7 @@ namespace inicpp
 		{
 			auto params = std::get<option_schema_params<ValueType>>(params_);
 			if (params.validator != nullptr) {
-				for (const auto &item : items) {
+				for (auto &&item : items) {
 					if (!params.validator(item)) {
 						throw validation_exception("Option '" + option_name + "' - validation failed");
 					}
