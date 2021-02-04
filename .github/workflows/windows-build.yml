@@ -46,7 +46,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake .. -DINICPP_BUILD_TESTS=ON -DINICPP_BUILD_EXAMPLES=ON -DINICPP_BUILD_SHARED=${{matrix.build_shared}} -T${{matrix.msvc_toolset}}
+          cmake .. -DINICPP_BUILD_TESTS=ON -DINICPP_BUILD_EXAMPLES=ON -DINICPP_BUILD_SHARED=${{matrix.build_shared}} -T${{matrix.msvc_toolset}} -A "x64"
         shell: bash
 
       - name: Build
