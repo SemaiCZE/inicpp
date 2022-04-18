@@ -1,0 +1,8 @@
+includedir=@CMAKE_INSTALL_FULL_INCLUDEDIR@
+libdir=@CMAKE_INSTALL_FULL_LIBDIR@
+
+Name: inicpp
+Description: C++ parser of INI files with schema validation
+Version: @inicpp_VERSION@
+Cflags: -I${includedir}/inicpp
+Libs: -L${libdir} -linicpp
