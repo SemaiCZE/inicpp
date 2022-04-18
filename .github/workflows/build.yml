@@ -1,4 +1,4 @@
-name: Github Actions Build
+name: Linux/MacOS Build
 
 on: [push, pull_request]
 
@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-latest, ubuntu-latest]
+        os: [macos-11, ubuntu-20.04]
         compiler: [GCC, Clang]
         build_type: [Debug, Release]
         build_shared: [ON, OFF]
@@ -21,9 +21,9 @@ jobs:
           - compiler: clang
             c_compiler: clang
             cxx_compiler: clang++
-          - os: macos-latest
+          - os: macos-11
             name: MacOS
-          - os: ubuntu-latest
+          - os: ubuntu-20.04
             name: Ubuntu
           - build_shared: ON
             lib_type: Shared
@@ -31,7 +31,7 @@ jobs:
             lib_type: Static
 
     steps:
-      - uses: lukka/get-cmake@v3.19.2
+      - uses: lukka/get-cmake@v3.23.0
       - uses: seanmiddleditch/gha-setup-ninja@v3
 
       - name: Checkout
