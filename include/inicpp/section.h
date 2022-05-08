@@ -217,9 +217,8 @@ namespace inicpp
 	/**
 	 * Templated section iterator.
 	 * Templates provide const and non-const iterator in one implementation.
-	 * For easier implementation inheritance from std::iterator is used.
 	 */
-	template <typename Element> class section_iterator : public std::iterator<std::random_access_iterator_tag, Element>
+	template <typename Element> class section_iterator
 	{
 	private:
 		/** Reference to container which can be iterated */
@@ -228,8 +227,12 @@ namespace inicpp
 		size_t position_;
 
 	public:
-		using typename std::iterator<std::random_access_iterator_tag, Element>::reference;
-		using typename std::iterator<std::random_access_iterator_tag, Element>::pointer;
+		// iterator traits
+		using difference_type = Element;
+		using value_type = Element;
+		using pointer = Element*;
+		using reference = Element&;
+		using iterator_category = std::random_access_iterator_tag;
 
 		/**
 		 * Deleted default constructor.
