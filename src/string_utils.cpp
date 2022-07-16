@@ -106,13 +106,18 @@ namespace inicpp
 		template <> signed_ini_t parse_string<signed_ini_t>(const std::string &value, const std::string &option_name)
 		{
 			try {
-				std::string binary_prefix = "0b";
-				if (std::equal(binary_prefix.begin(), binary_prefix.end(), value.begin())) {
+				// guaranteed string is suit for prefix: MSVC: cannot seek string iterator after end
+				if (value.size() > 1){
+				    if (std::equal(binary_prefix.begin(), binary_prefix.end(), value.begin())) {
 					// this is binary number
 					return std::stoll(value.substr(2), 0, 2);
-				} else {
+				    } else {
 					// decimal and hexadecimal number can handle stoll itself
 					return std::stoll(value, 0, 0);
+				    }
+				} else {
+				    // decimal and hexadecimal number can handle stoll itself
+				    return std::stoll(value, 0, 0);
 				}
 			} catch (std::exception &e) {
 				throw invalid_type_exception("Option '" + option_name + "' parsing failed: " + e.what());
