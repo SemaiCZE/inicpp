@@ -107,7 +107,8 @@ namespace inicpp
 		{
 			try {
 				std::string binary_prefix = "0b";
-				if (std::equal(binary_prefix.begin(), binary_prefix.end(), value.begin())) {
+				if (value.size() > binary_prefix.size() && 
+				    	std::equal(binary_prefix.begin(), binary_prefix.end(), value.begin())) {
 					// this is binary number
 					return std::stoll(value.substr(2), 0, 2);
 				} else {
