@@ -222,7 +222,7 @@ namespace inicpp
 		template <typename ValueType> void set_list(const std::vector<ValueType> &list)
 		{
 			values_.clear();
-			for (auto &&item : list) { add_to_list(item); }
+			for (auto &&item : list) { add_to_list(static_cast<ValueType>(item)); }
 		}
 
 		/**
