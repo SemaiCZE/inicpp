@@ -10,20 +10,20 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-11, ubuntu-20.04]
+        os: [macos-14, ubuntu-22.04]
         compiler: [GCC, Clang]
         build_type: [Debug, Release]
         build_shared: [ON, OFF]
         include:
           - compiler: gcc
-            c_compiler: gcc-9
-            cxx_compiler: g++-9
+            c_compiler: gcc-13
+            cxx_compiler: g++-13
           - compiler: clang
             c_compiler: clang
             cxx_compiler: clang++
-          - os: macos-11
+          - os: macos-14
             name: MacOS
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             name: Ubuntu
           - build_shared: ON
             lib_type: Shared
@@ -31,11 +31,11 @@ jobs:
             lib_type: Static
 
     steps:
-      - uses: lukka/get-cmake@v3.23.0
-      - uses: seanmiddleditch/gha-setup-ninja@v3
+      - uses: lukka/get-cmake@v3.29.2
+      - uses: seanmiddleditch/gha-setup-ninja@v4
 
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           submodules: true
 
