@@ -30,6 +30,10 @@ jobs:
           - build_shared: OFF
             lib_type: Static
 
+    defaults:
+      run:
+        shell: bash
+
     steps:
       - uses: lukka/get-cmake@v3.29.2
       - uses: seanmiddleditch/gha-setup-ninja@v4
@@ -39,25 +43,33 @@ jobs:
         with:
           submodules: true
 
+      # NOTE: Linker ICEs with Xcode 15.0.1
+      # * https://issues.dlang.org/show_bug.cgi?id=24407
+      # Remove this step if the default gets changed to 15.1 in actions/runner-images.
+      - name: 'macOS: Switch to Xcode v15.1'
+        if: matrix.os == 'macos-14'
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '^15.1'
+      # run: |
+      #   sudo xcode-select -switch /Applications/Xcode_15.1.app
+
       - name: Buildtools Version
         run: |
           ${{ matrix.cxx_compiler }} --version
-        shell: bash
 
       - name: Configure
         run: |
           mkdir build
           cd build
           cmake .. -GNinja -DCMAKE_BUILD_TYPE=${{matrix.build_type}} -DCMAKE_C_COMPILER=${{matrix.c_compiler}} -DCMAKE_CXX_COMPILER=${{matrix.cxx_compiler}} -DINICPP_BUILD_TESTS=ON -DINICPP_BUILD_EXAMPLES=ON -DINICPP_BUILD_SHARED=${{matrix.build_shared}}
-        shell: bash
 
       - name: Build
         run: |
           cmake --build .
-        shell: bash
         working-directory: build
 
       - name: Tests
         run: ctest . --output-on-failure
-        shell: bash
         working-directory: build
+
